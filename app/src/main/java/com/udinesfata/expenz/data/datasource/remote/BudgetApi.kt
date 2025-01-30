@@ -8,7 +8,7 @@ class BudgetApi {
         throw NotImplementedError()
     }
 
-    fun getBudgets(): List<Budget> {
+    fun getBudgets(): List<BudgetResponse> {
         throw NotImplementedError()
     }
 

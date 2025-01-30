@@ -1,13 +1,14 @@
 package com.udinesfata.expenz.data.datasource.remote
 
+import com.udinesfata.expenz.data.model.remote.CategoryResponse
 import com.udinesfata.expenz.domain.entity.Category
 
 class CategoryApi {
-    fun getCategory(id: Int): Category {
+    fun getCategory(id: Int): CategoryResponse {
         throw NotImplementedError()
     }
 
-    fun getCategories(): List<Category> {
+    fun getCategories(): List<CategoryResponse> {
         throw NotImplementedError()
     }
 

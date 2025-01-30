@@ -1,13 +1,14 @@
 package com.udinesfata.expenz.data.datasource.remote
 
+import com.udinesfata.expenz.data.model.remote.WalletResponse
 import com.udinesfata.expenz.domain.entity.Wallet
 
 class WalletApi {
-    fun getWallet(id: Int): Wallet {
+    fun getWallet(id: Int): WalletResponse {
         throw NotImplementedError()
     }
 
-    fun getWallets(): List<Wallet> {
+    fun getWallets(): List<WalletResponse> {
         throw NotImplementedError()
     }
 

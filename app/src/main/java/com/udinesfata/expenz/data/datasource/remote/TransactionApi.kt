@@ -1,13 +1,14 @@
 package com.udinesfata.expenz.data.datasource.remote
 
+import com.udinesfata.expenz.data.model.remote.TransactionResponse
 import com.udinesfata.expenz.domain.entity.Transaction
 
 class TransactionApi {
-    fun getTransaction(id: Int): Transaction {
+    fun getTransaction(id: Int): TransactionResponse {
         throw NotImplementedError()
     }
 
-    fun getTransactions(): List<Transaction> {
+    fun getTransactions(): List<TransactionResponse> {
         throw NotImplementedError()
     }
 
