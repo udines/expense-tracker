@@ -3,9 +3,9 @@ package com.udinesfata.expenz.domain.repository
 import com.udinesfata.expenz.domain.entity.Wallet
 
 interface WalletRepository {
-    fun getWallet(id: Int): Wallet
-    fun getWallets(): List<Wallet>
-    fun createWallet(wallet: Wallet)
-    fun updateWallet(wallet: Wallet)
-    fun deleteWallet(id: Int)
+    suspend fun getWallet(id: Int): Wallet
+    suspend fun getWallets(): List<Wallet>
+    suspend fun createWallet(wallet: Wallet)
+    suspend fun updateWallet(wallet: Wallet)
+    suspend fun deleteWallet(id: Int)
 }

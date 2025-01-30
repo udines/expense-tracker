@@ -3,9 +3,9 @@ package com.udinesfata.expenz.domain.repository
 import com.udinesfata.expenz.domain.entity.Transaction
 
 interface TransactionRepository {
-    fun getTransaction(id: Int): Transaction
-    fun getTransactions(): List<Transaction>
-    fun createTransaction(transaction: Transaction)
-    fun updateTransaction(transaction: Transaction)
-    fun deleteTransaction(id: Int)
+    suspend fun getTransaction(id: Int): Transaction
+    suspend fun getTransactions(): List<Transaction>
+    suspend fun createTransaction(transaction: Transaction)
+    suspend fun updateTransaction(transaction: Transaction)
+    suspend fun deleteTransaction(id: Int)
 }

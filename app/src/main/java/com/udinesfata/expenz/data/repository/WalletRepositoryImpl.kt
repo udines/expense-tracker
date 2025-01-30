@@ -1,6 +1,6 @@
 package com.udinesfata.expenz.data.repository
 
-import com.udinesfata.expenz.data.datasource.database.WalletDao
+import com.udinesfata.expenz.data.datasource.local.WalletDao
 import com.udinesfata.expenz.data.datasource.remote.WalletApi
 import com.udinesfata.expenz.data.utils.mapper.WalletMapper
 import com.udinesfata.expenz.domain.entity.Wallet
@@ -11,26 +11,26 @@ class WalletRepositoryImpl(
     private val walletApi: WalletApi,
     private val mapper: WalletMapper,
 ) : WalletRepository {
-    override fun getWallet(id: Int): Wallet {
+    override suspend fun getWallet(id: Int): Wallet {
         val walletDb = walletDao.getWallet(id)
         return mapper.dbToEntity(walletDb)
     }
 
-    override fun getWallets(): List<Wallet> {
+    override suspend fun getWallets(): List<Wallet> {
         throw NotImplementedError()
     }
 
-    override fun createWallet(wallet: Wallet) {
+    override suspend fun createWallet(wallet: Wallet) {
         val walletDb = mapper.entityToDb(wallet)
         walletDao.createWallet(walletDb)
     }
 
-    override fun updateWallet(wallet: Wallet) {
+    override suspend fun updateWallet(wallet: Wallet) {
         val walletDb = mapper.entityToDb(wallet)
         walletDao.updateWallet(walletDb)
     }
 
-    override fun deleteWallet(id: Int) {
+    override suspend fun deleteWallet(id: Int) {
         walletDao.deleteWallet(id)
     }
 }

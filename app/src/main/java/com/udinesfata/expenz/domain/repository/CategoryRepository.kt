@@ -3,9 +3,9 @@ package com.udinesfata.expenz.domain.repository
 import com.udinesfata.expenz.domain.entity.Category
 
 interface CategoryRepository {
-    fun getCategory(id: Int): Category
-    fun getCategories(): List<Category>
-    fun createCategory(category: Category)
-    fun updateCategory(category: Category)
-    fun deleteCategory(id: Int)
+    suspend fun getCategory(id: Int): Category
+    suspend fun getCategories(): List<Category>
+    suspend fun createCategory(category: Category)
+    suspend fun updateCategory(category: Category)
+    suspend fun deleteCategory(id: Int)
 }
