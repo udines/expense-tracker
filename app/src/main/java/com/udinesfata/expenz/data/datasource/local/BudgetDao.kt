@@ -10,7 +10,7 @@ import com.udinesfata.expenz.data.model.local.BudgetDb
 @Dao
 interface BudgetDao {
     @Query("SELECT * FROM budgets WHERE id = :id")
-    suspend fun getBudget(id: Int): BudgetDb
+    suspend fun getBudget(id: Int): BudgetDb?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createBudget(budget: BudgetDb)

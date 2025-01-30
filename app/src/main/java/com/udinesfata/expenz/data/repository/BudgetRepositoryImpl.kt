@@ -6,29 +6,66 @@ import com.udinesfata.expenz.data.utils.mapper.toDb
 import com.udinesfata.expenz.data.utils.mapper.toEntity
 import com.udinesfata.expenz.domain.entity.Budget
 import com.udinesfata.expenz.domain.repository.BudgetRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class BudgetRepositoryImpl(
     private val budgetDao: BudgetDao,
     private val budgetApi: BudgetApi,
 ) : BudgetRepository {
-    override suspend fun getBudget(id: Int): Budget {
-        val budgetDb = budgetDao.getBudget(id)
-        return budgetDb.toEntity()
+    override suspend fun getBudget(id: Int, forceRefresh: Boolean): Budget {
+        return withContext(Dispatchers.IO) {
+            val budgetDb = budgetDao.getBudget(id)
+            return@withContext if (!forceRefresh && budgetDb != null) {
+                budgetDb.toEntity()
+            } else {
+                try {
+                    val budgetResponse = budgetApi.getBudget(id)
+                    budgetDao.createBudget(budgetResponse.toDb())
+                    budgetResponse.toEntity()
+                } catch (e: Exception) {
+                    budgetDb?.toEntity() ?: throw e
+                }
+            }
+        }
     }
 
-    override suspend fun getBudgets(): List<Budget> {
+    override suspend fun getBudgets(forceRefresh: Boolean): List<Budget> {
         throw NotImplementedError()
     }
 
     override suspend fun createBudget(budget: Budget) {
-        budgetDao.createBudget(budget.toDb())
+        withContext(Dispatchers.IO) {
+            budgetDao.createBudget(budget.toDb())
+            try {
+                budgetApi.createBudget(budget)
+            } catch (e: Exception) {
+                budgetDao.deleteBudget(budget.id)
+            }
+        }
     }
 
     override suspend fun updateBudget(budget: Budget) {
-        budgetDao.updateBudget(budget.toDb())
+        withContext(Dispatchers.IO) {
+            val previousBudget = budgetDao.getBudget(budget.id)
+            budgetDao.updateBudget(budget.toDb())
+            try {
+                budgetApi.updateBudget(budget)
+            } catch (e: Exception) {
+                budgetDao.updateBudget(previousBudget!!)
+            }
+        }
     }
 
     override suspend fun deleteBudget(id: Int) {
-        budgetDao.deleteBudget(id)
+        withContext(Dispatchers.IO) {
+            val budget = budgetDao.getBudget(id)
+            budgetDao.deleteBudget(id)
+            try {
+                budgetApi.deleteBudget(id)
+            } catch (e: Exception) {
+                budgetDao.createBudget(budget!!)
+            }
+        }
     }
 }

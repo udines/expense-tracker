@@ -10,7 +10,7 @@ import com.udinesfata.expenz.data.model.local.TransactionDb
 @Dao
 interface TransactionDao {
     @Query("SELECT * FROM transactions WHERE id = :id")
-    suspend fun getTransaction(id: Int): TransactionDb
+    suspend fun getTransaction(id: Int): TransactionDb?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createTransaction(transaction: TransactionDb)

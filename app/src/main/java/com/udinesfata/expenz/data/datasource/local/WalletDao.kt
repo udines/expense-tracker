@@ -10,7 +10,7 @@ import com.udinesfata.expenz.data.model.local.WalletDb
 @Dao
 interface WalletDao {
     @Query("SELECT * FROM wallets WHERE id = :id")
-    suspend fun getWallet(id: Int): WalletDb
+    suspend fun getWallet(id: Int): WalletDb?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createWallet(wallet: WalletDb)

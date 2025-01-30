@@ -6,14 +6,28 @@ import com.udinesfata.expenz.data.utils.mapper.toDb
 import com.udinesfata.expenz.data.utils.mapper.toEntity
 import com.udinesfata.expenz.domain.entity.Category
 import com.udinesfata.expenz.domain.repository.CategoryRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao,
     private val categoryApi: CategoryApi,
 ) : CategoryRepository {
-    override suspend fun getCategory(id: Int): Category {
-        val categoryDb = categoryDao.getCategory(id)
-        return categoryDb.toEntity()
+    override suspend fun getCategory(id: Int, forceRefresh: Boolean): Category {
+        return withContext(Dispatchers.IO) {
+            val categoryDb = categoryDao.getCategory(id)
+            return@withContext if (!forceRefresh && categoryDb != null) {
+                categoryDb.toEntity()
+            } else {
+                try {
+                    val categoryResponse = categoryApi.getCategory(id)
+                    categoryDao.createCategory(categoryResponse.toDb())
+                    categoryResponse.toEntity()
+                } catch (e: Exception) {
+                    categoryDb?.toEntity() ?: throw e
+                }
+            }
+        }
     }
 
     override suspend fun getCategories(): List<Category> {
@@ -21,14 +35,37 @@ class CategoryRepositoryImpl(
     }
 
     override suspend fun createCategory(category: Category) {
-        categoryDao.createCategory(category.toDb())
+        withContext(Dispatchers.IO) {
+            categoryDao.createCategory(category.toDb())
+            try {
+                categoryApi.createCategory(category)
+            } catch (e: Exception) {
+                categoryDao.deleteCategory(category.id)
+            }
+        }
     }
 
     override suspend fun updateCategory(category: Category) {
-        categoryDao.updateCategory(category.toDb())
+        withContext(Dispatchers.IO) {
+            val previousCategory = categoryDao.getCategory(category.id)
+            categoryDao.updateCategory(category.toDb())
+            try {
+                categoryApi.updateCategory(category)
+            } catch (e: Exception) {
+                categoryDao.updateCategory(previousCategory!!)
+            }
+        }
     }
 
     override suspend fun deleteCategory(id: Int) {
-        categoryDao.deleteCategory(id)
+        withContext(Dispatchers.IO) {
+            val category = categoryDao.getCategory(id)
+            categoryDao.deleteCategory(id)
+            try {
+                categoryApi.deleteCategory(id)
+            } catch (e: Exception) {
+                categoryDao.createCategory(category!!)
+            }
+        }
     }
 }

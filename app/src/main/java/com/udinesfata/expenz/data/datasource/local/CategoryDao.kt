@@ -10,7 +10,7 @@ import com.udinesfata.expenz.data.model.local.CategoryDb
 @Dao
 interface CategoryDao {
     @Query("SELECT * FROM categories WHERE id = :id")
-    suspend fun getCategory(id: Int): CategoryDb
+    suspend fun getCategory(id: Int): CategoryDb?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createCategory(category: CategoryDb)
