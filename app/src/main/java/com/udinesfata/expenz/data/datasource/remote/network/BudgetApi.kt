@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.data.datasource.remote
+package com.udinesfata.expenz.data.datasource.remote.network
 
 import com.udinesfata.expenz.data.model.payload.BudgetPayload
 import com.udinesfata.expenz.data.model.remote.BudgetResponse

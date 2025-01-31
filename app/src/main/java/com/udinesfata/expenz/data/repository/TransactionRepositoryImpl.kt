@@ -1,9 +1,10 @@
 package com.udinesfata.expenz.data.repository
 
-import com.udinesfata.expenz.data.datasource.local.TransactionDao
-import com.udinesfata.expenz.data.datasource.remote.TransactionApi
+import com.udinesfata.expenz.data.datasource.local.database.TransactionDao
+import com.udinesfata.expenz.data.datasource.remote.TransactionRemoteDataSource
 import com.udinesfata.expenz.data.utils.mapper.toDb
 import com.udinesfata.expenz.data.utils.mapper.toEntity
+import com.udinesfata.expenz.data.utils.mapper.toPayload
 import com.udinesfata.expenz.domain.entity.Transaction
 import com.udinesfata.expenz.domain.repository.TransactionRepository
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +12,7 @@ import kotlinx.coroutines.withContext
 
 class TransactionRepositoryImpl(
     private val transactionDao: TransactionDao,
-    private val transactionApi: TransactionApi,
+    private val remoteDataSource: TransactionRemoteDataSource,
 ) : TransactionRepository {
     override suspend fun getTransaction(id: Int, forceRefresh: Boolean): Transaction {
         return withContext(Dispatchers.IO) {
@@ -20,7 +21,7 @@ class TransactionRepositoryImpl(
                 transactionDb.toEntity()
             } else {
                 try {
-                    val transactionResponse = transactionApi.getTransaction(id)
+                    val transactionResponse = remoteDataSource.getTransaction(id)
                     transactionDao.createTransaction(transactionResponse.toDb())
                     transactionResponse.toEntity()
                 } catch (e: Exception) {
@@ -38,7 +39,7 @@ class TransactionRepositoryImpl(
         withContext(Dispatchers.IO) {
             transactionDao.createTransaction(transaction.toDb())
             try {
-                transactionApi.createTransaction(transaction)
+                remoteDataSource.createTransaction(transaction.toPayload())
             } catch (e: Exception) {
                 transactionDao.deleteTransaction(transaction.id)
             }
@@ -50,7 +51,7 @@ class TransactionRepositoryImpl(
             val previousTransaction = transactionDao.getTransaction(transaction.id)
             transactionDao.updateTransaction(transaction.toDb())
             try {
-                transactionApi.updateTransaction(transaction)
+                remoteDataSource.updateTransaction(transaction.toPayload())
             } catch (e: Exception) {
                 transactionDao.updateTransaction(previousTransaction!!)
             }
@@ -62,7 +63,7 @@ class TransactionRepositoryImpl(
             val transaction = transactionDao.getTransaction(id)
             transactionDao.deleteTransaction(id)
             try {
-                transactionApi.deleteTransaction(id)
+                remoteDataSource.deleteTransaction(id)
             } catch (e: Exception) {
                 transactionDao.createTransaction(transaction!!)
             }

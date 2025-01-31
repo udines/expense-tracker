@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.data.datasource.remote
+package com.udinesfata.expenz.data.datasource.remote.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

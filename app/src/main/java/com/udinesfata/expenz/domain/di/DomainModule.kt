@@ -1,13 +1,13 @@
 package com.udinesfata.expenz.domain.di
 
-import com.udinesfata.expenz.data.datasource.local.BudgetDao
-import com.udinesfata.expenz.data.datasource.local.CategoryDao
-import com.udinesfata.expenz.data.datasource.local.TransactionDao
-import com.udinesfata.expenz.data.datasource.local.WalletDao
-import com.udinesfata.expenz.data.datasource.remote.BudgetApi
-import com.udinesfata.expenz.data.datasource.remote.CategoryApi
-import com.udinesfata.expenz.data.datasource.remote.TransactionApi
-import com.udinesfata.expenz.data.datasource.remote.WalletApi
+import com.udinesfata.expenz.data.datasource.local.database.BudgetDao
+import com.udinesfata.expenz.data.datasource.local.database.CategoryDao
+import com.udinesfata.expenz.data.datasource.local.database.TransactionDao
+import com.udinesfata.expenz.data.datasource.local.database.WalletDao
+import com.udinesfata.expenz.data.datasource.remote.network.BudgetApi
+import com.udinesfata.expenz.data.datasource.remote.network.CategoryApi
+import com.udinesfata.expenz.data.datasource.remote.network.TransactionApi
+import com.udinesfata.expenz.data.datasource.remote.network.WalletApi
 import com.udinesfata.expenz.data.repository.BudgetRepositoryImpl
 import com.udinesfata.expenz.data.repository.CategoryRepositoryImpl
 import com.udinesfata.expenz.data.repository.TransactionRepositoryImpl
@@ -22,26 +22,26 @@ val domainModule = module {
     /// Repositories
     single<BudgetRepository> {
         BudgetRepositoryImpl(
-            budgetDao = get<BudgetDao>(),
-            budgetApi = get<BudgetApi>()
+            budgetDao = get(),
+            remoteDataSource = get()
         )
     }
     single<CategoryRepository> {
         CategoryRepositoryImpl(
-            categoryDao = get<CategoryDao>(),
-            categoryApi = get<CategoryApi>()
+            categoryDao = get(),
+            remoteDataSource = get()
         )
     }
     single<TransactionRepository> {
         TransactionRepositoryImpl(
-            transactionDao = get<TransactionDao>(),
-            transactionApi = get<TransactionApi>()
+            transactionDao = get(),
+            remoteDataSource = get()
         )
     }
     single<WalletRepository> {
         WalletRepositoryImpl(
-            walletDao = get<WalletDao>(),
-            walletApi = get<WalletApi>()
+            walletDao = get(),
+            remoteDataSource = get()
         )
     }
 }
