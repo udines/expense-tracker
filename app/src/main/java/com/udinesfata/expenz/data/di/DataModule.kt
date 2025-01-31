@@ -6,10 +6,7 @@ import com.udinesfata.expenz.data.datasource.local.BudgetDao
 import com.udinesfata.expenz.data.datasource.local.CategoryDao
 import com.udinesfata.expenz.data.datasource.local.TransactionDao
 import com.udinesfata.expenz.data.datasource.local.WalletDao
-import com.udinesfata.expenz.data.datasource.remote.BudgetApi
-import com.udinesfata.expenz.data.datasource.remote.CategoryApi
-import com.udinesfata.expenz.data.datasource.remote.TransactionApi
-import com.udinesfata.expenz.data.datasource.remote.WalletApi
+import com.udinesfata.expenz.data.datasource.remote.RetrofitClient
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -27,8 +24,8 @@ val dataModule = module {
     single<WalletDao> { get<AppDatabase>().walletDao() }
 
     /// Remote APIs
-    single { BudgetApi() }
-    single { CategoryApi() }
-    single { TransactionApi() }
-    single { WalletApi() }
+    single { RetrofitClient.budgetApi }
+    single { RetrofitClient.categoryApi }
+    single { RetrofitClient.transactionApi }
+    single { RetrofitClient.walletApi }
 }

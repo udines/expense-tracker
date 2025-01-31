@@ -1,26 +1,31 @@
 package com.udinesfata.expenz.data.datasource.remote
 
+import com.udinesfata.expenz.data.model.payload.TransactionPayload
 import com.udinesfata.expenz.data.model.remote.TransactionResponse
-import com.udinesfata.expenz.domain.entity.Transaction
+import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 
-class TransactionApi {
-    fun getTransaction(id: Int): TransactionResponse {
-        throw NotImplementedError()
-    }
+interface TransactionApi {
+    @GET("transactions/{id}")
+    fun getTransaction(@Path("id") id: Int): Call<TransactionResponse>
 
-    fun getTransactions(): List<TransactionResponse> {
-        throw NotImplementedError()
-    }
+    @GET("transactions")
+    fun getTransactions(): Call<List<TransactionResponse>>
 
-    fun createTransaction(transaction: Transaction) {
-        throw NotImplementedError()
-    }
+    @POST("transactions")
+    fun createTransaction(@Body transaction: TransactionPayload): Call<TransactionResponse>
 
-    fun updateTransaction(transaction: Transaction) {
-        throw NotImplementedError()
-    }
+    @PUT("transactions/{id}")
+    fun updateTransaction(
+        @Path("id") id: Int,
+        @Body transaction: TransactionPayload
+    ): Call<TransactionResponse>
 
-    fun deleteTransaction(id: Int) {
-        throw NotImplementedError()
-    }
+    @DELETE("transactions/{id}")
+    fun deleteTransaction(@Path("id") id: Int): Call<Int>
 }

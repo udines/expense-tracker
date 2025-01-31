@@ -1,26 +1,28 @@
 package com.udinesfata.expenz.data.datasource.remote
 
+import com.udinesfata.expenz.data.model.payload.BudgetPayload
 import com.udinesfata.expenz.data.model.remote.BudgetResponse
-import com.udinesfata.expenz.domain.entity.Budget
+import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 
-class BudgetApi {
-    fun getBudget(id: Int): BudgetResponse {
-        throw NotImplementedError()
-    }
+interface BudgetApi {
+    @GET("budgets/{id}")
+    fun getBudget(@Path("id") id: Int): Call<BudgetResponse>
 
-    fun getBudgets(): List<BudgetResponse> {
-        throw NotImplementedError()
-    }
+    @GET("budgets")
+    fun getBudgets(): Call<List<BudgetResponse>>
 
-    fun createBudget(budget: Budget) {
-        throw NotImplementedError()
-    }
+    @POST("budgets")
+    fun createBudget(@Body budget: BudgetPayload): Call<BudgetResponse>
 
-    fun updateBudget(budget: Budget) {
-        throw NotImplementedError()
-    }
+    @PUT("budgets/{id}")
+    fun updateBudget(@Path("id") id: Int, @Body budget: BudgetPayload): Call<BudgetResponse>
 
-    fun deleteBudget(id: Int) {
-        throw NotImplementedError()
-    }
+    @DELETE("budgets/{id}")
+    fun deleteBudget(@Path("id") id: Int): Call<Int>
 }
