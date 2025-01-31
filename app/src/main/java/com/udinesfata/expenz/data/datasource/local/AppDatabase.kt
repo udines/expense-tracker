@@ -11,7 +11,8 @@ import com.udinesfata.expenz.data.model.local.WalletDb
 
 @Database(
     entities = [CategoryDb::class, TransactionDb::class, BudgetDb::class, WalletDb::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
