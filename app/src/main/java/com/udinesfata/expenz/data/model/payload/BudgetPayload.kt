@@ -1,8 +1,8 @@
-package com.udinesfata.expenz.data.model.remote
+package com.udinesfata.expenz.data.model.payload
 
 import com.google.gson.annotations.SerializedName
 
-data class BudgetResponse(
+data class BudgetPayload(
     val id: Int,
     @SerializedName("category_id")
     val categoryId: Int,

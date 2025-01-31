@@ -1,8 +1,8 @@
-package com.udinesfata.expenz.data.model.remote
+package com.udinesfata.expenz.data.model.payload
 
 import com.google.gson.annotations.SerializedName
 
-class TransactionResponse(
+class TransactionPayload(
     val id: Int,
     val amount: Double,
     val date: String, // ISO 8601 date format

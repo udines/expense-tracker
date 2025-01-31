@@ -1,6 +1,7 @@
 package com.udinesfata.expenz.data.utils.mapper
 
 import com.udinesfata.expenz.data.model.local.BudgetDb
+import com.udinesfata.expenz.data.model.payload.BudgetPayload
 import com.udinesfata.expenz.data.model.remote.BudgetResponse
 import com.udinesfata.expenz.domain.entity.Budget
 
@@ -36,6 +37,17 @@ fun Budget.toDb(): BudgetDb {
         endDate = this.endDate,
         walletId = this.walletId,
         isSynced = false
+    )
+}
+
+fun Budget.toPayload(): BudgetPayload {
+    return BudgetPayload(
+        id = this.id,
+        categoryId = this.categoryId,
+        amount = this.amount,
+        startDate = this.startDate,
+        endDate = this.endDate,
+        walletId = this.walletId,
     )
 }
 

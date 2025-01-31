@@ -1,6 +1,7 @@
 package com.udinesfata.expenz.data.utils.mapper
 
 import com.udinesfata.expenz.data.model.local.WalletDb
+import com.udinesfata.expenz.data.model.payload.WalletPayload
 import com.udinesfata.expenz.data.model.remote.WalletResponse
 import com.udinesfata.expenz.domain.entity.Wallet
 
@@ -30,6 +31,15 @@ fun Wallet.toDb(): WalletDb {
         balance = this.balance,
         currency = this.currency,
         isSynced = false
+    )
+}
+
+fun Wallet.toPayload(): WalletPayload {
+    return WalletPayload(
+        id = this.id,
+        name = this.name,
+        balance = this.balance,
+        currency = this.currency,
     )
 }
 

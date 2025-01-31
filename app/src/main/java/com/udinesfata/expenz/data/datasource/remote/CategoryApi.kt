@@ -1,26 +1,28 @@
 package com.udinesfata.expenz.data.datasource.remote
 
+import com.udinesfata.expenz.data.model.payload.CategoryPayload
 import com.udinesfata.expenz.data.model.remote.CategoryResponse
-import com.udinesfata.expenz.domain.entity.Category
+import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 
-class CategoryApi {
-    fun getCategory(id: Int): CategoryResponse {
-        throw NotImplementedError()
-    }
+interface CategoryApi {
+    @GET("categories/{id}")
+    fun getCategory(@Path("id") id: Int): Call<CategoryResponse>
 
-    fun getCategories(): List<CategoryResponse> {
-        throw NotImplementedError()
-    }
+    @GET("categories")
+    fun getCategories(): Call<List<CategoryResponse>>
 
-    fun createCategory(category: Category) {
-        throw NotImplementedError()
-    }
+    @POST("categories")
+    fun createCategory(@Body category: CategoryPayload): Call<CategoryResponse>
 
-    fun updateCategory(category: Category) {
-        throw NotImplementedError()
-    }
+    @PUT("categories/{id}")
+    fun updateCategory(@Path("id") id: Int, @Body category: CategoryPayload): Call<CategoryResponse>
 
-    fun deleteCategory(id: Int) {
-        throw NotImplementedError()
-    }
+    @DELETE("categories/{id}")
+    fun deleteCategory(@Path("id") id: Int): Call<Int>
 }
