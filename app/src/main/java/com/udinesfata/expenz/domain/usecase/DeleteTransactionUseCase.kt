@@ -1,9 +1,9 @@
 package com.udinesfata.expenz.domain.usecase
 
-import com.udinesfata.expenz.data.repository.TransactionRepositoryImpl
+import com.udinesfata.expenz.domain.repository.TransactionRepository
 
 class DeleteTransactionUseCase(
-    private val transactionRepositoryImpl: TransactionRepositoryImpl
+    private val transactionRepositoryImpl: TransactionRepository
 ) {
     suspend operator fun invoke(id: Int) {
         transactionRepositoryImpl.deleteTransaction(id)

@@ -1,12 +1,12 @@
 package com.udinesfata.expenz.domain.usecase
 
-import com.udinesfata.expenz.data.repository.TransactionRepositoryImpl
 import com.udinesfata.expenz.domain.entity.Transaction
 import com.udinesfata.expenz.domain.params.ORDER_DESC
 import com.udinesfata.expenz.domain.params.TransactionParams
+import com.udinesfata.expenz.domain.repository.TransactionRepository
 
 class GetThisMonthTopSpendingUseCase(
-    private val transactionRepositoryImpl: TransactionRepositoryImpl,
+    private val transactionRepositoryImpl: TransactionRepository,
     private val getStartDateUseCase: GetStartDateUseCase,
     private val getEndDateUseCase: GetEndDateUseCase,
 ) {

@@ -1,17 +1,15 @@
 package com.udinesfata.expenz.domain.usecase
 
-import com.udinesfata.expenz.data.repository.CategoryRepositoryImpl
-import com.udinesfata.expenz.data.repository.TransactionRepositoryImpl
-import com.udinesfata.expenz.data.repository.WalletRepositoryImpl
 import com.udinesfata.expenz.domain.entity.Report
 import com.udinesfata.expenz.domain.entity.isExpense
 import com.udinesfata.expenz.domain.entity.isIncome
 import com.udinesfata.expenz.domain.params.TransactionParams
+import com.udinesfata.expenz.domain.repository.CategoryRepository
+import com.udinesfata.expenz.domain.repository.TransactionRepository
+import com.udinesfata.expenz.domain.repository.WalletRepository
 
 class GetThisMonthReportUseCase(
-    private val transactionRepositoryImpl: TransactionRepositoryImpl,
-    private val walletRepositoryImpl: WalletRepositoryImpl,
-    private val categoryRepositoryImpl: CategoryRepositoryImpl,
+    private val transactionRepositoryImpl: TransactionRepository,
     private val getStartDateUseCase: GetStartDateUseCase,
     private val getEndDateUseCase: GetEndDateUseCase,
 ) {

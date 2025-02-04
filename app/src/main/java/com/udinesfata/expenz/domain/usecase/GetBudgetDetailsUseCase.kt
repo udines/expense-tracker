@@ -1,15 +1,14 @@
 package com.udinesfata.expenz.domain.usecase
 
-import com.udinesfata.expenz.data.repository.BudgetRepositoryImpl
-import com.udinesfata.expenz.data.repository.CategoryRepositoryImpl
-import com.udinesfata.expenz.data.repository.TransactionRepositoryImpl
 import com.udinesfata.expenz.domain.entity.BudgetDetail
 import com.udinesfata.expenz.domain.entity.isExpense
 import com.udinesfata.expenz.domain.params.TransactionParams
+import com.udinesfata.expenz.domain.repository.BudgetRepository
+import com.udinesfata.expenz.domain.repository.TransactionRepository
 
 class GetBudgetDetailsUseCase(
-    private val budgetRepositoryImpl: BudgetRepositoryImpl,
-    private val transactionRepositoryImpl: TransactionRepositoryImpl,
+    private val budgetRepositoryImpl: BudgetRepository,
+    private val transactionRepositoryImpl: TransactionRepository,
 ) {
     suspend operator fun invoke(budgetId: Int): BudgetDetail {
         val budget = budgetRepositoryImpl.getBudget(budgetId)

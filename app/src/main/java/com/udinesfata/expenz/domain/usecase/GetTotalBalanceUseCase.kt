@@ -1,11 +1,9 @@
 package com.udinesfata.expenz.domain.usecase
 
-import com.udinesfata.expenz.data.repository.TransactionRepositoryImpl
-import com.udinesfata.expenz.data.repository.WalletRepositoryImpl
+import com.udinesfata.expenz.domain.repository.WalletRepository
 
 class GetTotalBalanceUseCase(
-    private val walletRepositoryImpl: WalletRepositoryImpl,
-    private val transactionRepositoryImpl: TransactionRepositoryImpl,
+    private val walletRepositoryImpl: WalletRepository,
 ) {
     suspend operator fun invoke(): Double {
         val wallets = walletRepositoryImpl.getWallets()
