@@ -22,25 +22,25 @@ val domainModule = module {
     /// Repositories
     single<BudgetRepository> {
         BudgetRepositoryImpl(
-            budgetDao = get(),
+            localDataSource = get(),
             remoteDataSource = get()
         )
     }
     single<CategoryRepository> {
         CategoryRepositoryImpl(
-            categoryDao = get(),
+            localDataSource = get(),
             remoteDataSource = get()
         )
     }
     single<TransactionRepository> {
         TransactionRepositoryImpl(
-            transactionDao = get(),
+            localDataSource = get(),
             remoteDataSource = get()
         )
     }
     single<WalletRepository> {
         WalletRepositoryImpl(
-            walletDao = get(),
+            localDataSource = get(),
             remoteDataSource = get()
         )
     }
