@@ -1,6 +1,10 @@
 package com.udinesfata.expenz.data.di
 
 import androidx.room.Room
+import com.udinesfata.expenz.data.datasource.local.BudgetLocalDataSource
+import com.udinesfata.expenz.data.datasource.local.CategoryLocalDataSource
+import com.udinesfata.expenz.data.datasource.local.TransactionLocalDataSource
+import com.udinesfata.expenz.data.datasource.local.WalletLocalDataSource
 import com.udinesfata.expenz.data.datasource.local.database.AppDatabase
 import com.udinesfata.expenz.data.datasource.local.database.BudgetDao
 import com.udinesfata.expenz.data.datasource.local.database.CategoryDao
@@ -38,4 +42,10 @@ val dataModule = module {
     single { CategoryRemoteDataSource(get()) }
     single { TransactionRemoteDataSource(get()) }
     single { WalletRemoteDataSource(get()) }
+
+    /// Local data sources
+    single { BudgetLocalDataSource(get()) }
+    single { CategoryLocalDataSource(get()) }
+    single { TransactionLocalDataSource(get()) }
+    single { WalletLocalDataSource(get()) }
 }

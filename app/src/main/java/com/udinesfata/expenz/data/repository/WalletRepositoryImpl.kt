@@ -1,6 +1,6 @@
 package com.udinesfata.expenz.data.repository
 
-import com.udinesfata.expenz.data.datasource.local.database.WalletDao
+import com.udinesfata.expenz.data.datasource.local.WalletLocalDataSource
 import com.udinesfata.expenz.data.datasource.remote.WalletRemoteDataSource
 import com.udinesfata.expenz.data.utils.mapper.toDb
 import com.udinesfata.expenz.data.utils.mapper.toEntity
@@ -11,18 +11,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class WalletRepositoryImpl(
-    private val walletDao: WalletDao,
+    private val localDataSource: WalletLocalDataSource,
     private val remoteDataSource: WalletRemoteDataSource,
 ) : WalletRepository {
     override suspend fun getWallet(id: Int, forceRefresh: Boolean): Wallet {
         return withContext(Dispatchers.IO) {
-            val walletDb = walletDao.getWallet(id)
+            val walletDb = localDataSource.getWallet(id)
             return@withContext if (!forceRefresh && walletDb != null) {
                 walletDb.toEntity()
             } else {
                 try {
                     val walletResponse = remoteDataSource.getWallet(id)
-                    walletDao.createWallet(walletResponse.toDb())
+                    localDataSource.createWallet(walletResponse.toDb())
                     walletResponse.toEntity()
                 } catch (e: Exception) {
                     walletDb?.toEntity() ?: throw e
@@ -37,35 +37,35 @@ class WalletRepositoryImpl(
 
     override suspend fun createWallet(wallet: Wallet) {
         withContext(Dispatchers.IO) {
-            walletDao.createWallet(wallet.toDb())
+            localDataSource.createWallet(wallet.toDb())
             try {
                 remoteDataSource.createWallet(wallet.toPayload())
             } catch (e: Exception) {
-                walletDao.deleteWallet(wallet.id)
+                localDataSource.deleteWallet(wallet.id)
             }
         }
     }
 
     override suspend fun updateWallet(wallet: Wallet) {
         withContext(Dispatchers.IO) {
-            val previousWallet = walletDao.getWallet(wallet.id)
-            walletDao.updateWallet(wallet.toDb())
+            val previousWallet = localDataSource.getWallet(wallet.id)
+            localDataSource.updateWallet(wallet.toDb())
             try {
                 remoteDataSource.updateWallet(wallet.toPayload())
             } catch (e: Exception) {
-                walletDao.updateWallet(previousWallet!!)
+                localDataSource.updateWallet(previousWallet!!)
             }
         }
     }
 
     override suspend fun deleteWallet(id: Int) {
         withContext(Dispatchers.IO) {
-            val wallet = walletDao.getWallet(id)
-            walletDao.deleteWallet(id)
+            val wallet = localDataSource.getWallet(id)
+            localDataSource.deleteWallet(id)
             try {
                 remoteDataSource.deleteWallet(id)
             } catch (e: Exception) {
-                walletDao.createWallet(wallet!!)
+                localDataSource.createWallet(wallet!!)
             }
         }
     }

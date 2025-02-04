@@ -1,6 +1,6 @@
 package com.udinesfata.expenz.data.repository
 
-import com.udinesfata.expenz.data.datasource.local.database.CategoryDao
+import com.udinesfata.expenz.data.datasource.local.CategoryLocalDataSource
 import com.udinesfata.expenz.data.datasource.remote.CategoryRemoteDataSource
 import com.udinesfata.expenz.data.utils.mapper.toDb
 import com.udinesfata.expenz.data.utils.mapper.toEntity
@@ -11,18 +11,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class CategoryRepositoryImpl(
-    private val categoryDao: CategoryDao,
+    private val localDataSource: CategoryLocalDataSource,
     private val remoteDataSource: CategoryRemoteDataSource,
 ) : CategoryRepository {
     override suspend fun getCategory(id: Int, forceRefresh: Boolean): Category {
         return withContext(Dispatchers.IO) {
-            val categoryDb = categoryDao.getCategory(id)
+            val categoryDb = localDataSource.getCategory(id)
             return@withContext if (!forceRefresh && categoryDb != null) {
                 categoryDb.toEntity()
             } else {
                 try {
                     val categoryResponse = remoteDataSource.getCategory(id)
-                    categoryDao.createCategory(categoryResponse.toDb())
+                    localDataSource.createCategory(categoryResponse.toDb())
                     categoryResponse.toEntity()
                 } catch (e: Exception) {
                     categoryDb?.toEntity() ?: throw e
@@ -37,35 +37,35 @@ class CategoryRepositoryImpl(
 
     override suspend fun createCategory(category: Category) {
         withContext(Dispatchers.IO) {
-            categoryDao.createCategory(category.toDb())
+            localDataSource.createCategory(category.toDb())
             try {
                 remoteDataSource.createCategory(category.toPayload())
             } catch (e: Exception) {
-                categoryDao.deleteCategory(category.id)
+                localDataSource.deleteCategory(category.id)
             }
         }
     }
 
     override suspend fun updateCategory(category: Category) {
         withContext(Dispatchers.IO) {
-            val previousCategory = categoryDao.getCategory(category.id)
-            categoryDao.updateCategory(category.toDb())
+            val previousCategory = localDataSource.getCategory(category.id)
+            localDataSource.updateCategory(category.toDb())
             try {
                 remoteDataSource.updateCategory(category.toPayload())
             } catch (e: Exception) {
-                categoryDao.updateCategory(previousCategory!!)
+                localDataSource.updateCategory(previousCategory!!)
             }
         }
     }
 
     override suspend fun deleteCategory(id: Int) {
         withContext(Dispatchers.IO) {
-            val category = categoryDao.getCategory(id)
-            categoryDao.deleteCategory(id)
+            val category = localDataSource.getCategory(id)
+            localDataSource.deleteCategory(id)
             try {
                 remoteDataSource.deleteCategory(id)
             } catch (e: Exception) {
-                categoryDao.createCategory(category!!)
+                localDataSource.createCategory(category!!)
             }
         }
     }
