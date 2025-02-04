@@ -10,3 +10,7 @@ class Transaction(
     val type: String, // income or expense
     val currency: String,
 )
+
+fun Transaction.isIncome(): Boolean = this.type == "income"
+
+fun Transaction.isExpense(): Boolean = this.type == "expense"

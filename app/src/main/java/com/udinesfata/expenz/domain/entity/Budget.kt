@@ -7,4 +7,5 @@ class Budget(
     val startDate: String, // ISO 8601 date format
     val endDate: String, // ISO 8601 date format
     val walletId: Int,
+    val categoryIds: List<Int>,
 )
