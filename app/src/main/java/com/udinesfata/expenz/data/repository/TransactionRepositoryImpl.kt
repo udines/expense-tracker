@@ -6,6 +6,7 @@ import com.udinesfata.expenz.data.utils.mapper.toDb
 import com.udinesfata.expenz.data.utils.mapper.toEntity
 import com.udinesfata.expenz.data.utils.mapper.toPayload
 import com.udinesfata.expenz.domain.entity.Transaction
+import com.udinesfata.expenz.domain.params.TransactionParams
 import com.udinesfata.expenz.domain.repository.TransactionRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -31,7 +32,7 @@ class TransactionRepositoryImpl(
         }
     }
 
-    override suspend fun getTransactions(): List<Transaction> {
+    override suspend fun getTransactions(params: TransactionParams): List<Transaction> {
         throw NotImplementedError()
     }
 
