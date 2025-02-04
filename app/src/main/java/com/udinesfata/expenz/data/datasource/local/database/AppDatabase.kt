@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.data.datasource.local
+package com.udinesfata.expenz.data.datasource.local.database
 
 import android.content.Context
 import androidx.room.Database

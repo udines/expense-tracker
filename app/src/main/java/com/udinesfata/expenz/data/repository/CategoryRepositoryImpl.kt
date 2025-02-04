@@ -1,9 +1,10 @@
 package com.udinesfata.expenz.data.repository
 
-import com.udinesfata.expenz.data.datasource.local.CategoryDao
-import com.udinesfata.expenz.data.datasource.remote.CategoryApi
+import com.udinesfata.expenz.data.datasource.local.database.CategoryDao
+import com.udinesfata.expenz.data.datasource.remote.CategoryRemoteDataSource
 import com.udinesfata.expenz.data.utils.mapper.toDb
 import com.udinesfata.expenz.data.utils.mapper.toEntity
+import com.udinesfata.expenz.data.utils.mapper.toPayload
 import com.udinesfata.expenz.domain.entity.Category
 import com.udinesfata.expenz.domain.repository.CategoryRepository
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +12,7 @@ import kotlinx.coroutines.withContext
 
 class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao,
-    private val categoryApi: CategoryApi,
+    private val remoteDataSource: CategoryRemoteDataSource,
 ) : CategoryRepository {
     override suspend fun getCategory(id: Int, forceRefresh: Boolean): Category {
         return withContext(Dispatchers.IO) {
@@ -20,7 +21,7 @@ class CategoryRepositoryImpl(
                 categoryDb.toEntity()
             } else {
                 try {
-                    val categoryResponse = categoryApi.getCategory(id)
+                    val categoryResponse = remoteDataSource.getCategory(id)
                     categoryDao.createCategory(categoryResponse.toDb())
                     categoryResponse.toEntity()
                 } catch (e: Exception) {
@@ -38,7 +39,7 @@ class CategoryRepositoryImpl(
         withContext(Dispatchers.IO) {
             categoryDao.createCategory(category.toDb())
             try {
-                categoryApi.createCategory(category)
+                remoteDataSource.createCategory(category.toPayload())
             } catch (e: Exception) {
                 categoryDao.deleteCategory(category.id)
             }
@@ -50,7 +51,7 @@ class CategoryRepositoryImpl(
             val previousCategory = categoryDao.getCategory(category.id)
             categoryDao.updateCategory(category.toDb())
             try {
-                categoryApi.updateCategory(category)
+                remoteDataSource.updateCategory(category.toPayload())
             } catch (e: Exception) {
                 categoryDao.updateCategory(previousCategory!!)
             }
@@ -62,7 +63,7 @@ class CategoryRepositoryImpl(
             val category = categoryDao.getCategory(id)
             categoryDao.deleteCategory(id)
             try {
-                categoryApi.deleteCategory(id)
+                remoteDataSource.deleteCategory(id)
             } catch (e: Exception) {
                 categoryDao.createCategory(category!!)
             }

@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.data.datasource.local
+package com.udinesfata.expenz.data.datasource.local.database
 
 import androidx.room.Dao
 import androidx.room.Insert

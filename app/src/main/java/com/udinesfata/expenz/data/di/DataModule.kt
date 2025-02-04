@@ -1,12 +1,16 @@
 package com.udinesfata.expenz.data.di
 
 import androidx.room.Room
-import com.udinesfata.expenz.data.datasource.local.AppDatabase
-import com.udinesfata.expenz.data.datasource.local.BudgetDao
-import com.udinesfata.expenz.data.datasource.local.CategoryDao
-import com.udinesfata.expenz.data.datasource.local.TransactionDao
-import com.udinesfata.expenz.data.datasource.local.WalletDao
-import com.udinesfata.expenz.data.datasource.remote.RetrofitClient
+import com.udinesfata.expenz.data.datasource.local.database.AppDatabase
+import com.udinesfata.expenz.data.datasource.local.database.BudgetDao
+import com.udinesfata.expenz.data.datasource.local.database.CategoryDao
+import com.udinesfata.expenz.data.datasource.local.database.TransactionDao
+import com.udinesfata.expenz.data.datasource.local.database.WalletDao
+import com.udinesfata.expenz.data.datasource.remote.BudgetRemoteDataSource
+import com.udinesfata.expenz.data.datasource.remote.CategoryRemoteDataSource
+import com.udinesfata.expenz.data.datasource.remote.TransactionRemoteDataSource
+import com.udinesfata.expenz.data.datasource.remote.WalletRemoteDataSource
+import com.udinesfata.expenz.data.datasource.remote.network.RetrofitClient
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -28,4 +32,10 @@ val dataModule = module {
     single { RetrofitClient.categoryApi }
     single { RetrofitClient.transactionApi }
     single { RetrofitClient.walletApi }
+
+    /// Remote data sources
+    single { BudgetRemoteDataSource(get()) }
+    single { CategoryRemoteDataSource(get()) }
+    single { TransactionRemoteDataSource(get()) }
+    single { WalletRemoteDataSource(get()) }
 }
