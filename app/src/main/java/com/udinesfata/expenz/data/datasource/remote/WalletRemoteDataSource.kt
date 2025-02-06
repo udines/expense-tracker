@@ -2,6 +2,7 @@ package com.udinesfata.expenz.data.datasource.remote
 
 import com.udinesfata.expenz.data.datasource.remote.network.WalletApi
 import com.udinesfata.expenz.data.model.payload.WalletPayload
+import com.udinesfata.expenz.data.model.query.WalletQuery
 import com.udinesfata.expenz.data.model.remote.WalletResponse
 import com.udinesfata.expenz.domain.entity.Wallet
 
@@ -11,7 +12,7 @@ class WalletRemoteDataSource(
     fun getWallet(id: Int, forceRefresh: Boolean = true): WalletResponse =
         walletApi.getWallet(id).execute().body() ?: throw Exception("Null result")
 
-    fun getWallets(): List<WalletResponse> =
+    fun getWallets(query: WalletQuery): List<WalletResponse> =
         walletApi.getWallets().execute().body() ?: throw Exception("Null result")
 
     fun createWallet(wallet: WalletPayload): WalletResponse =

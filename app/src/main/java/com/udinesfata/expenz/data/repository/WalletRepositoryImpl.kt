@@ -4,69 +4,90 @@ import com.udinesfata.expenz.data.datasource.local.WalletLocalDataSource
 import com.udinesfata.expenz.data.datasource.remote.WalletRemoteDataSource
 import com.udinesfata.expenz.data.utils.mapper.toDb
 import com.udinesfata.expenz.data.utils.mapper.toEntity
+import com.udinesfata.expenz.data.utils.mapper.toListDb
+import com.udinesfata.expenz.data.utils.mapper.toListEntity
 import com.udinesfata.expenz.data.utils.mapper.toPayload
+import com.udinesfata.expenz.data.utils.mapper.toQuery
+import com.udinesfata.expenz.data.utils.network.NetworkChecker
 import com.udinesfata.expenz.domain.entity.Wallet
+import com.udinesfata.expenz.domain.params.WalletParams
 import com.udinesfata.expenz.domain.repository.WalletRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class WalletRepositoryImpl(
     private val localDataSource: WalletLocalDataSource,
     private val remoteDataSource: WalletRemoteDataSource,
+    private val networkChecker: NetworkChecker
 ) : WalletRepository {
-    override suspend fun getWallet(id: Int, forceRefresh: Boolean): Wallet {
-        return withContext(Dispatchers.IO) {
-            val walletDb = localDataSource.getWallet(id)
-            return@withContext if (!forceRefresh && walletDb != null) {
-                walletDb.toEntity()
+    override suspend fun getWallet(id: Int, fromLocal: Boolean): Wallet? {
+        try {
+            if (fromLocal || !networkChecker.isNetworkAvailable()) {
+                return localDataSource.getWallet(id)?.toEntity()
             } else {
-                try {
-                    val walletResponse = remoteDataSource.getWallet(id)
-                    localDataSource.createWallet(walletResponse.toDb())
-                    walletResponse.toEntity()
-                } catch (e: Exception) {
-                    walletDb?.toEntity() ?: throw e
-                }
+                val response = remoteDataSource.getWallet(id)
+                localDataSource.createWallet(response.toDb())
+                return response.toEntity()
             }
+        } catch (e: Exception) {
+            throw e
         }
     }
 
-    override suspend fun getWallets(): List<Wallet> {
-        throw NotImplementedError()
-    }
-
-    override suspend fun createWallet(wallet: Wallet) {
-        withContext(Dispatchers.IO) {
-            localDataSource.createWallet(wallet.toDb())
-            try {
-                remoteDataSource.createWallet(wallet.toPayload())
-            } catch (e: Exception) {
-                localDataSource.deleteWallet(wallet.id)
+    override suspend fun getWallets(params: WalletParams, fromLocal: Boolean): List<Wallet> {
+        try {
+            if (fromLocal || !networkChecker.isNetworkAvailable()) {
+                return localDataSource.getWallets(params.toQuery()).toListEntity()
+            } else {
+                val response = remoteDataSource.getWallets(params.toQuery())
+                localDataSource.createWallets(response.toListDb())
+                return response.toListEntity()
             }
+        } catch (e: Exception) {
+            throw e
         }
     }
 
-    override suspend fun updateWallet(wallet: Wallet) {
-        withContext(Dispatchers.IO) {
-            val previousWallet = localDataSource.getWallet(wallet.id)
-            localDataSource.updateWallet(wallet.toDb())
-            try {
-                remoteDataSource.updateWallet(wallet.toPayload())
-            } catch (e: Exception) {
-                localDataSource.updateWallet(previousWallet!!)
+    override suspend fun createWallet(wallet: Wallet, fromLocal: Boolean): Wallet {
+        try {
+            if (fromLocal || !networkChecker.isNetworkAvailable()) {
+                localDataSource.createWallet(wallet.toDb(), fromLocal = true)
+                return wallet
+            } else {
+                val response = remoteDataSource.createWallet(wallet.toPayload())
+                localDataSource.createWallet(response.toDb())
+                return response.toEntity()
             }
+        } catch (e: Exception) {
+            throw e
         }
     }
 
-    override suspend fun deleteWallet(id: Int) {
-        withContext(Dispatchers.IO) {
-            val wallet = localDataSource.getWallet(id)
-            localDataSource.deleteWallet(id)
-            try {
+    override suspend fun updateWallet(wallet: Wallet, fromLocal: Boolean): Wallet {
+        try {
+            if (fromLocal || !networkChecker.isNetworkAvailable()) {
+                localDataSource.updateWallet(wallet.toDb(), fromLocal = true)
+                return wallet
+            } else {
+                val response = remoteDataSource.updateWallet(wallet.toPayload())
+                localDataSource.updateWallet(response.toDb())
+                return response.toEntity()
+            }
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun deleteWallet(id: Int, fromLocal: Boolean): Boolean {
+        try {
+            if (fromLocal || !networkChecker.isNetworkAvailable()) {
+                localDataSource.deleteWallet(id, flagOnly = true)
+                return true
+            } else {
                 remoteDataSource.deleteWallet(id)
-            } catch (e: Exception) {
-                localDataSource.createWallet(wallet!!)
+                localDataSource.deleteWallet(id)
+                return true
             }
+        } catch (e: Exception) {
+            throw e
         }
     }
 }
