@@ -12,6 +12,9 @@ interface BudgetDao {
     @Query("SELECT * FROM budgets WHERE id = :id")
     suspend fun getBudget(id: Int): BudgetDb?
 
+    @Query("SELECT * FROM budgets")
+    suspend fun getBudgets(): List<BudgetDb>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createBudget(budget: BudgetDb)
 

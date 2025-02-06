@@ -2,6 +2,7 @@ package com.udinesfata.expenz.data.datasource.remote
 
 import com.udinesfata.expenz.data.datasource.remote.network.BudgetApi
 import com.udinesfata.expenz.data.model.payload.BudgetPayload
+import com.udinesfata.expenz.data.model.query.BudgetQuery
 import com.udinesfata.expenz.data.model.remote.BudgetResponse
 
 class BudgetRemoteDataSource(
@@ -10,7 +11,7 @@ class BudgetRemoteDataSource(
     fun getBudget(id: Int): BudgetResponse =
         budgetApi.getBudget(id).execute().body() ?: throw Exception("Null result")
 
-    fun getBudgets(forceRefresh: Boolean): List<BudgetResponse> =
+    fun getBudgets(query: BudgetQuery): List<BudgetResponse> =
         budgetApi.getBudgets().execute().body() ?: throw Exception("Null result")
 
     fun createBudget(budget: BudgetPayload): BudgetResponse =
