@@ -2,6 +2,7 @@ package com.udinesfata.expenz.data.datasource.remote
 
 import com.udinesfata.expenz.data.datasource.remote.network.CategoryApi
 import com.udinesfata.expenz.data.model.payload.CategoryPayload
+import com.udinesfata.expenz.data.model.query.CategoryQuery
 import com.udinesfata.expenz.data.model.remote.CategoryResponse
 
 class CategoryRemoteDataSource(
@@ -10,7 +11,7 @@ class CategoryRemoteDataSource(
     fun getCategory(id: Int, forceRefresh: Boolean = true): CategoryResponse =
         categoryApi.getCategory(id).execute().body() ?: throw Exception("Null result")
 
-    fun getCategories(): List<CategoryResponse> =
+    fun getCategories(categoryQuery: CategoryQuery): List<CategoryResponse> =
         categoryApi.getCategories().execute().body() ?: throw Exception("Null result")
 
     fun createCategory(category: CategoryPayload): CategoryResponse =

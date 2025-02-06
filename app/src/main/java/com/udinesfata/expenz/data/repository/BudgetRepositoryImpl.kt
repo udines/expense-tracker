@@ -49,7 +49,7 @@ class BudgetRepositoryImpl(
     override suspend fun createBudget(budget: Budget, fromLocal: Boolean): Budget {
         try {
             if (fromLocal || !networkChecker.isNetworkAvailable()) {
-                localDataSource.createBudget(budget.toDb())
+                localDataSource.createBudget(budget.toDb(), fromLocal = true)
                 return budget
             } else {
                 val response = remoteDataSource.createBudget(budget.toPayload())
@@ -64,7 +64,7 @@ class BudgetRepositoryImpl(
     override suspend fun updateBudget(budget: Budget, fromLocal: Boolean): Budget {
         try {
             if (fromLocal || !networkChecker.isNetworkAvailable()) {
-                localDataSource.updateBudget(budget.toDb())
+                localDataSource.updateBudget(budget.toDb(), fromLocal = true)
                 return budget
             } else {
                 val response = remoteDataSource.updateBudget(budget.toPayload())

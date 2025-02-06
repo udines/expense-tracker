@@ -12,4 +12,6 @@ data class CategoryDb(
     val type: String, // income or expense
     @ColumnInfo(name = "is_synced")
     val isSynced: Boolean,
+    @ColumnInfo(name = "sync_operation")
+    val syncOperation: String, // create, update, delete
 )

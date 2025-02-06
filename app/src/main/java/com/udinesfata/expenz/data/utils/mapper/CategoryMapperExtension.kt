@@ -2,8 +2,10 @@ package com.udinesfata.expenz.data.utils.mapper
 
 import com.udinesfata.expenz.data.model.local.CategoryDb
 import com.udinesfata.expenz.data.model.payload.CategoryPayload
+import com.udinesfata.expenz.data.model.query.CategoryQuery
 import com.udinesfata.expenz.data.model.remote.CategoryResponse
 import com.udinesfata.expenz.domain.entity.Category
+import com.udinesfata.expenz.domain.params.CategoryParams
 
 fun CategoryResponse.toEntity(): Category {
     return Category(
@@ -45,4 +47,20 @@ fun CategoryDb.toEntity(): Category {
         name = this.name,
         type = this.type,
     )
+}
+
+fun CategoryParams.toQuery(): CategoryQuery {
+    return CategoryQuery()
+}
+
+fun List<CategoryDb>.toListEntity(): List<Category> {
+    return this.map { it.toEntity() }
+}
+
+fun List<CategoryResponse>.toListEntity(): List<Category> {
+    return this.map { it.toEntity() }
+}
+
+fun List<CategoryResponse>.toListDb(): List<CategoryDb> {
+    return this.map { it.toDb() }
 }
