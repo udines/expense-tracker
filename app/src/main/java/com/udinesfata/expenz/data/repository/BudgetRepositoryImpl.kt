@@ -4,8 +4,6 @@ import com.udinesfata.expenz.data.datasource.local.BudgetLocalDataSource
 import com.udinesfata.expenz.data.datasource.remote.BudgetRemoteDataSource
 import com.udinesfata.expenz.data.utils.mapper.toDb
 import com.udinesfata.expenz.data.utils.mapper.toEntity
-import com.udinesfata.expenz.data.utils.mapper.toListDb
-import com.udinesfata.expenz.data.utils.mapper.toListEntity
 import com.udinesfata.expenz.data.utils.mapper.toPayload
 import com.udinesfata.expenz.data.utils.mapper.toQuery
 import com.udinesfata.expenz.data.utils.network.NetworkChecker
@@ -35,11 +33,11 @@ class BudgetRepositoryImpl(
     override suspend fun getBudgets(params: BudgetParams, fromLocal: Boolean): List<Budget> {
         try {
             if (fromLocal || !networkChecker.isNetworkAvailable()) {
-                return localDataSource.getBudgets(params.toQuery()).toListEntity()
+                return localDataSource.getBudgets(params.toQuery()).map { it.toEntity() }
             } else {
                 val response = remoteDataSource.getBudgets(params.toQuery())
-                localDataSource.createBudgets(response.toListDb())
-                return response.toListEntity()
+                localDataSource.createBudgets(response.map { it.toDb() })
+                return response.map { it.toEntity() }
             }
         } catch (e: Exception) {
             throw e

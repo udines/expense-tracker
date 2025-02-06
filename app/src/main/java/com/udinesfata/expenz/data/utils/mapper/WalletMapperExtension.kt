@@ -57,15 +57,3 @@ fun WalletDb.toEntity(): Wallet {
 fun WalletParams.toQuery(): WalletQuery {
     return WalletQuery()
 }
-
-fun List<WalletDb>.toListEntity(): List<Wallet> {
-    return this.map { it.toEntity() }
-}
-
-fun List<WalletResponse>.toListEntity(): List<Wallet> {
-    return this.map { it.toEntity() }
-}
-
-fun List<WalletResponse>.toListDb(): List<WalletDb> {
-    return this.map { it.toDb() }
-}

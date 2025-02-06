@@ -4,8 +4,6 @@ import com.udinesfata.expenz.data.datasource.local.TransactionLocalDataSource
 import com.udinesfata.expenz.data.datasource.remote.TransactionRemoteDataSource
 import com.udinesfata.expenz.data.utils.mapper.toDb
 import com.udinesfata.expenz.data.utils.mapper.toEntity
-import com.udinesfata.expenz.data.utils.mapper.toListDb
-import com.udinesfata.expenz.data.utils.mapper.toListEntity
 import com.udinesfata.expenz.data.utils.mapper.toPayload
 import com.udinesfata.expenz.data.utils.mapper.toQuery
 import com.udinesfata.expenz.data.utils.network.NetworkChecker
@@ -38,11 +36,11 @@ class TransactionRepositoryImpl(
     ): List<Transaction> {
         try {
             if (fromLocal || !networkChecker.isNetworkAvailable()) {
-                return localDataSource.getTransactions(params.toQuery()).toListEntity()
+                return localDataSource.getTransactions(params.toQuery()).map { it.toEntity() }
             } else {
                 val response = remoteDataSource.getTransactions(params.toQuery())
-                localDataSource.createTransactions(response.toListDb())
-                return response.toListEntity()
+                localDataSource.createTransactions(response.map { it.toDb() })
+                return response.map { it.toEntity() }
             }
         } catch (e: Exception) {
             throw e

@@ -77,15 +77,3 @@ fun TransactionDb.toEntity(): Transaction {
 fun TransactionParams.toQuery(): TransactionQuery {
     return TransactionQuery()
 }
-
-fun List<TransactionDb>.toListEntity(): List<Transaction> {
-    return this.map { it.toEntity() }
-}
-
-fun List<TransactionResponse>.toListEntity(): List<Transaction> {
-    return this.map { it.toEntity() }
-}
-
-fun List<TransactionResponse>.toListDb(): List<TransactionDb> {
-    return this.map { it.toDb() }
-}

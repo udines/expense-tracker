@@ -69,15 +69,3 @@ fun BudgetDb.toEntity(): Budget {
 fun BudgetParams.toQuery(): BudgetQuery {
     return BudgetQuery()
 }
-
-fun List<BudgetDb>.toListEntity(): List<Budget> {
-    return this.map { it.toEntity() }
-}
-
-fun List<BudgetResponse>.toListEntity(): List<Budget> {
-    return this.map { it.toEntity() }
-}
-
-fun List<BudgetResponse>.toListDb(): List<BudgetDb> {
-    return this.map { it.toDb() }
-}

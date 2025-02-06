@@ -4,8 +4,6 @@ import com.udinesfata.expenz.data.datasource.local.CategoryLocalDataSource
 import com.udinesfata.expenz.data.datasource.remote.CategoryRemoteDataSource
 import com.udinesfata.expenz.data.utils.mapper.toDb
 import com.udinesfata.expenz.data.utils.mapper.toEntity
-import com.udinesfata.expenz.data.utils.mapper.toListDb
-import com.udinesfata.expenz.data.utils.mapper.toListEntity
 import com.udinesfata.expenz.data.utils.mapper.toPayload
 import com.udinesfata.expenz.data.utils.mapper.toQuery
 import com.udinesfata.expenz.data.utils.network.NetworkChecker
@@ -35,11 +33,11 @@ class CategoryRepositoryImpl(
     override suspend fun getCategories(params: CategoryParams, fromLocal: Boolean): List<Category> {
         try {
             if (fromLocal || !networkChecker.isNetworkAvailable()) {
-                return localDataSource.getCategories(params.toQuery()).toListEntity()
+                return localDataSource.getCategories(params.toQuery()).map { it.toEntity() }
             } else {
                 val response = remoteDataSource.getCategories(params.toQuery())
-                localDataSource.createCategories(response.toListDb())
-                return response.toListEntity()
+                localDataSource.createCategories(response.map { it.toDb() })
+                return response.map { it.toEntity() }
             }
         } catch (e: Exception) {
             throw e

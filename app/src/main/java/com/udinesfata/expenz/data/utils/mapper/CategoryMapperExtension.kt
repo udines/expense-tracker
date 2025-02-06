@@ -52,15 +52,3 @@ fun CategoryDb.toEntity(): Category {
 fun CategoryParams.toQuery(): CategoryQuery {
     return CategoryQuery()
 }
-
-fun List<CategoryDb>.toListEntity(): List<Category> {
-    return this.map { it.toEntity() }
-}
-
-fun List<CategoryResponse>.toListEntity(): List<Category> {
-    return this.map { it.toEntity() }
-}
-
-fun List<CategoryResponse>.toListDb(): List<CategoryDb> {
-    return this.map { it.toDb() }
-}

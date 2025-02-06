@@ -1,13 +1,5 @@
 package com.udinesfata.expenz.domain.di
 
-import com.udinesfata.expenz.data.datasource.local.database.BudgetDao
-import com.udinesfata.expenz.data.datasource.local.database.CategoryDao
-import com.udinesfata.expenz.data.datasource.local.database.TransactionDao
-import com.udinesfata.expenz.data.datasource.local.database.WalletDao
-import com.udinesfata.expenz.data.datasource.remote.network.BudgetApi
-import com.udinesfata.expenz.data.datasource.remote.network.CategoryApi
-import com.udinesfata.expenz.data.datasource.remote.network.TransactionApi
-import com.udinesfata.expenz.data.datasource.remote.network.WalletApi
 import com.udinesfata.expenz.data.repository.BudgetRepositoryImpl
 import com.udinesfata.expenz.data.repository.CategoryRepositoryImpl
 import com.udinesfata.expenz.data.repository.TransactionRepositoryImpl
@@ -49,28 +41,16 @@ import org.koin.dsl.module
 val domainModule = module {
     /// Repositories
     single<BudgetRepository> {
-        BudgetRepositoryImpl(
-            localDataSource = get(),
-            remoteDataSource = get()
-        )
+        BudgetRepositoryImpl(get(), get(), get())
     }
     single<CategoryRepository> {
-        CategoryRepositoryImpl(
-            localDataSource = get(),
-            remoteDataSource = get()
-        )
+        CategoryRepositoryImpl(get(), get(), get())
     }
     single<TransactionRepository> {
-        TransactionRepositoryImpl(
-            localDataSource = get(),
-            remoteDataSource = get()
-        )
+        TransactionRepositoryImpl(get(), get(), get())
     }
     single<WalletRepository> {
-        WalletRepositoryImpl(
-            localDataSource = get(),
-            remoteDataSource = get()
-        )
+        WalletRepositoryImpl(get(), get(), get())
     }
 
     /// Use cases
