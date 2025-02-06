@@ -4,7 +4,7 @@ import com.udinesfata.expenz.domain.entity.Transaction
 import com.udinesfata.expenz.domain.params.TransactionParams
 
 interface TransactionRepository {
-    suspend fun getTransaction(id: Int, fromLocal: Boolean = false): Transaction
+    suspend fun getTransaction(id: Int, fromLocal: Boolean = false): Transaction?
     suspend fun getTransactions(
         params: TransactionParams,
         fromLocal: Boolean = false

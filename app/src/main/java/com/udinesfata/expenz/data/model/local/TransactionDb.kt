@@ -19,4 +19,6 @@ data class TransactionDb(
     val currency: String,
     @ColumnInfo(name = "is_synced")
     val isSynced: Boolean,
+    @ColumnInfo(name = "sync_operation")
+    val syncOperation: String? = null, // "create", "update", "delete"
 )
