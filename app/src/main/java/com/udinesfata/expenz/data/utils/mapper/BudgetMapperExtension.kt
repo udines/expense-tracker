@@ -2,8 +2,10 @@ package com.udinesfata.expenz.data.utils.mapper
 
 import com.udinesfata.expenz.data.model.local.BudgetDb
 import com.udinesfata.expenz.data.model.payload.BudgetPayload
+import com.udinesfata.expenz.data.model.query.BudgetQuery
 import com.udinesfata.expenz.data.model.remote.BudgetResponse
 import com.udinesfata.expenz.domain.entity.Budget
+import com.udinesfata.expenz.domain.params.BudgetParams
 
 fun BudgetResponse.toEntity(): Budget {
     return Budget(
@@ -62,4 +64,8 @@ fun BudgetDb.toEntity(): Budget {
         walletId = this.walletId,
         categoryIds = listOf(),
     )
+}
+
+fun BudgetParams.toQuery(): BudgetQuery {
+    return BudgetQuery()
 }

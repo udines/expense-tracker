@@ -6,7 +6,7 @@ import com.udinesfata.expenz.domain.repository.WalletRepository
 class GetWalletDetailsUseCase(
     private val walletRepositoryImpl: WalletRepository,
 ) {
-    suspend operator fun invoke(walletId: Int): Wallet {
+    suspend operator fun invoke(walletId: Int): Wallet? {
         return walletRepositoryImpl.getWallet(walletId)
     }
 }

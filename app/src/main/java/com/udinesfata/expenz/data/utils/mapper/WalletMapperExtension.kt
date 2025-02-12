@@ -2,8 +2,10 @@ package com.udinesfata.expenz.data.utils.mapper
 
 import com.udinesfata.expenz.data.model.local.WalletDb
 import com.udinesfata.expenz.data.model.payload.WalletPayload
+import com.udinesfata.expenz.data.model.query.WalletQuery
 import com.udinesfata.expenz.data.model.remote.WalletResponse
 import com.udinesfata.expenz.domain.entity.Wallet
+import com.udinesfata.expenz.domain.params.WalletParams
 
 fun WalletResponse.toEntity(): Wallet {
     return Wallet(
@@ -50,4 +52,8 @@ fun WalletDb.toEntity(): Wallet {
         balance = this.balance,
         currency = this.currency,
     )
+}
+
+fun WalletParams.toQuery(): WalletQuery {
+    return WalletQuery()
 }

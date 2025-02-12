@@ -1,5 +1,6 @@
 package com.udinesfata.expenz.data.di
 
+import android.content.Context
 import androidx.room.Room
 import com.udinesfata.expenz.data.datasource.local.BudgetLocalDataSource
 import com.udinesfata.expenz.data.datasource.local.CategoryLocalDataSource
@@ -15,6 +16,7 @@ import com.udinesfata.expenz.data.datasource.remote.CategoryRemoteDataSource
 import com.udinesfata.expenz.data.datasource.remote.TransactionRemoteDataSource
 import com.udinesfata.expenz.data.datasource.remote.WalletRemoteDataSource
 import com.udinesfata.expenz.data.datasource.remote.network.RetrofitClient
+import com.udinesfata.expenz.data.utils.network.NetworkChecker
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -24,6 +26,10 @@ val dataModule = module {
             .fallbackToDestructiveMigration()
             .build()
     }
+
+    /// Utils
+    single<Context> { get<Context>().applicationContext }
+    single { NetworkChecker(get()) }
 
     /// DAOs
     single<BudgetDao> { get<AppDatabase>().budgetDao() }

@@ -5,68 +5,87 @@ import com.udinesfata.expenz.data.datasource.remote.BudgetRemoteDataSource
 import com.udinesfata.expenz.data.utils.mapper.toDb
 import com.udinesfata.expenz.data.utils.mapper.toEntity
 import com.udinesfata.expenz.data.utils.mapper.toPayload
+import com.udinesfata.expenz.data.utils.mapper.toQuery
+import com.udinesfata.expenz.data.utils.network.NetworkChecker
 import com.udinesfata.expenz.domain.entity.Budget
+import com.udinesfata.expenz.domain.params.BudgetParams
 import com.udinesfata.expenz.domain.repository.BudgetRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class BudgetRepositoryImpl(
     private val localDataSource: BudgetLocalDataSource,
     private val remoteDataSource: BudgetRemoteDataSource,
+    private val networkChecker: NetworkChecker,
 ) : BudgetRepository {
-    override suspend fun getBudget(id: Int, forceRefresh: Boolean): Budget {
-        return withContext(Dispatchers.IO) {
-            val budgetDb = localDataSource.getBudget(id)
-            return@withContext if (!forceRefresh && budgetDb != null) {
-                budgetDb.toEntity()
+    override suspend fun getBudget(id: Int, fromLocal: Boolean): Budget? {
+        try {
+            if (fromLocal || !networkChecker.isNetworkAvailable()) {
+                return localDataSource.getBudget(id)?.toEntity()
             } else {
-                try {
-                    val budgetResponse = remoteDataSource.getBudget(id)
-                    localDataSource.createBudget(budgetResponse.toDb())
-                    budgetResponse.toEntity()
-                } catch (e: Exception) {
-                    budgetDb?.toEntity() ?: throw e
-                }
+                val response = remoteDataSource.getBudget(id)
+                localDataSource.createBudget(response.toDb())
+                return response.toEntity()
             }
+        } catch (e: Exception) {
+            throw e
         }
     }
 
-    override suspend fun getBudgets(forceRefresh: Boolean): List<Budget> {
-        throw NotImplementedError()
-    }
-
-    override suspend fun createBudget(budget: Budget) {
-        withContext(Dispatchers.IO) {
-            localDataSource.createBudget(budget.toDb())
-            try {
-                remoteDataSource.createBudget(budget.toPayload())
-            } catch (e: Exception) {
-                localDataSource.deleteBudget(budget.id)
+    override suspend fun getBudgets(params: BudgetParams, fromLocal: Boolean): List<Budget> {
+        try {
+            if (fromLocal || !networkChecker.isNetworkAvailable()) {
+                return localDataSource.getBudgets(params.toQuery()).map { it.toEntity() }
+            } else {
+                val response = remoteDataSource.getBudgets(params.toQuery())
+                localDataSource.createBudgets(response.map { it.toDb() })
+                return response.map { it.toEntity() }
             }
+        } catch (e: Exception) {
+            throw e
         }
     }
 
-    override suspend fun updateBudget(budget: Budget) {
-        withContext(Dispatchers.IO) {
-            val previousBudget = localDataSource.getBudget(budget.id)
-            localDataSource.updateBudget(budget.toDb())
-            try {
-                remoteDataSource.updateBudget(budget.toPayload())
-            } catch (e: Exception) {
-                localDataSource.updateBudget(previousBudget!!)
+    override suspend fun createBudget(budget: Budget, fromLocal: Boolean): Budget {
+        try {
+            if (fromLocal || !networkChecker.isNetworkAvailable()) {
+                localDataSource.createBudget(budget.toDb(), fromLocal = true)
+                return budget
+            } else {
+                val response = remoteDataSource.createBudget(budget.toPayload())
+                localDataSource.createBudget(response.toDb())
+                return response.toEntity()
             }
+        } catch (e: Exception) {
+            throw e
         }
     }
 
-    override suspend fun deleteBudget(id: Int) {
-        withContext(Dispatchers.IO) {
-            val budget = localDataSource.getBudget(id)
-            localDataSource.deleteBudget(id)
-            try {
+    override suspend fun updateBudget(budget: Budget, fromLocal: Boolean): Budget {
+        try {
+            if (fromLocal || !networkChecker.isNetworkAvailable()) {
+                localDataSource.updateBudget(budget.toDb(), fromLocal = true)
+                return budget
+            } else {
+                val response = remoteDataSource.updateBudget(budget.toPayload())
+                localDataSource.updateBudget(response.toDb())
+                return response.toEntity()
+            }
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun deleteBudget(id: Int, fromLocal: Boolean): Boolean {
+        try {
+            if (fromLocal || !networkChecker.isNetworkAvailable()) {
+                localDataSource.deleteBudget(id, flagOnly = true)
+                return true
+            } else {
                 remoteDataSource.deleteBudget(id)
-            } catch (e: Exception) {
-                localDataSource.createBudget(budget!!)
+                localDataSource.deleteBudget(id)
+                return true
             }
+        } catch (e: Exception) {
+            throw e
         }
     }
 }

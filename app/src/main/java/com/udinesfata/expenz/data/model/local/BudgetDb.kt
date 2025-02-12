@@ -19,4 +19,6 @@ data class BudgetDb(
     val walletId: Int,
     @ColumnInfo(name = "is_synced")
     val isSynced: Boolean,
+    @ColumnInfo(name = "sync_operation")
+    val syncOperation: String? = null, // "create", "update", "delete"
 )

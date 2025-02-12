@@ -12,6 +12,9 @@ interface WalletDao {
     @Query("SELECT * FROM wallets WHERE id = :id")
     suspend fun getWallet(id: Int): WalletDb?
 
+    @Query("SELECT * FROM wallets")
+    suspend fun getWallets(): List<WalletDb>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createWallet(wallet: WalletDb)
 

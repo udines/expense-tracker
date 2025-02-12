@@ -7,6 +7,6 @@ class GetBalanceByWalletUseCase(
 ) {
     suspend operator fun invoke(walletId: Int): Double {
         val wallet = walletRepositoryImpl.getWallet(walletId)
-        return wallet.balance
+        return wallet?.balance ?: 0.0
     }
 }
