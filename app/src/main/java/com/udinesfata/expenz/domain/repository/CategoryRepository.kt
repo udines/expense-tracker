@@ -8,5 +8,5 @@ interface CategoryRepository {
     suspend fun getCategories(params: CategoryParams, fromLocal: Boolean = false): List<Category>
     suspend fun createCategory(category: Category, fromLocal: Boolean = false): Category
     suspend fun updateCategory(category: Category, fromLocal: Boolean = false): Category
-    suspend fun deleteCategory(id: Int, fromLocal: Boolean = false): Boolean
+    suspend fun deleteCategory(id: Int, fromLocal: Boolean = false): Int?
 }

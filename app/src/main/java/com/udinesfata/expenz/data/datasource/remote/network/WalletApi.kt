@@ -1,28 +1,35 @@
 package com.udinesfata.expenz.data.datasource.remote.network
 
 import com.udinesfata.expenz.data.model.payload.WalletPayload
+import com.udinesfata.expenz.data.model.query.WalletQuery
 import com.udinesfata.expenz.data.model.remote.WalletResponse
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface WalletApi {
     @GET("wallets/{id}")
-    fun getWallet(@Path("id") id: Int): Call<WalletResponse>
+    suspend fun getWallet(@Path("id") id: Int): Response<WalletResponse>
 
     @GET("wallets")
-    fun getWallets(): Call<List<WalletResponse>>
+    suspend fun getWallets(
+        @Query("query") query: WalletQuery
+    ): Response<List<WalletResponse>>
 
     @POST("wallets")
-    fun createWallet(@Body wallet: WalletPayload): Call<WalletResponse>
+    suspend fun createWallet(@Body wallet: WalletPayload): Response<WalletResponse>
 
     @PUT("wallets/{id}")
-    fun updateWallet(@Path("id") id: Int, @Body wallet: WalletPayload): Call<WalletResponse>
+    suspend fun updateWallet(
+        @Path("id") id: Int,
+        @Body wallet: WalletPayload
+    ): Response<WalletResponse>
 
     @DELETE("wallets/{id}")
-    fun deleteWallet(@Path("id") id: Int): Call<Int>
+    suspend fun deleteWallet(@Path("id") id: Int): Response<Int>
 }

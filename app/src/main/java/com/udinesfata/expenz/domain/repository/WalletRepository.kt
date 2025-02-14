@@ -8,5 +8,5 @@ interface WalletRepository {
     suspend fun getWallets(params: WalletParams, fromLocal: Boolean = false): List<Wallet>
     suspend fun createWallet(wallet: Wallet, fromLocal: Boolean = false): Wallet
     suspend fun updateWallet(wallet: Wallet, fromLocal: Boolean = false): Wallet
-    suspend fun deleteWallet(id: Int, fromLocal: Boolean = false): Boolean
+    suspend fun deleteWallet(id: Int, fromLocal: Boolean = false): Int?
 }

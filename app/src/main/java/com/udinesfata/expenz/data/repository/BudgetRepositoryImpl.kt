@@ -22,8 +22,10 @@ class BudgetRepositoryImpl(
                 return localDataSource.getBudget(id)?.toEntity()
             } else {
                 val response = remoteDataSource.getBudget(id)
-                localDataSource.createBudget(response.toDb())
-                return response.toEntity()
+                response?.let {
+                    localDataSource.createBudget(it.toDb())
+                }
+                return response?.toEntity()
             }
         } catch (e: Exception) {
             throw e
@@ -51,8 +53,10 @@ class BudgetRepositoryImpl(
                 return budget
             } else {
                 val response = remoteDataSource.createBudget(budget.toPayload())
-                localDataSource.createBudget(response.toDb())
-                return response.toEntity()
+                response?.let {
+                    localDataSource.createBudget(it.toDb())
+                }
+                return response?.toEntity() ?: budget
             }
         } catch (e: Exception) {
             throw e
@@ -66,23 +70,27 @@ class BudgetRepositoryImpl(
                 return budget
             } else {
                 val response = remoteDataSource.updateBudget(budget.toPayload())
-                localDataSource.updateBudget(response.toDb())
-                return response.toEntity()
+                response?.let {
+                    localDataSource.updateBudget(it.toDb())
+                }
+                return response?.toEntity() ?: budget
             }
         } catch (e: Exception) {
             throw e
         }
     }
 
-    override suspend fun deleteBudget(id: Int, fromLocal: Boolean): Boolean {
+    override suspend fun deleteBudget(id: Int, fromLocal: Boolean): Int? {
         try {
             if (fromLocal || !networkChecker.isNetworkAvailable()) {
                 localDataSource.deleteBudget(id, flagOnly = true)
-                return true
+                return id
             } else {
-                remoteDataSource.deleteBudget(id)
-                localDataSource.deleteBudget(id)
-                return true
+                val response = remoteDataSource.deleteBudget(id)
+                response?.let {
+                    localDataSource.deleteBudget(it)
+                }
+                return response
             }
         } catch (e: Exception) {
             throw e

@@ -17,6 +17,7 @@ import com.udinesfata.expenz.data.datasource.remote.TransactionRemoteDataSource
 import com.udinesfata.expenz.data.datasource.remote.WalletRemoteDataSource
 import com.udinesfata.expenz.data.datasource.remote.network.RetrofitClient
 import com.udinesfata.expenz.data.utils.network.NetworkChecker
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -28,8 +29,7 @@ val dataModule = module {
     }
 
     /// Utils
-    single<Context> { get<Context>().applicationContext }
-    single { NetworkChecker(get()) }
+    single { NetworkChecker(androidContext()) }
 
     /// DAOs
     single<BudgetDao> { get<AppDatabase>().budgetDao() }

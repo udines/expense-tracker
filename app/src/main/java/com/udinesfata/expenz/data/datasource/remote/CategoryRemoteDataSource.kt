@@ -8,19 +8,48 @@ import com.udinesfata.expenz.data.model.remote.CategoryResponse
 class CategoryRemoteDataSource(
     private val categoryApi: CategoryApi
 ) {
-    fun getCategory(id: Int, forceRefresh: Boolean = true): CategoryResponse =
-        categoryApi.getCategory(id).execute().body() ?: throw Exception("Null result")
+    suspend fun getCategory(id: Int): CategoryResponse? {
+        val response = categoryApi.getCategory(id)
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 
-    fun getCategories(categoryQuery: CategoryQuery): List<CategoryResponse> =
-        categoryApi.getCategories().execute().body() ?: throw Exception("Null result")
+    suspend fun getCategories(categoryQuery: CategoryQuery): List<CategoryResponse> {
+        val response = categoryApi.getCategories(categoryQuery)
+        if (response.isSuccessful) {
+            return response.body() ?: listOf()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 
-    fun createCategory(category: CategoryPayload): CategoryResponse =
-        categoryApi.createCategory(category).execute().body() ?: throw Exception("Null result")
+    suspend fun createCategory(category: CategoryPayload): CategoryResponse? {
+        val response = categoryApi.createCategory(category)
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 
-    fun updateCategory(category: CategoryPayload): CategoryResponse =
-        categoryApi.updateCategory(category.id, category).execute().body()
-            ?: throw Exception("Null result")
+    suspend fun updateCategory(category: CategoryPayload): CategoryResponse? {
+        val response = categoryApi.updateCategory(category.id, category)
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 
-    fun deleteCategory(id: Int): Int =
-        categoryApi.deleteCategory(id).execute().body() ?: throw Exception("Null result")
+    suspend fun deleteCategory(id: Int): Int? {
+        val response = categoryApi.deleteCategory(id)
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 }

@@ -22,8 +22,10 @@ class TransactionRepositoryImpl(
                 return localDataSource.getTransaction(id)?.toEntity()
             } else {
                 val response = remoteDataSource.getTransaction(id)
-                localDataSource.createTransaction(response.toDb())
-                return response.toEntity()
+                response?.let {
+                    localDataSource.createTransaction(it.toDb())
+                }
+                return response?.toEntity()
             }
         } catch (e: Exception) {
             throw e
@@ -57,8 +59,10 @@ class TransactionRepositoryImpl(
                 return transaction
             } else {
                 val response = remoteDataSource.createTransaction(transaction.toPayload())
-                localDataSource.createTransaction(response.toDb())
-                return response.toEntity()
+                response?.let {
+                    localDataSource.createTransaction(it.toDb())
+                }
+                return response?.toEntity() ?: transaction
             }
         } catch (e: Exception) {
             throw e
@@ -75,23 +79,27 @@ class TransactionRepositoryImpl(
                 return transaction
             } else {
                 val response = remoteDataSource.updateTransaction(transaction.toPayload())
-                localDataSource.updateTransaction(response.toDb())
-                return response.toEntity()
+                response?.let {
+                    localDataSource.updateTransaction(it.toDb())
+                }
+                return response?.toEntity() ?: transaction
             }
         } catch (e: Exception) {
             throw e
         }
     }
 
-    override suspend fun deleteTransaction(id: Int, fromLocal: Boolean): Boolean {
+    override suspend fun deleteTransaction(id: Int, fromLocal: Boolean): Int? {
         try {
             if (fromLocal || !networkChecker.isNetworkAvailable()) {
                 localDataSource.deleteTransaction(id, flagOnly = true)
-                return true
+                return id
             } else {
-                remoteDataSource.deleteTransaction(id)
-                localDataSource.deleteTransaction(id)
-                return true
+                val response = remoteDataSource.deleteTransaction(id)
+                response?.let {
+                    localDataSource.deleteTransaction(it)
+                }
+                return response ?: id
             }
         } catch (e: Exception) {
             throw e

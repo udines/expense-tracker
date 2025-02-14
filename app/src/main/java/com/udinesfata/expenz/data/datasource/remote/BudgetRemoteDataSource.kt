@@ -8,18 +8,48 @@ import com.udinesfata.expenz.data.model.remote.BudgetResponse
 class BudgetRemoteDataSource(
     private val budgetApi: BudgetApi
 ) {
-    fun getBudget(id: Int): BudgetResponse =
-        budgetApi.getBudget(id).execute().body() ?: throw Exception("Null result")
+    suspend fun getBudget(id: Int): BudgetResponse? {
+        val response = budgetApi.getBudget(id)
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 
-    fun getBudgets(query: BudgetQuery): List<BudgetResponse> =
-        budgetApi.getBudgets().execute().body() ?: throw Exception("Null result")
+    suspend fun getBudgets(query: BudgetQuery): List<BudgetResponse> {
+        val response = budgetApi.getBudgets(query)
+        if (response.isSuccessful) {
+            return response.body() ?: listOf()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 
-    fun createBudget(budget: BudgetPayload): BudgetResponse =
-        budgetApi.createBudget(budget).execute().body() ?: throw Exception("Null result")
+    suspend fun createBudget(budget: BudgetPayload): BudgetResponse? {
+        val response = budgetApi.createBudget(budget)
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 
-    fun updateBudget(budget: BudgetPayload): BudgetResponse =
-        budgetApi.updateBudget(budget.id, budget).execute().body() ?: throw Exception("Null result")
+    suspend fun updateBudget(budget: BudgetPayload): BudgetResponse? {
+        val response = budgetApi.updateBudget(budget.id, budget)
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 
-    fun deleteBudget(id: Int): Int =
-        budgetApi.deleteBudget(id).execute().body() ?: throw Exception("Null result")
+    suspend fun deleteBudget(id: Int): Int? {
+        val response = budgetApi.deleteBudget(id)
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 }

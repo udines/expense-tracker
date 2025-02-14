@@ -22,8 +22,10 @@ class CategoryRepositoryImpl(
                 return localDataSource.getCategory(id)?.toEntity()
             } else {
                 val response = remoteDataSource.getCategory(id)
-                localDataSource.createCategory(response.toDb())
-                return response.toEntity()
+                response?.let {
+                    localDataSource.createCategory(it.toDb())
+                }
+                return response?.toEntity()
             }
         } catch (e: Exception) {
             throw e
@@ -51,8 +53,10 @@ class CategoryRepositoryImpl(
                 return category
             } else {
                 val response = remoteDataSource.createCategory(category.toPayload())
-                localDataSource.createCategory(response.toDb())
-                return response.toEntity()
+                response?.let {
+                    localDataSource.createCategory(it.toDb())
+                }
+                return response?.toEntity() ?: category
             }
         } catch (e: Exception) {
             throw e
@@ -66,23 +70,27 @@ class CategoryRepositoryImpl(
                 return category
             } else {
                 val response = remoteDataSource.updateCategory(category.toPayload())
-                localDataSource.updateCategory(response.toDb())
-                return response.toEntity()
+                response?.let {
+                    localDataSource.updateCategory(it.toDb())
+                }
+                return response?.toEntity() ?: category
             }
         } catch (e: Exception) {
             throw e
         }
     }
 
-    override suspend fun deleteCategory(id: Int, fromLocal: Boolean): Boolean {
+    override suspend fun deleteCategory(id: Int, fromLocal: Boolean): Int {
         try {
             if (fromLocal || !networkChecker.isNetworkAvailable()) {
                 localDataSource.deleteCategory(id, flagOnly = true)
-                return true
+                return id
             } else {
-                remoteDataSource.deleteCategory(id)
-                localDataSource.deleteCategory(id)
-                return true
+                val response = remoteDataSource.deleteCategory(id)
+                response?.let {
+                    localDataSource.deleteCategory(it)
+                }
+                return response ?: id
             }
         } catch (e: Exception) {
             throw e
