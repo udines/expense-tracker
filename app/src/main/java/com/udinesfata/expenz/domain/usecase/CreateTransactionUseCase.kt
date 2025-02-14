@@ -6,7 +6,7 @@ import com.udinesfata.expenz.domain.repository.TransactionRepository
 class CreateTransactionUseCase(
     private val transactionRepositoryImpl: TransactionRepository
 ) {
-    suspend operator fun invoke(transaction: Transaction) {
-        transactionRepositoryImpl.createTransaction(transaction)
+    suspend operator fun invoke(transaction: Transaction): Transaction {
+        return transactionRepositoryImpl.createTransaction(transaction)
     }
 }

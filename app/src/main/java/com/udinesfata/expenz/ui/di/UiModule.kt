@@ -1,0 +1,18 @@
+package com.udinesfata.expenz.ui.di
+
+import com.udinesfata.expenz.domain.usecase.CreateTransactionUseCase
+import com.udinesfata.expenz.domain.usecase.GetBalanceByWalletUseCase
+import com.udinesfata.expenz.domain.usecase.GetTransactionsByWalletUseCase
+import com.udinesfata.expenz.ui.home.HomeViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
+
+val uiModule = module {
+    viewModel {
+        HomeViewModel(
+            get<GetBalanceByWalletUseCase>(),
+            get<GetTransactionsByWalletUseCase>(),
+            get<CreateTransactionUseCase>()
+        )
+    }
+}
