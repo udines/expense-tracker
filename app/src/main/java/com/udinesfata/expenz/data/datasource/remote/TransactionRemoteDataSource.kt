@@ -8,20 +8,48 @@ import com.udinesfata.expenz.data.model.remote.TransactionResponse
 class TransactionRemoteDataSource(
     private val transactionApi: TransactionApi
 ) {
-    fun getTransaction(id: Int, forceRefresh: Boolean = true): TransactionResponse =
-        transactionApi.getTransaction(id).execute().body() ?: throw Exception("Null result")
+    suspend fun getTransaction(id: Int): TransactionResponse? {
+        val response = transactionApi.getTransaction(id)
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 
-    fun getTransactions(query: TransactionQuery): List<TransactionResponse> =
-        transactionApi.getTransactions().execute().body() ?: throw Exception("Null result")
+    suspend fun getTransactions(query: TransactionQuery): List<TransactionResponse> {
+        val response = transactionApi.getTransactions(query)
+        if (response.isSuccessful) {
+            return response.body() ?: listOf()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 
-    fun createTransaction(transaction: TransactionPayload): TransactionResponse =
-        transactionApi.createTransaction(transaction).execute().body()
-            ?: throw Exception("Null result")
+    suspend fun createTransaction(transaction: TransactionPayload): TransactionResponse? {
+        val response = transactionApi.createTransaction(transaction)
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 
-    fun updateTransaction(transaction: TransactionPayload): TransactionResponse =
-        transactionApi.updateTransaction(transaction.id, transaction).execute().body()
-            ?: throw Exception("Null result")
+    suspend fun updateTransaction(transaction: TransactionPayload): TransactionResponse? {
+        val response = transactionApi.updateTransaction(transaction.id, transaction)
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 
-    fun deleteTransaction(id: Int): Int =
-        transactionApi.deleteTransaction(id).execute().body() ?: throw Exception("Null result")
+    suspend fun deleteTransaction(id: Int): Int? {
+        val response = transactionApi.deleteTransaction(id)
+        if (response.isSuccessful) {
+            return response.body()
+        } else {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
 }

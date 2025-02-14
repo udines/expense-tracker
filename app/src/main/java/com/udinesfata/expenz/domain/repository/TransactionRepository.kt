@@ -12,5 +12,5 @@ interface TransactionRepository {
 
     suspend fun createTransaction(transaction: Transaction, fromLocal: Boolean = false): Transaction
     suspend fun updateTransaction(transaction: Transaction, fromLocal: Boolean = false): Transaction
-    suspend fun deleteTransaction(id: Int, fromLocal: Boolean = false): Boolean
+    suspend fun deleteTransaction(id: Int, fromLocal: Boolean = false): Int?
 }

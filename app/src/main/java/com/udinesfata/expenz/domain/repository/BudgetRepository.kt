@@ -8,5 +8,5 @@ interface BudgetRepository {
     suspend fun getBudgets(params: BudgetParams, fromLocal: Boolean = false): List<Budget>
     suspend fun createBudget(budget: Budget, fromLocal: Boolean = false): Budget
     suspend fun updateBudget(budget: Budget, fromLocal: Boolean = false): Budget
-    suspend fun deleteBudget(id: Int, fromLocal: Boolean = false): Boolean?
+    suspend fun deleteBudget(id: Int, fromLocal: Boolean = false): Int?
 }

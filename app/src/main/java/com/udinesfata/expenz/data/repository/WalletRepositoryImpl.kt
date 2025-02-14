@@ -22,8 +22,10 @@ class WalletRepositoryImpl(
                 return localDataSource.getWallet(id)?.toEntity()
             } else {
                 val response = remoteDataSource.getWallet(id)
-                localDataSource.createWallet(response.toDb())
-                return response.toEntity()
+                response?.let {
+                    localDataSource.createWallet(it.toDb())
+                }
+                return response?.toEntity()
             }
         } catch (e: Exception) {
             throw e
@@ -51,8 +53,10 @@ class WalletRepositoryImpl(
                 return wallet
             } else {
                 val response = remoteDataSource.createWallet(wallet.toPayload())
-                localDataSource.createWallet(response.toDb())
-                return response.toEntity()
+                response?.let {
+                    localDataSource.createWallet(it.toDb())
+                }
+                return response?.toEntity() ?: wallet
             }
         } catch (e: Exception) {
             throw e
@@ -66,23 +70,27 @@ class WalletRepositoryImpl(
                 return wallet
             } else {
                 val response = remoteDataSource.updateWallet(wallet.toPayload())
-                localDataSource.updateWallet(response.toDb())
-                return response.toEntity()
+                response?.let {
+                    localDataSource.updateWallet(it.toDb())
+                }
+                return response?.toEntity() ?: wallet
             }
         } catch (e: Exception) {
             throw e
         }
     }
 
-    override suspend fun deleteWallet(id: Int, fromLocal: Boolean): Boolean {
+    override suspend fun deleteWallet(id: Int, fromLocal: Boolean): Int? {
         try {
             if (fromLocal || !networkChecker.isNetworkAvailable()) {
                 localDataSource.deleteWallet(id, flagOnly = true)
-                return true
+                return id
             } else {
-                remoteDataSource.deleteWallet(id)
-                localDataSource.deleteWallet(id)
-                return true
+                val response = remoteDataSource.deleteWallet(id)
+                response?.let {
+                    localDataSource.deleteWallet(it)
+                }
+                return response ?: id
             }
         } catch (e: Exception) {
             throw e
