@@ -6,7 +6,6 @@ import com.udinesfata.expenz.domain.entity.Transaction
 import com.udinesfata.expenz.domain.usecase.CreateTransactionUseCase
 import com.udinesfata.expenz.domain.usecase.GetBalanceByWalletUseCase
 import com.udinesfata.expenz.domain.usecase.GetTransactionsByWalletUseCase
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,15 +44,17 @@ class HomeViewModel(
 
     fun getBalance(walletId: Int) {
         scope.launch(handler) {
-            val balance = getBalanceByWalletUseCase(walletId)
-            _uiState.value = _uiState.value.copy(balance = balance)
+            getBalanceByWalletUseCase(walletId).collect { balance ->
+                _uiState.value = _uiState.value.copy(balance = balance)
+            }
         }
     }
 
     fun getTransactions(walletId: Int) {
         scope.launch(handler) {
-            val transactions = getTransactionsByWalletUseCase(walletId)
-            _uiState.value = _uiState.value.copy(transactions = transactions)
+            getTransactionsByWalletUseCase(walletId).collect { transactions ->
+                _uiState.value = _uiState.value.copy(transactions = transactions)
+            }
         }
     }
 }
