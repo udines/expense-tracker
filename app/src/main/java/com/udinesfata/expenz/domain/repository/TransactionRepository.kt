@@ -1,7 +1,7 @@
 package com.udinesfata.expenz.domain.repository
 
 import com.udinesfata.expenz.domain.entity.Transaction
-import com.udinesfata.expenz.domain.params.TransactionParams
+import com.udinesfata.expenz.domain.entity.params.TransactionParams
 
 interface TransactionRepository {
     suspend fun getTransaction(id: Int, fromLocal: Boolean = false): Transaction?

@@ -5,7 +5,7 @@ import com.udinesfata.expenz.data.model.payload.CategoryPayload
 import com.udinesfata.expenz.data.model.query.CategoryQuery
 import com.udinesfata.expenz.data.model.remote.CategoryResponse
 import com.udinesfata.expenz.domain.entity.Category
-import com.udinesfata.expenz.domain.params.CategoryParams
+import com.udinesfata.expenz.domain.entity.params.CategoryParams
 
 fun CategoryResponse.toEntity(): Category {
     return Category(

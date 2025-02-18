@@ -5,7 +5,7 @@ import com.udinesfata.expenz.data.model.payload.WalletPayload
 import com.udinesfata.expenz.data.model.query.WalletQuery
 import com.udinesfata.expenz.data.model.remote.WalletResponse
 import com.udinesfata.expenz.domain.entity.Wallet
-import com.udinesfata.expenz.domain.params.WalletParams
+import com.udinesfata.expenz.domain.entity.params.WalletParams
 
 fun WalletResponse.toEntity(): Wallet {
     return Wallet(

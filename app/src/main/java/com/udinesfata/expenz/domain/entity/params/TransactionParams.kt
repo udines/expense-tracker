@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.domain.params
+package com.udinesfata.expenz.domain.entity.params
 
 const val ORDER_ASC = "ASC"
 const val ORDER_DESC = "DESC"

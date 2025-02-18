@@ -8,7 +8,7 @@ import com.udinesfata.expenz.data.utils.mapper.toPayload
 import com.udinesfata.expenz.data.utils.mapper.toQuery
 import com.udinesfata.expenz.data.utils.network.NetworkChecker
 import com.udinesfata.expenz.domain.entity.Category
-import com.udinesfata.expenz.domain.params.CategoryParams
+import com.udinesfata.expenz.domain.entity.params.CategoryParams
 import com.udinesfata.expenz.domain.repository.CategoryRepository
 
 class CategoryRepositoryImpl(

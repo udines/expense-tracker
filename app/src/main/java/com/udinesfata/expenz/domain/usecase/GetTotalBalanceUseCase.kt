@@ -1,6 +1,6 @@
 package com.udinesfata.expenz.domain.usecase
 
-import com.udinesfata.expenz.domain.params.WalletParams
+import com.udinesfata.expenz.domain.entity.params.WalletParams
 import com.udinesfata.expenz.domain.repository.WalletRepository
 
 class GetTotalBalanceUseCase(

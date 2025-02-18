@@ -8,7 +8,7 @@ import com.udinesfata.expenz.data.utils.mapper.toPayload
 import com.udinesfata.expenz.data.utils.mapper.toQuery
 import com.udinesfata.expenz.data.utils.network.NetworkChecker
 import com.udinesfata.expenz.domain.entity.Budget
-import com.udinesfata.expenz.domain.params.BudgetParams
+import com.udinesfata.expenz.domain.entity.params.BudgetParams
 import com.udinesfata.expenz.domain.repository.BudgetRepository
 
 class BudgetRepositoryImpl(

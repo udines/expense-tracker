@@ -8,7 +8,7 @@ import com.udinesfata.expenz.data.utils.mapper.toPayload
 import com.udinesfata.expenz.data.utils.mapper.toQuery
 import com.udinesfata.expenz.data.utils.network.NetworkChecker
 import com.udinesfata.expenz.domain.entity.Transaction
-import com.udinesfata.expenz.domain.params.TransactionParams
+import com.udinesfata.expenz.domain.entity.params.TransactionParams
 import com.udinesfata.expenz.domain.repository.TransactionRepository
 
 class TransactionRepositoryImpl(

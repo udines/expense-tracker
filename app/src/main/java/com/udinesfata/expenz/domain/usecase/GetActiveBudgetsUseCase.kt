@@ -1,7 +1,7 @@
 package com.udinesfata.expenz.domain.usecase
 
 import com.udinesfata.expenz.domain.entity.Budget
-import com.udinesfata.expenz.domain.params.BudgetParams
+import com.udinesfata.expenz.domain.entity.params.BudgetParams
 import com.udinesfata.expenz.domain.repository.BudgetRepository
 
 class GetActiveBudgetsUseCase(
