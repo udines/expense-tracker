@@ -3,7 +3,7 @@ package com.udinesfata.expenz.domain.usecase
 import com.udinesfata.expenz.domain.entity.Report
 import com.udinesfata.expenz.domain.entity.isExpense
 import com.udinesfata.expenz.domain.entity.isIncome
-import com.udinesfata.expenz.domain.params.TransactionParams
+import com.udinesfata.expenz.domain.entity.params.TransactionParams
 import com.udinesfata.expenz.domain.repository.CategoryRepository
 import com.udinesfata.expenz.domain.repository.TransactionRepository
 import com.udinesfata.expenz.domain.repository.WalletRepository

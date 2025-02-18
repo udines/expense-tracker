@@ -46,18 +46,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
         Text(text = "Balance: ${uiState.balance}")
         Text(text = "Transactions: ${uiState.transactions.size}")
         Button(onClick = {
-            viewModel.createTransaction(
-                Transaction(
-                    id = 1,
-                    amount = 1000.0,
-                    date = Instant.now().toString(),
-                    notes = "My first transaction",
-                    categoryId = 1,
-                    walletId = 1,
-                    type = "expense",
-                    currency = "USD"
-                )
-            )
+
         }) {
             Text(text = "Add Transaction")
         }

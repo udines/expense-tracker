@@ -1,7 +1,7 @@
 package com.udinesfata.expenz.domain.usecase
 
 import com.udinesfata.expenz.domain.entity.Category
-import com.udinesfata.expenz.domain.params.CategoryParams
+import com.udinesfata.expenz.domain.entity.params.CategoryParams
 import com.udinesfata.expenz.domain.repository.CategoryRepository
 
 class GetCategoriesUseCase(

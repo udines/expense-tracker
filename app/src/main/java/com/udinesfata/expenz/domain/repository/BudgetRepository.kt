@@ -1,7 +1,7 @@
 package com.udinesfata.expenz.domain.repository
 
 import com.udinesfata.expenz.domain.entity.Budget
-import com.udinesfata.expenz.domain.params.BudgetParams
+import com.udinesfata.expenz.domain.entity.params.BudgetParams
 
 interface BudgetRepository {
     suspend fun getBudget(id: Int, fromLocal: Boolean = false): Budget?

@@ -5,7 +5,7 @@ import com.udinesfata.expenz.data.model.payload.TransactionPayload
 import com.udinesfata.expenz.data.model.query.TransactionQuery
 import com.udinesfata.expenz.data.model.remote.TransactionResponse
 import com.udinesfata.expenz.domain.entity.Transaction
-import com.udinesfata.expenz.domain.params.TransactionParams
+import com.udinesfata.expenz.domain.entity.params.TransactionParams
 
 fun TransactionResponse.toEntity(): Transaction {
     return Transaction(

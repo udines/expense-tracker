@@ -5,7 +5,7 @@ import com.udinesfata.expenz.data.model.payload.BudgetPayload
 import com.udinesfata.expenz.data.model.query.BudgetQuery
 import com.udinesfata.expenz.data.model.remote.BudgetResponse
 import com.udinesfata.expenz.domain.entity.Budget
-import com.udinesfata.expenz.domain.params.BudgetParams
+import com.udinesfata.expenz.domain.entity.params.BudgetParams
 
 fun BudgetResponse.toEntity(): Budget {
     return Budget(

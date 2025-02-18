@@ -1,13 +1,20 @@
 package com.udinesfata.expenz.domain.usecase
 
 import com.udinesfata.expenz.domain.entity.Wallet
-import com.udinesfata.expenz.domain.params.WalletParams
+import com.udinesfata.expenz.domain.entity.params.WalletParams
 import com.udinesfata.expenz.domain.repository.WalletRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class GetAllWalletsUseCase(
     private val walletRepositoryImpl: WalletRepository
 ) {
-    suspend operator fun invoke(): List<Wallet> {
-        return walletRepositoryImpl.getWallets(WalletParams())
+    operator fun invoke(): Flow<List<Wallet>> {
+        return flow {
+            val localWallets = walletRepositoryImpl.getWallets(WalletParams(), true)
+            emit(localWallets)
+            val remoteWallets = walletRepositoryImpl.getWallets(WalletParams(), false)
+            emit(remoteWallets)
+        }
     }
 }

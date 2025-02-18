@@ -8,7 +8,7 @@ import com.udinesfata.expenz.data.utils.mapper.toPayload
 import com.udinesfata.expenz.data.utils.mapper.toQuery
 import com.udinesfata.expenz.data.utils.network.NetworkChecker
 import com.udinesfata.expenz.domain.entity.Wallet
-import com.udinesfata.expenz.domain.params.WalletParams
+import com.udinesfata.expenz.domain.entity.params.WalletParams
 import com.udinesfata.expenz.domain.repository.WalletRepository
 
 class WalletRepositoryImpl(

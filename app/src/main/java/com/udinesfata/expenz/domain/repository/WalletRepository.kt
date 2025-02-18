@@ -1,7 +1,7 @@
 package com.udinesfata.expenz.domain.repository
 
 import com.udinesfata.expenz.domain.entity.Wallet
-import com.udinesfata.expenz.domain.params.WalletParams
+import com.udinesfata.expenz.domain.entity.params.WalletParams
 
 interface WalletRepository {
     suspend fun getWallet(id: Int, fromLocal: Boolean = false): Wallet?

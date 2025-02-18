@@ -4,6 +4,7 @@ import android.app.Application
 import com.udinesfata.expenz.data.di.dataModule
 import com.udinesfata.expenz.domain.di.domainModule
 import com.udinesfata.expenz.ui.di.uiModule
+import com.udinesfata.expenz.utils.di.utilsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -12,7 +13,7 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            modules(dataModule, domainModule, uiModule)
+            modules(dataModule, domainModule, uiModule, utilsModule)
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.udinesfata.expenz.domain.repository
 
 import com.udinesfata.expenz.domain.entity.Category
-import com.udinesfata.expenz.domain.params.CategoryParams
+import com.udinesfata.expenz.domain.entity.params.CategoryParams
 
 interface CategoryRepository {
     suspend fun getCategory(id: Int, fromLocal: Boolean = false): Category?
