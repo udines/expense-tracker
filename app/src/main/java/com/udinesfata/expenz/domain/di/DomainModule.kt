@@ -9,6 +9,7 @@ import com.udinesfata.expenz.domain.repository.CategoryRepository
 import com.udinesfata.expenz.domain.repository.TransactionRepository
 import com.udinesfata.expenz.domain.repository.WalletRepository
 import com.udinesfata.expenz.domain.usecase.CreateBudgetUseCase
+import com.udinesfata.expenz.domain.usecase.CreateCategoryUseCase
 import com.udinesfata.expenz.domain.usecase.CreateTransactionUseCase
 import com.udinesfata.expenz.domain.usecase.CreateWalletUseCase
 import com.udinesfata.expenz.domain.usecase.DeleteBudgetUseCase
@@ -82,4 +83,5 @@ val domainModule = module {
     single { UpdateBudgetUseCase(get()) }
     single { UpdateTransactionUseCase(get()) }
     single { UpdateWalletUseCase(get()) }
+    single { CreateCategoryUseCase(get()) }
 }
