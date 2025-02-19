@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".ui.wallet.AddWalletActivity">
         </activity>
+        <activity android:name=".ui.category.AddCategoryActivity">
+        </activity>
     </application>
 
 </manifest>
