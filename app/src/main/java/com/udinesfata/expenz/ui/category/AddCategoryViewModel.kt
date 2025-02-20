@@ -6,6 +6,7 @@ import com.udinesfata.expenz.domain.usecase.CreateCategoryUseCase
 import com.udinesfata.expenz.utils.ExceptionHandler
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -21,7 +22,6 @@ class AddCategoryViewModel(
 
     fun addCategory(name: String, type: String) {
         scope.launch {
-            _uiState.value = _uiState.value.copy(loading = true)
             val category = createCategoryUseCase(name, type)
             _uiState.value = _uiState.value.copy(category = category, loading = false)
         }
