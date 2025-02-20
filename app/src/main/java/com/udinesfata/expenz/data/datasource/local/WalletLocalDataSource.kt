@@ -15,7 +15,7 @@ class WalletLocalDataSource(
     }
 
     suspend fun getWallets(query: WalletQuery): List<WalletDb> {
-        return walletDao.getWallets()
+        return walletDao.getWallets(name = query.name)
     }
 
     suspend fun createWallet(wallet: WalletDb, fromLocal: Boolean = false) {

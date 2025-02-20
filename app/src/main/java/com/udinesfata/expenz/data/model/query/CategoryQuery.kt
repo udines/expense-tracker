@@ -1,4 +1,5 @@
 package com.udinesfata.expenz.data.model.query
 
-class CategoryQuery {
-}
+class CategoryQuery(
+    val name: String? = null
+)

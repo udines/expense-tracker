@@ -15,7 +15,8 @@ class CategoryLocalDataSource(
     }
 
     suspend fun getCategories(query: CategoryQuery): List<CategoryDb> {
-        return categoryDao.getCategories()
+        val result = categoryDao.getCategories(name = query.name)
+        return result
     }
 
     suspend fun createCategory(category: CategoryDb, fromLocal: Boolean = false) {

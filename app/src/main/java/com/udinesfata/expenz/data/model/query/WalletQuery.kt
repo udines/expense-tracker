@@ -1,4 +1,5 @@
 package com.udinesfata.expenz.data.model.query
 
-class WalletQuery {
-}
+data class WalletQuery(
+    val name: String? = null
+)
