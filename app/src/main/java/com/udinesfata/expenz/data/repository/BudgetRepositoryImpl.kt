@@ -10,6 +10,7 @@ import com.udinesfata.expenz.data.utils.network.NetworkChecker
 import com.udinesfata.expenz.domain.entity.Budget
 import com.udinesfata.expenz.domain.entity.params.BudgetParams
 import com.udinesfata.expenz.domain.repository.BudgetRepository
+import java.net.SocketTimeoutException
 
 class BudgetRepositoryImpl(
     private val localDataSource: BudgetLocalDataSource,
@@ -28,7 +29,14 @@ class BudgetRepositoryImpl(
                 return response?.toEntity()
             }
         } catch (e: Exception) {
-            throw e
+            when (e) {
+                is SocketTimeoutException -> {
+                    val budgetDb = localDataSource.getBudget(id)
+                    return budgetDb?.toEntity()
+                }
+
+                else -> throw e
+            }
         }
     }
 
@@ -42,7 +50,14 @@ class BudgetRepositoryImpl(
                 return response.map { it.toEntity() }
             }
         } catch (e: Exception) {
-            throw e
+            when (e) {
+                is SocketTimeoutException -> {
+                    val budgetsDb = localDataSource.getBudgets(params.toQuery())
+                    return budgetsDb.map { it.toEntity() }
+                }
+
+                else -> throw e
+            }
         }
     }
 
@@ -59,7 +74,14 @@ class BudgetRepositoryImpl(
                 return response?.toEntity() ?: budget
             }
         } catch (e: Exception) {
-            throw e
+            when (e) {
+                is SocketTimeoutException -> {
+                    localDataSource.createBudget(budget.toDb(), fromLocal = true)
+                    return budget
+                }
+
+                else -> throw e
+            }
         }
     }
 
@@ -76,7 +98,14 @@ class BudgetRepositoryImpl(
                 return response?.toEntity() ?: budget
             }
         } catch (e: Exception) {
-            throw e
+            when (e) {
+                is SocketTimeoutException -> {
+                    localDataSource.updateBudget(budget.toDb(), fromLocal = true)
+                    return budget
+                }
+
+                else -> throw e
+            }
         }
     }
 
@@ -93,7 +122,14 @@ class BudgetRepositoryImpl(
                 return response
             }
         } catch (e: Exception) {
-            throw e
+            when (e) {
+                is SocketTimeoutException -> {
+                    localDataSource.deleteBudget(id, flagOnly = true)
+                    return id
+                }
+
+                else -> throw e
+            }
         }
     }
 }
