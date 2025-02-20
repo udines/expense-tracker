@@ -9,11 +9,12 @@ import com.udinesfata.expenz.data.model.local.CategoryDb
 
 @Dao
 interface CategoryDao {
-    @Query("SELECT * FROM categories WHERE id = :id")
+    @Query("SELECT * FROM categories WHERE id = :id LIMIT 1")
     suspend fun getCategory(id: Int): CategoryDb?
 
-    @Query("SELECT * FROM categories")
-    suspend fun getCategories(): List<CategoryDb>
+    @Query("SELECT * FROM categories WHERE (:name IS NULL OR name = :name) " +
+            "AND (sync_operation IS NULL OR sync_operation != 'delete')")
+    suspend fun getCategories(name: String?): List<CategoryDb>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createCategory(category: CategoryDb)

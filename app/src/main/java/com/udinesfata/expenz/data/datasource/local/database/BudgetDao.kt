@@ -7,12 +7,12 @@ import androidx.room.Query
 import androidx.room.Update
 import com.udinesfata.expenz.data.model.local.BudgetDb
 
-@Dao
+@Dao 
 interface BudgetDao {
     @Query("SELECT * FROM budgets WHERE id = :id")
     suspend fun getBudget(id: Int): BudgetDb?
 
-    @Query("SELECT * FROM budgets")
+    @Query("SELECT * FROM budgets WHERE (sync_operation IS NULL OR sync_operation != 'delete') ")
     suspend fun getBudgets(): List<BudgetDb>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
