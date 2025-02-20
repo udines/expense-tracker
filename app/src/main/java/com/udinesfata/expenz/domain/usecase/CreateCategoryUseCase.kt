@@ -15,7 +15,8 @@ class CreateCategoryUseCase(
             throw Exception("Category with name $name already exists")
         }
         val categoryRequest = CategoryRequest(name, type)
-        return categoryRepository.createCategory(categoryRequest.toEntity())
+        val result = categoryRepository.createCategory(categoryRequest.toEntity())
+        return result
     }
 
 }
