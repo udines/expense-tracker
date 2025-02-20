@@ -6,6 +6,7 @@ import com.udinesfata.expenz.data.model.query.TransactionQuery
 import com.udinesfata.expenz.data.model.remote.TransactionResponse
 import com.udinesfata.expenz.domain.entity.Transaction
 import com.udinesfata.expenz.domain.entity.params.TransactionParams
+import com.udinesfata.expenz.domain.entity.request.TransactionRequest
 
 fun TransactionResponse.toEntity(): Transaction {
     return Transaction(
@@ -76,4 +77,17 @@ fun TransactionDb.toEntity(): Transaction {
 
 fun TransactionParams.toQuery(): TransactionQuery {
     return TransactionQuery()
+}
+
+fun TransactionRequest.toEntity(): Transaction {
+    return Transaction(
+        id = 0,
+        amount = this.amount,
+        date = this.date,
+        notes = this.notes,
+        walletId = this.walletId,
+        categoryId = this.categoryId,
+        type = this.type,
+        currency = "IDR"
+    )
 }
