@@ -12,7 +12,7 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions WHERE id = :id")
     suspend fun getTransaction(id: Int): TransactionDb?
 
-    @Query("SELECT * FROM transactions")
+    @Query("SELECT * FROM transactions WHERE (sync_operation IS NULL OR sync_operation != 'delete') ")
     suspend fun getTransactions(): List<TransactionDb>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

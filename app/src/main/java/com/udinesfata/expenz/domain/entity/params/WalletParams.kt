@@ -1,3 +1,5 @@
 package com.udinesfata.expenz.domain.entity.params
 
-class WalletParams()
+class WalletParams(
+    val name: String? = null
+)

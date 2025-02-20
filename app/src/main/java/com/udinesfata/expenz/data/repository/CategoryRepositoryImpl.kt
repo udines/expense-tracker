@@ -10,6 +10,7 @@ import com.udinesfata.expenz.data.utils.network.NetworkChecker
 import com.udinesfata.expenz.domain.entity.Category
 import com.udinesfata.expenz.domain.entity.params.CategoryParams
 import com.udinesfata.expenz.domain.repository.CategoryRepository
+import java.net.SocketTimeoutException
 
 class CategoryRepositoryImpl(
     private val localDataSource: CategoryLocalDataSource,
@@ -28,7 +29,14 @@ class CategoryRepositoryImpl(
                 return response?.toEntity()
             }
         } catch (e: Exception) {
-            throw e
+            when (e) {
+                is SocketTimeoutException -> {
+                    val categoryDb = localDataSource.getCategory(id)
+                    return categoryDb?.toEntity()
+                }
+
+                else -> throw e
+            }
         }
     }
 
@@ -42,7 +50,14 @@ class CategoryRepositoryImpl(
                 return response.map { it.toEntity() }
             }
         } catch (e: Exception) {
-            throw e
+            when (e) {
+                is SocketTimeoutException -> {
+                    val categoriesDb = localDataSource.getCategories(params.toQuery())
+                    return categoriesDb.map { it.toEntity() }
+                }
+
+                else -> throw e
+            }
         }
     }
 
@@ -59,7 +74,14 @@ class CategoryRepositoryImpl(
                 return response?.toEntity() ?: category
             }
         } catch (e: Exception) {
-            throw e
+            when (e) {
+                is SocketTimeoutException -> {
+                    localDataSource.createCategory(category.toDb(), fromLocal = true)
+                    return category
+                }
+
+                else -> throw e
+            }
         }
     }
 
@@ -76,7 +98,14 @@ class CategoryRepositoryImpl(
                 return response?.toEntity() ?: category
             }
         } catch (e: Exception) {
-            throw e
+            when (e) {
+                is SocketTimeoutException -> {
+                    localDataSource.updateCategory(category.toDb(), fromLocal = true)
+                    return category
+                }
+
+                else -> throw e
+            }
         }
     }
 
@@ -93,7 +122,14 @@ class CategoryRepositoryImpl(
                 return response ?: id
             }
         } catch (e: Exception) {
-            throw e
+            when (e) {
+                is SocketTimeoutException -> {
+                    localDataSource.deleteCategory(id, flagOnly = true)
+                    return id
+                }
+
+                else -> throw e
+            }
         }
     }
 }

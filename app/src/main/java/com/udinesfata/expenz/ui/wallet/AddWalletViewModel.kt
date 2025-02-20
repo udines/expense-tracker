@@ -22,7 +22,6 @@ class AddWalletViewModel(
 
     fun addWallet(name: String, initialAmount: Double) {
         scope.launch {
-            _uiState.value = _uiState.value.copy(loading = true)
             createWalletUseCase(name, initialAmount).collect { wallet ->
                 _uiState.value = _uiState.value.copy(wallet = wallet, loading = false)
             }
