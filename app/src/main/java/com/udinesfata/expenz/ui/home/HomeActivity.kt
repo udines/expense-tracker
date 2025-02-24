@@ -26,6 +26,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.udinesfata.expenz.ui.budget.AddBudgetActivity
+import com.udinesfata.expenz.ui.category.AddCategoryActivity
 import com.udinesfata.expenz.ui.home.tab.BottomNavBarItem
 import com.udinesfata.expenz.ui.home.tab.budget.BudgetContent
 import com.udinesfata.expenz.ui.home.tab.dashboard.DashboardContent
@@ -93,7 +94,7 @@ private fun Fab(navController: NavHostController) {
         onClick = {
             when (currentRoute) {
                 "dashboard" -> {
-                    val intent = Intent(context, AddWalletActivity::class.java)
+                    val intent = Intent(context, AddCategoryActivity::class.java)
                     context.startActivity(intent)
                 }
 

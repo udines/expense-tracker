@@ -20,17 +20,20 @@ class CategoryLocalDataSource(
     }
 
     suspend fun createCategory(category: CategoryDb, fromLocal: Boolean = false) {
-        categoryDao.createCategory(
-            category.copy(
-                isSynced = !fromLocal,
-                syncOperation = SYNC_OPERATION_CREATE
+        val existingCategory = categoryDao.getCategoryByName(category.name)
+        if (existingCategory == null) {
+            categoryDao.createCategory(
+                category.copy(
+                    isSynced = !fromLocal,
+                    syncOperation = SYNC_OPERATION_CREATE
+                )
             )
-        )
+        }
     }
 
     suspend fun createCategories(categories: List<CategoryDb>) {
         for (category in categories) {
-            categoryDao.createCategory(category)
+            createCategory(category)
         }
     }
 

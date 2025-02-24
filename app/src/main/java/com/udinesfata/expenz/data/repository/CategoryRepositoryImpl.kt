@@ -29,14 +29,7 @@ class CategoryRepositoryImpl(
                 return response?.toEntity()
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    val categoryDb = localDataSource.getCategory(id)
-                    return categoryDb?.toEntity()
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 
@@ -50,14 +43,7 @@ class CategoryRepositoryImpl(
                 return response.map { it.toEntity() }
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    val categoriesDb = localDataSource.getCategories(params.toQuery())
-                    return categoriesDb.map { it.toEntity() }
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 
@@ -74,14 +60,7 @@ class CategoryRepositoryImpl(
                 return response?.toEntity() ?: category
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    localDataSource.createCategory(category.toDb(), fromLocal = true)
-                    return category
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 
@@ -98,14 +77,7 @@ class CategoryRepositoryImpl(
                 return response?.toEntity() ?: category
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    localDataSource.updateCategory(category.toDb(), fromLocal = true)
-                    return category
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 
@@ -122,14 +94,7 @@ class CategoryRepositoryImpl(
                 return response ?: id
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    localDataSource.deleteCategory(id, flagOnly = true)
-                    return id
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 }

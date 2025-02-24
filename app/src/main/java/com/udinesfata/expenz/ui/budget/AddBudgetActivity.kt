@@ -54,6 +54,7 @@ private fun AddBudgetScreen(viewModel: AddBudgetViewModel, onClose: () -> Unit) 
     }
 
     Scaffold(
+        modifier = Modifier.padding(16.dp),
         topBar = { TextAppBar(onClose = { onClose() }, title = "Add Budget") }
     ) { paddingValues ->
         Column(
@@ -79,6 +80,7 @@ private fun AddBudgetScreen(viewModel: AddBudgetViewModel, onClose: () -> Unit) 
                     endDate = it
                 }
             )
+            Spacer(modifier = Modifier.weight(1f))
             Footer(onSave = {
                 viewModel.createBudget(wallet, category, amount, startDate, endDate)
             })
@@ -98,10 +100,10 @@ private fun Form(
     var selectedWallet by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         DropdownField(
             label = "Select Wallet",
-            options = uiState.categories.map { it.name },
+            options = uiState.wallets.map { it.name },
             selectedOption = selectedWallet,
             onOptionSelected = {
                 selectedWallet = it
