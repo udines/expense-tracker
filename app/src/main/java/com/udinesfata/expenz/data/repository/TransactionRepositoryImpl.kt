@@ -10,8 +10,6 @@ import com.udinesfata.expenz.data.utils.network.NetworkChecker
 import com.udinesfata.expenz.domain.entity.Transaction
 import com.udinesfata.expenz.domain.entity.params.TransactionParams
 import com.udinesfata.expenz.domain.repository.TransactionRepository
-import java.net.ConnectException
-import java.net.SocketTimeoutException
 
 class TransactionRepositoryImpl(
     private val localDataSource: TransactionLocalDataSource,
@@ -30,14 +28,7 @@ class TransactionRepositoryImpl(
                 return response?.toEntity()
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    val transactionDb = localDataSource.getTransaction(id)
-                    return transactionDb?.toEntity()
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 
@@ -54,14 +45,7 @@ class TransactionRepositoryImpl(
                 return response.map { it.toEntity() }
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    val transactionsDb = localDataSource.getTransactions(params.toQuery())
-                    return transactionsDb.map { it.toEntity() }
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 
@@ -81,14 +65,7 @@ class TransactionRepositoryImpl(
                 return response?.toEntity() ?: transaction
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException, is ConnectException -> {
-                    localDataSource.createTransaction(transaction.toDb(), fromLocal = true)
-                    return transaction
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 
@@ -108,14 +85,7 @@ class TransactionRepositoryImpl(
                 return response?.toEntity() ?: transaction
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    localDataSource.updateTransaction(transaction.toDb(), fromLocal = true)
-                    return transaction
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 
@@ -132,14 +102,7 @@ class TransactionRepositoryImpl(
                 return response ?: id
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    localDataSource.deleteTransaction(id, flagOnly = true)
-                    return id
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 }

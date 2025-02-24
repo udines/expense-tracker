@@ -10,7 +10,6 @@ import com.udinesfata.expenz.data.utils.network.NetworkChecker
 import com.udinesfata.expenz.domain.entity.Wallet
 import com.udinesfata.expenz.domain.entity.params.WalletParams
 import com.udinesfata.expenz.domain.repository.WalletRepository
-import java.net.SocketTimeoutException
 
 class WalletRepositoryImpl(
     private val localDataSource: WalletLocalDataSource,
@@ -29,14 +28,7 @@ class WalletRepositoryImpl(
                 return response?.toEntity()
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    val walletDb = localDataSource.getWallet(id)
-                    return walletDb?.toEntity()
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 
@@ -50,14 +42,7 @@ class WalletRepositoryImpl(
                 return response.map { it.toEntity() }
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    val walletsDb = localDataSource.getWallets(params.toQuery())
-                    return walletsDb.map { it.toEntity() }
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 
@@ -74,14 +59,7 @@ class WalletRepositoryImpl(
                 return response?.toEntity() ?: wallet
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    localDataSource.createWallet(wallet.toDb(), fromLocal = true)
-                    return wallet
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 
@@ -98,14 +76,7 @@ class WalletRepositoryImpl(
                 return response?.toEntity() ?: wallet
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    localDataSource.updateWallet(wallet.toDb(), fromLocal = true)
-                    return wallet
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 
@@ -122,14 +93,7 @@ class WalletRepositoryImpl(
                 return response ?: id
             }
         } catch (e: Exception) {
-            when (e) {
-                is SocketTimeoutException -> {
-                    localDataSource.deleteWallet(id, flagOnly = true)
-                    return id
-                }
-
-                else -> throw e
-            }
+            throw e
         }
     }
 }

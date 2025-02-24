@@ -7,8 +7,8 @@ import com.udinesfata.expenz.domain.entity.Wallet
 import com.udinesfata.expenz.domain.usecase.CreateBudgetUseCase
 import com.udinesfata.expenz.domain.usecase.GetAllWalletsUseCase
 import com.udinesfata.expenz.domain.usecase.GetCategoriesUseCase
+import com.udinesfata.expenz.utils.ExceptionHandler
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,19 +19,21 @@ class AddBudgetViewModel(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getAllWalletsUseCase: GetAllWalletsUseCase,
     private val createBudgetUseCase: CreateBudgetUseCase,
-    exceptionHandler: CoroutineExceptionHandler,
-    dispatcher: CoroutineDispatcher,
+    private val exceptionHandler: ExceptionHandler,
+    private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(AddBudgetState())
     val uiState: StateFlow<AddBudgetState> = _uiState
-    private val scope = CoroutineScope(dispatcher + exceptionHandler)
+    private val scope = CoroutineScope(dispatcher + exceptionHandler.coroutine)
 
     fun getFormData() {
         scope.launch {
-            val categories = getCategoriesUseCase()
-            val wallets = getAllWalletsUseCase()
-            categories.collect { data -> _uiState.value = _uiState.value.copy(categories = data) }
-            wallets.collect { data -> _uiState.value = _uiState.value.copy(wallets = data) }
+            getCategoriesUseCase().collect { data ->
+                _uiState.value = _uiState.value.copy(categories = data)
+            }
+            getAllWalletsUseCase().collect { data ->
+                _uiState.value = _uiState.value.copy(wallets = data)
+            }
         }
     }
 

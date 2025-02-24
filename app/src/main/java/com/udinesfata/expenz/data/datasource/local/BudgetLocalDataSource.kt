@@ -2,9 +2,9 @@ package com.udinesfata.expenz.data.datasource.local
 
 import com.udinesfata.expenz.data.datasource.local.database.BudgetDao
 import com.udinesfata.expenz.data.model.local.BudgetDb
-import com.udinesfata.expenz.data.utils.constant.SYNC_OPERATION_DELETE
 import com.udinesfata.expenz.data.model.query.BudgetQuery
 import com.udinesfata.expenz.data.utils.constant.SYNC_OPERATION_CREATE
+import com.udinesfata.expenz.data.utils.constant.SYNC_OPERATION_DELETE
 import com.udinesfata.expenz.data.utils.constant.SYNC_OPERATION_UPDATE
 
 class BudgetLocalDataSource(
