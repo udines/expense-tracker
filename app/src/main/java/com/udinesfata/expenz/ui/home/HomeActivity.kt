@@ -22,9 +22,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.udinesfata.expenz.ui.home.tab.BottomNavBarItem
-import com.udinesfata.expenz.ui.home.tab.BudgetContent
-import com.udinesfata.expenz.ui.home.tab.HomeContent
-import com.udinesfata.expenz.ui.home.tab.TransactionContent
+import com.udinesfata.expenz.ui.home.tab.budget.BudgetContent
+import com.udinesfata.expenz.ui.home.tab.dashboard.DashboardContent
+import com.udinesfata.expenz.ui.home.tab.transaction.TransactionContent
 
 
 class HomeActivity : ComponentActivity() {
@@ -49,7 +49,7 @@ private fun HomeScreen() {
                 .fillMaxSize()
                 .padding(paddingValues),
         ) {
-            composable("home") { HomeContent() }
+            composable("home") { DashboardContent() }
             composable("transactions") { TransactionContent() }
             composable("budget") { BudgetContent() }
         }
