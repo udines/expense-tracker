@@ -3,13 +3,15 @@ package com.udinesfata.expenz.data.model.local
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.Instant
+import java.util.Date
 
 @Entity(tableName = "transactions")
 data class TransactionDb(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val amount: Double,
-    val date: String, // ISO 8601 date format
+    val date: Instant,
     val notes: String,
     @ColumnInfo(name = "category_id")
     val categoryId: Int,

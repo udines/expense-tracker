@@ -1,13 +1,13 @@
 package com.udinesfata.expenz.domain.usecase
 
+import java.time.Instant
 import java.util.Calendar
-import java.util.Date
 
 class GetEndDateUseCase {
-    operator fun invoke(startDate: Date): Date {
+    operator fun invoke(startDate: Instant): Instant {
         val calendar = Calendar.getInstance()
-        calendar.time = startDate
+        calendar.timeInMillis = startDate.toEpochMilli()
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
-        return calendar.time
+        return calendar.toInstant()
     }
 }

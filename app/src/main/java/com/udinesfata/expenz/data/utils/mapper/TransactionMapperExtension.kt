@@ -4,15 +4,17 @@ import com.udinesfata.expenz.data.model.local.TransactionDb
 import com.udinesfata.expenz.data.model.payload.TransactionPayload
 import com.udinesfata.expenz.data.model.query.TransactionQuery
 import com.udinesfata.expenz.data.model.remote.TransactionResponse
+import com.udinesfata.expenz.data.utils.extension.toIsoString
 import com.udinesfata.expenz.domain.entity.Transaction
 import com.udinesfata.expenz.domain.entity.params.TransactionParams
 import com.udinesfata.expenz.domain.entity.request.TransactionRequest
+import java.time.Instant
 
 fun TransactionResponse.toEntity(): Transaction {
     return Transaction(
         id = this.id,
         amount = this.amount,
-        date = this.date,
+        date = Instant.parse(this.date),
         notes = this.notes,
         categoryId = this.categoryId,
         walletId = this.walletId,
@@ -25,7 +27,7 @@ fun TransactionResponse.toDb(): TransactionDb {
     return TransactionDb(
         id = this.id,
         amount = this.amount,
-        date = this.date,
+        date = Instant.parse(this.date),
         notes = this.notes,
         categoryId = this.categoryId,
         walletId = this.walletId,
@@ -53,7 +55,7 @@ fun Transaction.toPayload(): TransactionPayload {
     return TransactionPayload(
         id = this.id,
         amount = this.amount,
-        date = this.date,
+        date = this.date.toIsoString(),
         notes = this.notes,
         categoryId = this.categoryId,
         walletId = this.walletId,
@@ -76,7 +78,13 @@ fun TransactionDb.toEntity(): Transaction {
 }
 
 fun TransactionParams.toQuery(): TransactionQuery {
-    return TransactionQuery()
+    return TransactionQuery(
+        walletId = this.walletId,
+        categoryIds = this.categoryIds,
+        startDate = this.startDate?.toEpochMilli(),
+        endDate = this.endDate?.toEpochMilli(),
+        orderByDate = this.orderByDate,
+    )
 }
 
 fun TransactionRequest.toEntity(): Transaction {

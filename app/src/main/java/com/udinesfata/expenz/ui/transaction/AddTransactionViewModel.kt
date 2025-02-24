@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.time.Instant
 
 class AddTransactionViewModel(
     private val getAllWalletsUseCase: GetAllWalletsUseCase,
@@ -48,7 +49,7 @@ class AddTransactionViewModel(
         wallet: String,
         category: String,
         amount: Double,
-        date: String,
+        date: Instant,
         notes: String
     ) {
         val walletId = _uiState.value.wallets.find { it.name == wallet }?.id ?: 0

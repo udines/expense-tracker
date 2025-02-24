@@ -13,7 +13,7 @@ class GetBudgetDetailsUseCase(
     suspend operator fun invoke(budgetId: Int): BudgetDetail {
         val budget = budgetRepositoryImpl.getBudget(budgetId)!!
         val transactions =
-            transactionRepositoryImpl.getTransactions(TransactionParams(categoryIds = budget.categoryIds))
+            transactionRepositoryImpl.getTransactions(TransactionParams())
         val totalExpense = transactions.filter { it.isExpense() }.sumOf { it.amount }
         val balance = budget.amount - totalExpense
         return BudgetDetail(budget, transactions, totalExpense, balance)

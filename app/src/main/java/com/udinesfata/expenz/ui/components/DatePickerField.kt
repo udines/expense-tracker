@@ -17,10 +17,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.util.Locale
 
 @Composable
-fun DatePickerField(label: String, onDateSelected: (String) -> Unit) {
+fun DatePickerField(label: String, onDateSelected: (Instant) -> Unit) {
     var displayDate by remember { mutableStateOf("Select Date") }
     var showDialog by remember { mutableStateOf(false) }
 
@@ -51,7 +52,7 @@ fun DatePickerField(label: String, onDateSelected: (String) -> Unit) {
                 },
                 onDateSelected = { date ->
                     displayDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
-                    onDateSelected(date.toString())
+                    onDateSelected(date)
                 }
             )
         }

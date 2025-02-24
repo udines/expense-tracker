@@ -16,7 +16,7 @@ class GetThisMonthTopSpendingUseCase(
         return transactionRepositoryImpl.getTransactions(
             TransactionParams(
                 walletId = walletId, orderByAmount = ORDER_DESC,
-                startDate = startDate.toString(), endDate = endDate.toString()
+                startDate = startDate, endDate = endDate
             )
         )
     }

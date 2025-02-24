@@ -20,8 +20,8 @@ class GetThisMonthReportUseCase(
             transactionRepositoryImpl.getTransactions(
                 TransactionParams(
                     walletId = walletId,
-                    startDate = startDate.toString(),
-                    endDate = endDate.toString(),
+                    startDate = startDate,
+                    endDate = endDate,
                 )
             )
         val totalExpense = transactions.filter { it.isExpense() }.sumOf { it.amount }
