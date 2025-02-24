@@ -6,6 +6,7 @@ import com.udinesfata.expenz.domain.entity.request.TransactionRequest
 import com.udinesfata.expenz.domain.repository.TransactionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.time.Instant
 
 class CreateTransactionUseCase(
     private val transactionRepositoryImpl: TransactionRepository
@@ -14,7 +15,7 @@ class CreateTransactionUseCase(
         walletId: Int,
         amount: Double,
         categoryId: Int,
-        date: String,
+        date: Instant,
         notes: String,
         type: String
     ): Flow<Transaction> {

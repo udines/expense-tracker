@@ -56,7 +56,9 @@ fun WalletDb.toEntity(): Wallet {
 }
 
 fun WalletParams.toQuery(): WalletQuery {
-    return WalletQuery()
+    return WalletQuery(
+        name = this.name
+    )
 }
 
 fun WalletRequest.toEntity(): Wallet {

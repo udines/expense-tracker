@@ -1,9 +1,11 @@
 package com.udinesfata.expenz.domain.entity
 
+import java.time.Instant
+
 class Transaction(
     val id: Int,
     val amount: Double,
-    val date: String, // ISO 8601 date format
+    val date: Instant,
     val notes: String,
     val categoryId: Int,
     val walletId: Int,

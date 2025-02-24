@@ -15,8 +15,8 @@ class GetThisMonthTransactionsUseCase(
         return transactionRepositoryImpl.getTransactions(
             TransactionParams(
                 walletId = walletId,
-                startDate = startDate.toString(),
-                endDate = endDate.toString(),
+                startDate = startDate,
+                endDate = endDate,
             )
         )
     }

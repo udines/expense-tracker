@@ -1,5 +1,8 @@
 package com.udinesfata.expenz.domain.entity.params
 
-class BudgetParams(
-    private val isActive: Boolean? = null
+import java.time.Instant
+
+data class BudgetParams(
+    val startDate: Instant? = null,
+    val endDate: Instant? = null
 )

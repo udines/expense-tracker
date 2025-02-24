@@ -7,11 +7,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import java.util.Date
+import java.time.Instant
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomDatePicker(onDismiss: () -> Unit, onDateSelected: (Date) -> Unit) {
+fun CustomDatePicker(onDismiss: () -> Unit, onDateSelected: (Instant) -> Unit) {
     val datePickerState = rememberDatePickerState()
 
     DatePickerDialog(
@@ -19,7 +19,7 @@ fun CustomDatePicker(onDismiss: () -> Unit, onDateSelected: (Date) -> Unit) {
         confirmButton = {
             TextButton(onClick = {
                 datePickerState.selectedDateMillis?.let {
-                    val date = Date(it)
+                    val date = Instant.ofEpochMilli(it)
                     onDateSelected(date)
                 }
                 onDismiss()

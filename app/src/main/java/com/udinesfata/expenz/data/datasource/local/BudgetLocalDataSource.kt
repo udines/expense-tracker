@@ -15,7 +15,7 @@ class BudgetLocalDataSource(
     }
 
     suspend fun getBudgets(query: BudgetQuery): List<BudgetDb> {
-        return budgetDao.getBudgets()
+        return budgetDao.getBudgets(query.startDate, query.endDate)
     }
 
     suspend fun createBudget(budget: BudgetDb, fromLocal: Boolean = false) {

@@ -7,13 +7,15 @@ import androidx.room.Query
 import androidx.room.Update
 import com.udinesfata.expenz.data.model.local.BudgetDb
 
-@Dao 
+@Dao
 interface BudgetDao {
     @Query("SELECT * FROM budgets WHERE id = :id")
     suspend fun getBudget(id: Int): BudgetDb?
 
-    @Query("SELECT * FROM budgets WHERE (sync_operation IS NULL OR sync_operation != 'delete') ")
-    suspend fun getBudgets(): List<BudgetDb>
+    @Query("SELECT * FROM budgets WHERE (sync_operation IS NULL OR sync_operation != 'delete') " +
+            "AND (start_date IS NULL OR start_date >= :startDate) " +
+            "AND (end_date IS NULL OR end_date <= :endDate)")
+    suspend fun getBudgets(startDate: Long?, endDate: Long?): List<BudgetDb>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createBudget(budget: BudgetDb)

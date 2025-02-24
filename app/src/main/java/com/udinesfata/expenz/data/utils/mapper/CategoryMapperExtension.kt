@@ -51,7 +51,9 @@ fun CategoryDb.toEntity(): Category {
 }
 
 fun CategoryParams.toQuery(): CategoryQuery {
-    return CategoryQuery()
+    return CategoryQuery(
+        name = this.name
+    )
 }
 
 fun CategoryRequest.toEntity(): Category {

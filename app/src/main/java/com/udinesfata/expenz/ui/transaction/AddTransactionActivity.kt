@@ -27,6 +27,7 @@ import com.udinesfata.expenz.ui.components.InputField
 import com.udinesfata.expenz.ui.components.NumberField
 import com.udinesfata.expenz.ui.components.TextAppBar
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.time.Instant
 
 class AddTransactionActivity : ComponentActivity() {
     private val viewModel: AddTransactionViewModel by viewModel()
@@ -54,7 +55,7 @@ private fun AddTransactionScreen(
     var wallet = ""
     var category = ""
     var amount = 0.0
-    var date = ""
+    var date = Instant.now()
     var notes = ""
 
     if (uiState.value.transaction != null) {
@@ -102,7 +103,7 @@ private fun Form(
     onWalletSelected: (String) -> Unit,
     onCategorySelected: (String) -> Unit,
     onAmountChanged: (Double) -> Unit,
-    onDateChanged: (String) -> Unit,
+    onDateChanged: (Instant) -> Unit,
     onNotesChanged: (String) -> Unit,
 ) {
     var selectedWallet by remember { mutableStateOf("") }
