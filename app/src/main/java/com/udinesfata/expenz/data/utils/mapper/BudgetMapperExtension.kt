@@ -17,7 +17,6 @@ fun BudgetResponse.toEntity(): Budget {
         startDate = Instant.parse(this.startDate),
         endDate = Instant.parse(this.endDate),
         walletId = this.walletId,
-        categoryIds = listOf()
     )
 }
 
@@ -64,7 +63,6 @@ fun BudgetDb.toEntity(): Budget {
         startDate = this.startDate,
         endDate = this.endDate,
         walletId = this.walletId,
-        categoryIds = listOf(),
     )
 }
 

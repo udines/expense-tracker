@@ -9,5 +9,4 @@ class Budget(
     val startDate: Instant,
     val endDate: Instant,
     val walletId: Int,
-    val categoryIds: List<Int>,
 )
