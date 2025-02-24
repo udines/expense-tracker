@@ -7,6 +7,7 @@ import com.udinesfata.expenz.data.model.remote.BudgetResponse
 import com.udinesfata.expenz.data.utils.extension.toIsoString
 import com.udinesfata.expenz.domain.entity.Budget
 import com.udinesfata.expenz.domain.entity.params.BudgetParams
+import com.udinesfata.expenz.domain.entity.request.BudgetRequest
 import java.time.Instant
 
 fun BudgetResponse.toEntity(): Budget {
@@ -70,5 +71,16 @@ fun BudgetParams.toQuery(): BudgetQuery {
     return BudgetQuery(
         startDate = this.startDate?.toEpochMilli(),
         endDate = this.endDate?.toEpochMilli()
+    )
+}
+
+fun BudgetRequest.toEntity(): Budget {
+    return Budget(
+        id = 0,
+        categoryId = this.categoryId,
+        amount = this.amount,
+        startDate = this.startDate,
+        endDate = this.endDate,
+        walletId = this.walletId,
     )
 }

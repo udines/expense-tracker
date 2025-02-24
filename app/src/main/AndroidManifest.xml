@@ -29,6 +29,8 @@
         </activity>
         <activity android:name=".ui.category.AddCategoryActivity">
         </activity>
+        <activity android:name=".ui.budget.AddBudgetActivity">
+        </activity>
     </application>
 
 </manifest>
