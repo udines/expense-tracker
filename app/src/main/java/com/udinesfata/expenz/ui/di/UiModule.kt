@@ -3,6 +3,7 @@ package com.udinesfata.expenz.ui.di
 import com.udinesfata.expenz.ui.budget.AddBudgetViewModel
 import com.udinesfata.expenz.ui.category.AddCategoryViewModel
 import com.udinesfata.expenz.ui.home.tab.budget.BudgetViewModel
+import com.udinesfata.expenz.ui.home.tab.transaction.TransactionViewModel
 import com.udinesfata.expenz.ui.transaction.AddTransactionViewModel
 import com.udinesfata.expenz.ui.wallet.AddWalletViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,4 +16,5 @@ val uiModule = module {
     viewModel { AddCategoryViewModel(get(), get(), Dispatchers.Main) }
     viewModel { AddBudgetViewModel(get(), get(), get(), get(), Dispatchers.Main) }
     viewModel { BudgetViewModel(get(), get(), Dispatchers.Main) }
+    viewModel { TransactionViewModel(get(), get(), get(), Dispatchers.Main) }
 }
