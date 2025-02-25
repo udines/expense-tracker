@@ -26,8 +26,8 @@ fun BudgetResponse.toDb(): BudgetDb {
         id = this.id,
         categoryId = this.categoryId,
         amount = this.amount,
-        startDate = Instant.parse(this.startDate),
-        endDate = Instant.parse(this.endDate),
+        startDate = Instant.parse(this.startDate).toEpochMilli(),
+        endDate = Instant.parse(this.endDate).toEpochMilli(),
         walletId = this.walletId,
         isSynced = true,
     )
@@ -38,8 +38,8 @@ fun Budget.toDb(): BudgetDb {
         id = this.id,
         categoryId = this.categoryId,
         amount = this.amount,
-        startDate = this.startDate,
-        endDate = this.endDate,
+        startDate = this.startDate.toEpochMilli(),
+        endDate = this.endDate.toEpochMilli(),
         walletId = this.walletId,
         isSynced = false
     )
@@ -61,8 +61,8 @@ fun BudgetDb.toEntity(): Budget {
         id = this.id,
         categoryId = this.categoryId,
         amount = this.amount,
-        startDate = this.startDate,
-        endDate = this.endDate,
+        startDate = Instant.ofEpochMilli(this.startDate),
+        endDate = Instant.ofEpochMilli(this.endDate),
         walletId = this.walletId,
     )
 }
