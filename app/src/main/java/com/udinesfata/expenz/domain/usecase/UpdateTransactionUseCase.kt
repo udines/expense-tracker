@@ -7,6 +7,6 @@ class UpdateTransactionUseCase(
     private val transactionRepositoryImpl: TransactionRepository
 ) {
     suspend operator fun invoke(transaction: Transaction) {
-        transactionRepositoryImpl.updateTransaction(transaction)
+        transactionRepositoryImpl.updateTransaction(transaction, true)
     }
 }

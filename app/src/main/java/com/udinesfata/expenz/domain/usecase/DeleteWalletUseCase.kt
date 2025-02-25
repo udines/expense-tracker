@@ -7,6 +7,6 @@ class DeleteWalletUseCase(
     private val walletRepositoryImpl: WalletRepository
 ) {
     suspend operator fun invoke(id: Int) {
-        walletRepositoryImpl.deleteWallet(id)
+        walletRepositoryImpl.deleteWallet(id, true)
     }
 }

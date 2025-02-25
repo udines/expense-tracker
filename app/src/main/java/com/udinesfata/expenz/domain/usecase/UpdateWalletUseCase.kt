@@ -7,6 +7,6 @@ class UpdateWalletUseCase(
     private val walletRepositoryImpl: WalletRepository
 ) {
     suspend operator fun invoke(wallet: Wallet) {
-        walletRepositoryImpl.updateWallet(wallet)
+        walletRepositoryImpl.updateWallet(wallet, true)
     }
 }

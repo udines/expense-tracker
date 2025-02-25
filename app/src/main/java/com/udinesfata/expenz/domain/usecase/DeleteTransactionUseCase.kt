@@ -6,6 +6,6 @@ class DeleteTransactionUseCase(
     private val transactionRepositoryImpl: TransactionRepository
 ) {
     suspend operator fun invoke(id: Int) {
-        transactionRepositoryImpl.deleteTransaction(id)
+        transactionRepositoryImpl.deleteTransaction(id, true)
     }
 }

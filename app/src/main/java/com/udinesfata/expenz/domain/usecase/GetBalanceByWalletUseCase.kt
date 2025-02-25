@@ -11,8 +11,8 @@ class GetBalanceByWalletUseCase(
         return flow {
             val localWallet = walletRepository.getWallet(walletId, true)
             emit(localWallet?.balance ?: 0.0)
-            val remoteWallet = walletRepository.getWallet(walletId, false)
-            emit(remoteWallet?.balance ?: 0.0)
+//            val remoteWallet = walletRepository.getWallet(walletId, false)
+//            emit(remoteWallet?.balance ?: 0.0)
         }
     }
 }

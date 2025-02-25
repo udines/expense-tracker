@@ -13,7 +13,7 @@ class CreateWalletUseCase(
     operator fun invoke(name: String, initialAmount: Double): Flow<Wallet> {
         return flow {
             val walletRequest = WalletRequest(name, initialAmount)
-            val remoteWallet = walletRepositoryImpl.createWallet(walletRequest.toEntity(), false)
+            val remoteWallet = walletRepositoryImpl.createWallet(walletRequest.toEntity(), true)
             emit(remoteWallet)
         }
     }
