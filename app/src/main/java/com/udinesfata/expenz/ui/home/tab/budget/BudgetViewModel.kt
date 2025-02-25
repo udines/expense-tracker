@@ -1,10 +1,10 @@
 package com.udinesfata.expenz.ui.home.tab.budget
 
 import androidx.lifecycle.ViewModel
-import com.udinesfata.expenz.domain.entity.Budget
+import com.udinesfata.expenz.domain.entity.BudgetItem
 import com.udinesfata.expenz.domain.usecase.GetActiveBudgetsUseCase
+import com.udinesfata.expenz.utils.ExceptionHandler
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,13 +12,13 @@ import kotlinx.coroutines.launch
 
 class BudgetViewModel(
     private val getActiveBudgetsUseCase: GetActiveBudgetsUseCase,
-    private val dispatcher: CoroutineDispatcher,
-    private val exceptionHandler: CoroutineExceptionHandler
+    exceptionHandler: ExceptionHandler,
+    dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(BudgetUiState())
     val uiState: StateFlow<BudgetUiState> = _uiState
     private val scope = CoroutineScope(
-        dispatcher + exceptionHandler
+        dispatcher + exceptionHandler.coroutine
     )
 
     fun getActiveBudgets() {
@@ -31,5 +31,5 @@ class BudgetViewModel(
 }
 
 data class BudgetUiState(
-    val budgets: List<Budget> = emptyList(),
+    val budgets: List<BudgetItem> = emptyList(),
 )

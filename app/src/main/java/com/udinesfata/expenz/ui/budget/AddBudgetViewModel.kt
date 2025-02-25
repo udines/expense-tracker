@@ -19,18 +19,28 @@ class AddBudgetViewModel(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getAllWalletsUseCase: GetAllWalletsUseCase,
     private val createBudgetUseCase: CreateBudgetUseCase,
-    private val exceptionHandler: ExceptionHandler,
-    private val dispatcher: CoroutineDispatcher,
+    exceptionHandler: ExceptionHandler,
+    dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(AddBudgetState())
     val uiState: StateFlow<AddBudgetState> = _uiState
     private val scope = CoroutineScope(dispatcher + exceptionHandler.coroutine)
 
     fun getFormData() {
+        getCategories()
+        getWallets()
+    }
+
+    private fun getCategories() {
         scope.launch {
             getCategoriesUseCase().collect { data ->
                 _uiState.value = _uiState.value.copy(categories = data)
             }
+        }
+    }
+
+    private fun getWallets() {
+        scope.launch {
             getAllWalletsUseCase().collect { data ->
                 _uiState.value = _uiState.value.copy(wallets = data)
             }
@@ -44,11 +54,12 @@ class AddBudgetViewModel(
         startDate: Instant,
         endDate: Instant
     ) {
+        val walletId = _uiState.value.wallets.find { it.name == wallet }?.id ?: 0
+        val categoryId = _uiState.value.categories.find { it.name == category }?.id ?: 0
         scope.launch {
-            val walletId = _uiState.value.wallets.find { it.name == wallet }?.id ?: 0
-            val categoryId = _uiState.value.categories.find { it.name == category }?.id ?: 0
-            createBudgetUseCase(walletId, categoryId, amount, startDate, endDate)
-                .collect { data -> _uiState.value = _uiState.value.copy(budget = data) }
+            createBudgetUseCase(walletId, categoryId, amount, startDate, endDate).collect { data ->
+                _uiState.value = _uiState.value.copy(budget = data)
+            }
         }
     }
 }
