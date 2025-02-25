@@ -7,6 +7,6 @@ class GetWalletDetailsUseCase(
     private val walletRepositoryImpl: WalletRepository,
 ) {
     suspend operator fun invoke(walletId: Int): Wallet? {
-        return walletRepositoryImpl.getWallet(walletId)
+        return walletRepositoryImpl.getWallet(walletId, true)
     }
 }

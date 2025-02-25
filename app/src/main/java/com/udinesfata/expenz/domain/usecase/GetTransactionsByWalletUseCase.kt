@@ -15,11 +15,11 @@ class GetTransactionsByWalletUseCase(
                 TransactionParams(walletId = walletId), true
             )
             emit(localTransactions)
-            val remoteTransactions = transactionRepositoryImpl.getTransactions(
-                TransactionParams(walletId = walletId),
-                false
-            )
-            emit(remoteTransactions)
+//            val remoteTransactions = transactionRepositoryImpl.getTransactions(
+//                TransactionParams(walletId = walletId),
+//                false
+//            )
+//            emit(remoteTransactions)
         }
     }
 }

@@ -12,7 +12,8 @@ class GetTransactionsByCategoryUseCase(
             TransactionParams(
                 walletId = walletId,
                 categoryIds = listOf(categoryId)
-            )
+            ),
+            true
         )
     }
 }

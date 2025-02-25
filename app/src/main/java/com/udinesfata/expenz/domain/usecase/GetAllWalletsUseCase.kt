@@ -13,8 +13,8 @@ class GetAllWalletsUseCase(
         return flow {
             val localWallets = walletRepositoryImpl.getWallets(WalletParams(), true)
             emit(localWallets)
-            val remoteWallets = walletRepositoryImpl.getWallets(WalletParams(), false)
-            emit(remoteWallets)
+//            val remoteWallets = walletRepositoryImpl.getWallets(WalletParams(), false)
+//            emit(remoteWallets)
         }
     }
 }

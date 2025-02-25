@@ -27,7 +27,7 @@ fun TransactionResponse.toDb(): TransactionDb {
     return TransactionDb(
         id = this.id,
         amount = this.amount,
-        date = Instant.parse(this.date),
+        date = Instant.parse(this.date).toEpochMilli(),
         notes = this.notes,
         categoryId = this.categoryId,
         walletId = this.walletId,
@@ -41,7 +41,7 @@ fun Transaction.toDb(): TransactionDb {
     return TransactionDb(
         id = this.id,
         amount = this.amount,
-        date = this.date,
+        date = this.date.toEpochMilli(),
         notes = this.notes,
         categoryId = this.categoryId,
         walletId = this.walletId,
@@ -68,7 +68,7 @@ fun TransactionDb.toEntity(): Transaction {
     return Transaction(
         id = this.id,
         amount = this.amount,
-        date = this.date,
+        date = Instant.ofEpochMilli(this.date),
         notes = this.notes,
         categoryId = this.categoryId,
         walletId = this.walletId,

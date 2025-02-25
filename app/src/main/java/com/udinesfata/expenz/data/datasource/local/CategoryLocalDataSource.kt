@@ -2,10 +2,10 @@ package com.udinesfata.expenz.data.datasource.local
 
 import com.udinesfata.expenz.data.datasource.local.database.CategoryDao
 import com.udinesfata.expenz.data.model.local.CategoryDb
+import com.udinesfata.expenz.data.model.query.CategoryQuery
 import com.udinesfata.expenz.data.utils.constant.SYNC_OPERATION_CREATE
 import com.udinesfata.expenz.data.utils.constant.SYNC_OPERATION_DELETE
 import com.udinesfata.expenz.data.utils.constant.SYNC_OPERATION_UPDATE
-import com.udinesfata.expenz.data.model.query.CategoryQuery
 
 class CategoryLocalDataSource(
     private val categoryDao: CategoryDao
@@ -20,17 +20,20 @@ class CategoryLocalDataSource(
     }
 
     suspend fun createCategory(category: CategoryDb, fromLocal: Boolean = false) {
-        categoryDao.createCategory(
-            category.copy(
-                isSynced = !fromLocal,
-                syncOperation = SYNC_OPERATION_CREATE
+        val existingCategory = categoryDao.getCategoryByName(category.name)
+        if (existingCategory == null) {
+            categoryDao.createCategory(
+                category.copy(
+                    isSynced = !fromLocal,
+                    syncOperation = SYNC_OPERATION_CREATE
+                )
             )
-        )
+        }
     }
 
     suspend fun createCategories(categories: List<CategoryDb>) {
         for (category in categories) {
-            categoryDao.createCategory(category)
+            createCategory(category)
         }
     }
 

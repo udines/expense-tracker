@@ -7,7 +7,7 @@ class GetTotalBalanceUseCase(
     private val walletRepositoryImpl: WalletRepository,
 ) {
     suspend operator fun invoke(): Double {
-        val wallets = walletRepositoryImpl.getWallets(WalletParams())
+        val wallets = walletRepositoryImpl.getWallets(WalletParams(), true)
         return wallets.sumOf { it.balance }
     }
 }

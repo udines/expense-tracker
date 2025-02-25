@@ -9,6 +9,9 @@ class GetRecentTransactionsUseCase(
     private val transactionRepositoryImpl: TransactionRepository
 ) {
     suspend operator fun invoke(): List<Transaction> {
-        return transactionRepositoryImpl.getTransactions(TransactionParams(orderByDate = ORDER_ASC))
+        return transactionRepositoryImpl.getTransactions(
+            TransactionParams(orderByDate = ORDER_ASC),
+            true
+        )
     }
 }

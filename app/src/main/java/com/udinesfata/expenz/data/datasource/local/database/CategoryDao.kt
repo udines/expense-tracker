@@ -16,6 +16,9 @@ interface CategoryDao {
             "AND (sync_operation IS NULL OR sync_operation != 'delete')")
     suspend fun getCategories(name: String?): List<CategoryDb>
 
+    @Query("SELECT * FROM categories WHERE name = :name")
+    suspend fun getCategoryByName(name: String): CategoryDb?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createCategory(category: CategoryDb)
 

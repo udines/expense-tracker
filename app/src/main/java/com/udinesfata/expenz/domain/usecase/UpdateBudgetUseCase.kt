@@ -7,7 +7,7 @@ class UpdateBudgetUseCase(
     private val budgetRepositoryImpl: BudgetRepository
 ) {
     suspend operator fun invoke(newBudget: Budget) {
-        budgetRepositoryImpl.updateBudget(newBudget)
+        budgetRepositoryImpl.updateBudget(newBudget, true)
     }
 
 }

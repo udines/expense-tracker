@@ -23,8 +23,8 @@ class CreateTransactionUseCase(
         return flow {
             val localTransaction = transactionRepositoryImpl.createTransaction(request.toEntity(), true)
             emit(localTransaction)
-            val remoteTransaction = transactionRepositoryImpl.createTransaction(request.toEntity(), false)
-            emit(remoteTransaction)
+//            val remoteTransaction = transactionRepositoryImpl.createTransaction(request.toEntity(), false)
+//            emit(remoteTransaction)
         }
     }
 }

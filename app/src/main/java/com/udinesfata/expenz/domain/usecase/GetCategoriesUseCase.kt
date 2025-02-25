@@ -13,8 +13,8 @@ class GetCategoriesUseCase(
         return flow {
             val localCategories = categoryRepositoryImpl.getCategories(CategoryParams(), true)
             emit(localCategories)
-            val remoteCategories = categoryRepositoryImpl.getCategories(CategoryParams(), false)
-            emit(remoteCategories)
+//            val remoteCategories = categoryRepositoryImpl.getCategories(CategoryParams(), false)
+//            emit(remoteCategories)
         }
     }
 }

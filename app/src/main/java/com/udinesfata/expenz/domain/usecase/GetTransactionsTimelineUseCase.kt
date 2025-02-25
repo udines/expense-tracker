@@ -9,6 +9,9 @@ class GetTransactionsTimelineUseCase(
     private val transactionRepositoryImpl: TransactionRepository,
 ) {
     suspend operator fun invoke(): List<Transaction> {
-        return transactionRepositoryImpl.getTransactions(TransactionParams(orderByDate = ORDER_DESC))
+        return transactionRepositoryImpl.getTransactions(
+            TransactionParams(orderByDate = ORDER_DESC),
+            true
+        )
     }
 }

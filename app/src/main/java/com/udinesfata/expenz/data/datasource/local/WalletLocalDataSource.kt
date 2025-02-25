@@ -19,17 +19,20 @@ class WalletLocalDataSource(
     }
 
     suspend fun createWallet(wallet: WalletDb, fromLocal: Boolean = false) {
-        walletDao.createWallet(
-            wallet.copy(
-                isSynced = !fromLocal,
-                syncOperation = SYNC_OPERATION_CREATE
+        val existingWallet = walletDao.getWalletByName(wallet.name)
+        if (existingWallet == null) {
+            walletDao.createWallet(
+                wallet.copy(
+                    isSynced = !fromLocal,
+                    syncOperation = SYNC_OPERATION_CREATE
+                )
             )
-        )
+        }
     }
 
     suspend fun createWallets(wallets: List<WalletDb>) {
         for (wallet in wallets) {
-            walletDao.createWallet(wallet)
+            createWallet(wallet)
         }
     }
 

@@ -16,6 +16,9 @@ interface WalletDao {
             "AND (sync_operation IS NULL OR sync_operation != 'delete')")
     suspend fun getWallets(name: String?): List<WalletDb>
 
+    @Query("SELECT * FROM wallets WHERE name = :name")
+    suspend fun getWalletByName(name: String): WalletDb?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createWallet(wallet: WalletDb)
 
