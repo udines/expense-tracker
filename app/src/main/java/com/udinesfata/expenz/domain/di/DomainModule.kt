@@ -61,7 +61,7 @@ val domainModule = module {
     single { DeleteBudgetUseCase(get()) }
     single { DeleteTransactionUseCase(get()) }
     single { DeleteWalletUseCase(get()) }
-    single { GetActiveBudgetsUseCase(get(), get(), get()) }
+    single { GetActiveBudgetsUseCase(get(), get(), get(), get(), get()) }
     single { GetAllWalletsUseCase(get()) }
     single { GetBalanceByWalletUseCase(get()) }
     single { GetBudgetDetailsUseCase(get(), get()) }

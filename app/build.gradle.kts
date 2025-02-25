@@ -61,6 +61,7 @@ dependencies {
 
     // Koin DI
     implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
 
     // Retrofit
     implementation(libs.gson)
