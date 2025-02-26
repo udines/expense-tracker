@@ -19,9 +19,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.udinesfata.expenz.ui.components.DatePickerField
 import com.udinesfata.expenz.ui.components.DropdownField
 import com.udinesfata.expenz.ui.components.InputField
@@ -58,6 +60,12 @@ private fun AddTransactionScreen(
     var amount = 0.0
     var date = Instant.now()
     var notes = ""
+    val systemUiController = rememberSystemUiController()
+
+    systemUiController.setStatusBarColor(
+        color = Color.LightGray,
+        darkIcons = true
+    )
 
     if (uiState.value.transaction != null) {
         onClose()

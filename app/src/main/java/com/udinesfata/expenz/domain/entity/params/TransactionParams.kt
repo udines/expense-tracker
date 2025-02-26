@@ -7,7 +7,7 @@ const val ORDER_DESC = "DESC"
 
 data class TransactionParams(
     val walletId: Int? = null,
-    val categoryIds: List<Int>? = null,
+    val categoryId: Int? = null,
     val startDate: Instant? = null,
     val endDate: Instant? = null,
     val orderByDate: String? = null, // ORDER_ASC ro ORDER_DESC

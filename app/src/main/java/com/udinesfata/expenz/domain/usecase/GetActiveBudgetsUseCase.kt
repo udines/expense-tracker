@@ -39,6 +39,7 @@ class GetActiveBudgetsUseCase(
             val transactions = transactionRepository.getTransactions(
                 TransactionParams(
                     walletId = budget.walletId,
+                    categoryId = budget.categoryId,
                     startDate = startDate,
                     endDate = endDate
                 ),

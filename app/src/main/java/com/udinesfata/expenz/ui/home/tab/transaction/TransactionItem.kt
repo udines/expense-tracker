@@ -23,7 +23,7 @@ import com.udinesfata.expenz.utils.formatDateReadable
 fun TransactionItem(transaction: TransactionItem) {
     Box(
         modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 12.dp, vertical = 8.dp)
             .fillMaxWidth()
             .background(color = Color.LightGray, shape = RoundedCornerShape(8.dp))
     ) {

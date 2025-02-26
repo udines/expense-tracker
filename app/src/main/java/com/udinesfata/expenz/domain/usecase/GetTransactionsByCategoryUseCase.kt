@@ -11,7 +11,7 @@ class GetTransactionsByCategoryUseCase(
         return transactionRepositoryImpl.getTransactions(
             TransactionParams(
                 walletId = walletId,
-                categoryIds = listOf(categoryId)
+                categoryId = categoryId,
             ),
             true
         )
