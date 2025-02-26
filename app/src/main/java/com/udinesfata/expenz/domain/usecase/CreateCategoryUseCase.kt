@@ -10,7 +10,7 @@ class CreateCategoryUseCase(
 ) {
     suspend operator fun invoke(name: String, type: String): Category {
         val categoryRequest = CategoryRequest(name, type)
-        val result = categoryRepository.createCategory(categoryRequest.toEntity())
+        val result = categoryRepository.createCategory(categoryRequest.toEntity(), true)
         return result
     }
 

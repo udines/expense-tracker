@@ -3,6 +3,7 @@ package com.udinesfata.expenz.ui.transaction
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -65,7 +66,6 @@ private fun AddTransactionScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
     ) {
         TextAppBar(
             onClose = onClose,
@@ -110,7 +110,9 @@ private fun Form(
     var selectedCategory by remember { mutableStateOf("") }
 
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
     ) {
         DropdownField(
             label = "Wallet",
@@ -142,12 +144,14 @@ private fun Form(
 
 @Composable
 private fun Footer(onSave: () -> Unit) {
-    Button(
-        onClick = onSave,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp),
-    ) {
-        Text(text = "Save", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+    Box(modifier = Modifier.padding(16.dp)) {
+        Button(
+            onClick = onSave,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+        ) {
+            Text(text = "Save", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        }
     }
 }

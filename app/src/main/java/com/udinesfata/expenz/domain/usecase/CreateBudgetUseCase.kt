@@ -22,8 +22,6 @@ class CreateBudgetUseCase(
         return flow {
             val localBudget = budgetRepositoryImpl.createBudget(request.toEntity(), true)
             emit(localBudget)
-//            val remoteBudget = budgetRepositoryImpl.createBudget(request.toEntity(), false)
-//            emit(remoteBudget)
         }
     }
 }

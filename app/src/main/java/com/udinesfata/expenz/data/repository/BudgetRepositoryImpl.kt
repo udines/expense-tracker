@@ -35,7 +35,8 @@ class BudgetRepositoryImpl(
     override suspend fun getBudgets(params: BudgetParams, fromLocal: Boolean): List<Budget> {
         try {
             if (fromLocal || !networkChecker.isNetworkAvailable()) {
-                return localDataSource.getBudgets(params.toQuery()).map { it.toEntity() }
+                val result = localDataSource.getBudgets(params.toQuery()).map { it.toEntity() }
+                return result
             } else {
                 val response = remoteDataSource.getBudgets(params.toQuery())
                 localDataSource.createBudgets(response.map { it.toDb() })

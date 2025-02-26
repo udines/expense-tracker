@@ -19,8 +19,7 @@ fun CustomDatePicker(onDismiss: () -> Unit, onDateSelected: (Instant) -> Unit) {
         confirmButton = {
             TextButton(onClick = {
                 datePickerState.selectedDateMillis?.let {
-                    val date = Instant.ofEpochMilli(it)
-                    onDateSelected(date)
+                    onDateSelected(Instant.ofEpochMilli(it))
                 }
                 onDismiss()
             }) {

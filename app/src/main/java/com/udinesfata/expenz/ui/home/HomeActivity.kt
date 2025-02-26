@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -15,18 +18,20 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.udinesfata.expenz.ui.budget.AddBudgetActivity
-import com.udinesfata.expenz.ui.category.AddCategoryActivity
 import com.udinesfata.expenz.ui.home.tab.BottomNavBarItem
 import com.udinesfata.expenz.ui.home.tab.budget.BudgetContent
 import com.udinesfata.expenz.ui.home.tab.dashboard.DashboardContent
@@ -46,33 +51,56 @@ class HomeActivity : ComponentActivity() {
 @Composable
 private fun HomeScreen() {
     val navController = rememberNavController()
-    Scaffold(
-        bottomBar = { BottomNavigationBar(navController) },
-        floatingActionButton = { Fab(navController) }
-    ) { paddingValues ->
-        NavHost(
+    val systemUiController = rememberSystemUiController()
+
+    systemUiController.setStatusBarColor(
+        color = Color.LightGray,
+        darkIcons = true
+    )
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Main screen content
+        Column(modifier = Modifier.fillMaxSize()) {
+            NavHost(
+                navController = navController,
+                startDestination = "dashboard",
+                modifier = Modifier.weight(1f) // Ensures NavHost takes available space
+            ) {
+                composable("dashboard") { DashboardContent() }
+                composable("transactions") { TransactionContent() }
+                composable("budget") { BudgetContent() }
+            }
+        }
+
+        // Bottom Navigation Bar
+        BottomNavigationBar(
             navController = navController,
-            startDestination = "dashboard",
             modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-        ) {
-            composable("dashboard") { DashboardContent() }
-            composable("transactions") { TransactionContent() }
-            composable("budget") { BudgetContent() }
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+        )
+
+        // Floating Action Button
+        if (navController.currentBackStackEntryAsState().value?.destination?.route != "dashboard") {
+            Fab(
+                navController = navController,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(bottom = 124.dp, end = 16.dp)
+            )
         }
     }
 }
 
 @Composable
-private fun BottomNavigationBar(navController: NavHostController) {
+private fun BottomNavigationBar(navController: NavHostController, modifier: Modifier) {
     val items = listOf(
         BottomNavBarItem("dashboard", "Home", Icons.Default.Home),
         BottomNavBarItem("transactions", "Transactions", Icons.Default.ShoppingCart),
         BottomNavBarItem("budget", "Budget", Icons.Default.List)
     )
 
-    NavigationBar {
+    NavigationBar(modifier = modifier) {
         val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
         items.forEach { item ->
             NavigationBarItem(
@@ -86,17 +114,13 @@ private fun BottomNavigationBar(navController: NavHostController) {
 }
 
 @Composable
-private fun Fab(navController: NavHostController) {
+private fun Fab(navController: NavHostController, modifier: Modifier) {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     val context = LocalContext.current
     FloatingActionButton(
+        modifier = modifier,
         onClick = {
             when (currentRoute) {
-                "dashboard" -> {
-                    val intent = Intent(context, AddCategoryActivity::class.java)
-                    context.startActivity(intent)
-                }
-
                 "transactions" -> {
                     val intent = Intent(context, AddTransactionActivity::class.java)
                     context.startActivity(intent)

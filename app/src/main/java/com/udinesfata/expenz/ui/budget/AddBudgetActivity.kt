@@ -3,6 +3,7 @@ package com.udinesfata.expenz.ui.budget
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -53,38 +53,33 @@ private fun AddBudgetScreen(viewModel: AddBudgetViewModel, onClose: () -> Unit) 
         onClose()
     }
 
-    Scaffold(
-        modifier = Modifier.padding(16.dp),
-        topBar = { TextAppBar(onClose = { onClose() }, title = "Add Budget") }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
-        ) {
-            Form(
-                uiState = uiState.value,
-                onCategorySelected = {
-                    category = it
-                },
-                onWalletSelected = {
-                    wallet = it
-                },
-                onNumberChanged = {
-                    amount = it
-                },
-                onStartDateChanged = {
-                    startDate = it
-                },
-                onEndDateChanged = {
-                    endDate = it
-                }
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Footer(onSave = {
-                viewModel.createBudget(wallet, category, amount, startDate, endDate)
-            })
-        }
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        TextAppBar(onClose = { onClose() }, title = "Add Budget")
+        Form(
+            uiState = uiState.value,
+            onCategorySelected = {
+                category = it
+            },
+            onWalletSelected = {
+                wallet = it
+            },
+            onNumberChanged = {
+                amount = it
+            },
+            onStartDateChanged = {
+                startDate = it
+            },
+            onEndDateChanged = {
+                endDate = it
+            }
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Footer(onSave = {
+            viewModel.createBudget(wallet, category, amount, startDate, endDate)
+        })
+
     }
 }
 
@@ -100,7 +95,9 @@ private fun Form(
     var selectedWallet by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(16.dp)) {
         DropdownField(
             label = "Select Wallet",
             options = uiState.wallets.map { it.name },
@@ -142,12 +139,14 @@ private fun Form(
 
 @Composable
 private fun Footer(onSave: () -> Unit) {
-    Button(
-        onClick = onSave,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp),
-    ) {
-        Text(text = "Save", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+    Box(modifier = Modifier.padding(16.dp)) {
+        Button(
+            onClick = onSave,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+        ) {
+            Text(text = "Save", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        }
     }
 }

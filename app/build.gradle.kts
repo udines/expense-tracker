@@ -78,6 +78,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
 
+    // Status bar
+    implementation(libs.accompanist.systemuicontroller)
 
     testImplementation(libs.junit)
     testImplementation(libs.koin.test.junit4)
