@@ -74,7 +74,7 @@ val domainModule = module {
     single { GetStartDateUseCase() }
     single { GetThisMonthReportUseCase(get(), get(), get()) }
     single { GetThisMonthTopSpendingUseCase(get(), get(), get()) }
-    single { GetThisMonthTransactionsUseCase(get(), get(), get()) }
+    single { GetThisMonthTransactionsUseCase(get(), get(), get(), get()) }
     single { GetTotalBalanceUseCase(get()) }
     single { GetTransactionsByCategoryUseCase(get()) }
     single { GetTransactionsByWalletUseCase(get()) }

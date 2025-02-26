@@ -15,7 +15,12 @@ class TransactionLocalDataSource(
     }
 
     suspend fun getTransactions(query: TransactionQuery): List<TransactionDb> {
-        return transactionDao.getTransactions()
+        val result = transactionDao.getTransactions(
+            query.walletId,
+            query.startDate,
+            query.endDate,
+        )
+        return result
     }
 
     suspend fun createTransaction(transaction: TransactionDb, fromLocal: Boolean = false) {

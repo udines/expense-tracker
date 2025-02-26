@@ -38,7 +38,8 @@ class TransactionRepositoryImpl(
     ): List<Transaction> {
         try {
             if (fromLocal || !networkChecker.isNetworkAvailable()) {
-                return localDataSource.getTransactions(params.toQuery()).map { it.toEntity() }
+                val result = localDataSource.getTransactions(params.toQuery()).map { it.toEntity() }
+                return result
             } else {
                 val response = remoteDataSource.getTransactions(params.toQuery())
                 localDataSource.createTransactions(response.map { it.toDb() })

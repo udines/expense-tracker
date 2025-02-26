@@ -13,8 +13,8 @@ interface BudgetDao {
     suspend fun getBudget(id: Int): BudgetDb?
 
     @Query("SELECT * FROM budgets WHERE (sync_operation IS NULL OR sync_operation != 'delete') " +
-            "AND (start_date IS NULL OR start_date >= :startDate) " +
-            "AND (end_date IS NULL OR end_date <= :endDate)")
+            "AND (:startDate IS NULL OR start_date >= :startDate) " +
+            "AND (:endDate IS NULL OR end_date <= :endDate)")
     suspend fun getBudgets(startDate: Long?, endDate: Long?): List<BudgetDb>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

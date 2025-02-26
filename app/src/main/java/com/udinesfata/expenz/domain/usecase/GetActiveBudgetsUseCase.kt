@@ -22,7 +22,6 @@ class GetActiveBudgetsUseCase(
             val startDate = getStartDateUseCase()
             val endDate = getEndDateUseCase(startDate)
             emit(getBudgetItems(true, startDate, endDate))
-//            emit(getBudgetItems(true, startDate, endDate))
         }
     }
 
