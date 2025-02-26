@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.udinesfata.expenz.data.model.local.TransactionDb
-import com.udinesfata.expenz.domain.entity.params.ORDER_DESC
 
 @Dao
 interface TransactionDao {
@@ -15,10 +14,12 @@ interface TransactionDao {
 
     @Query("SELECT * FROM transactions WHERE (sync_operation IS NULL OR sync_operation != 'delete')" +
             "AND (wallet_id = :walletId OR :walletId IS NULL)" +
+            "AND (category_id = :categoryId OR :categoryId IS NULL)" +
             "AND (date >= :startDate OR :startDate IS NULL)" +
             "AND (date <= :endDate OR :endDate IS NULL)")
     suspend fun getTransactions(
         walletId: Int?,
+        categoryId: Int?,
         startDate: Long?,
         endDate: Long?,
     ): List<TransactionDb>

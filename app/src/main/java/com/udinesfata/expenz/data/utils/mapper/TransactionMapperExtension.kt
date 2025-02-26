@@ -80,7 +80,7 @@ fun TransactionDb.toEntity(): Transaction {
 fun TransactionParams.toQuery(): TransactionQuery {
     return TransactionQuery(
         walletId = this.walletId,
-        categoryIds = this.categoryIds,
+        categoryId = this.categoryId,
         startDate = this.startDate?.toEpochMilli(),
         endDate = this.endDate?.toEpochMilli(),
         orderByDate = this.orderByDate,
