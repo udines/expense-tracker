@@ -1,9 +1,12 @@
 package com.udinesfata.expenz.ui.home.tab.transaction
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,11 +29,17 @@ fun TransactionContent(viewModel: TransactionViewModel = koinViewModel()) {
     val uiState = viewModel.uiState.collectAsState()
     viewModel.getWallets()
 
+    if (uiState.value.wallets.isNotEmpty()) {
+        viewModel.getTransactions(uiState.value.wallets[0].name)
+    }
+
     Column {
         TopAppBar(
-            title = { TopBar(onWalletSelected = {
-                viewModel.getTransactions(it)
-            }, uiState = uiState.value) },
+            title = {
+                TopBar(onWalletSelected = {
+                    viewModel.getTransactions(it)
+                }, uiState = uiState.value)
+            },
         )
         LazyColumn {
             items(uiState.value.transactions.size) { index ->
@@ -41,23 +50,29 @@ fun TransactionContent(viewModel: TransactionViewModel = koinViewModel()) {
 }
 
 @Composable
-private fun TopBar(onWalletSelected: (String) -> Unit, uiState: TransactionUiState) {
+private fun TopBar(
+    onWalletSelected: (String) -> Unit,
+    uiState: TransactionUiState,
+) {
     var selected by remember { mutableStateOf("") }
     Row(
-        modifier = Modifier.width(200.dp),
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Spacer(modifier = Modifier.weight(1f))
-        DropdownField(
-            label = "Wallet",
-            options = uiState.wallets.map { it.name },
-            selectedOption = selected,
-            onOptionSelected = {
-                selected = it
-                onWalletSelected(it)
-            },
-        )
+        Box(modifier = Modifier.width(200.dp)) {
+            DropdownField(
+                label = "Wallet",
+                options = uiState.wallets.map { it.name },
+                selectedOption = selected,
+                onOptionSelected = {
+                    selected = it
+                    onWalletSelected(it)
+                },
+            )
+
+        }
         Spacer(modifier = Modifier.weight(1f))
     }
 }
