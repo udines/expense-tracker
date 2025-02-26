@@ -19,8 +19,8 @@ class AddTransactionViewModel(
     private val getAllWalletsUseCase: GetAllWalletsUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val createTransactionUseCase: CreateTransactionUseCase,
-    private val exceptionHandler: ExceptionHandler,
-    private val dispatcher: CoroutineDispatcher,
+    exceptionHandler: ExceptionHandler,
+    dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(AddTransactionState())
     val uiState: StateFlow<AddTransactionState> = _uiState

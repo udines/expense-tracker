@@ -56,7 +56,7 @@ val domainModule = module {
 
     /// Use cases
     single { CreateBudgetUseCase(get()) }
-    single { CreateTransactionUseCase(get()) }
+    single { CreateTransactionUseCase(get(), get()) }
     single { CreateWalletUseCase(get()) }
     single { DeleteBudgetUseCase(get()) }
     single { DeleteTransactionUseCase(get()) }
