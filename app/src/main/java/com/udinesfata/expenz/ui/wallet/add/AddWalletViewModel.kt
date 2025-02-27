@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.ui.wallet
+package com.udinesfata.expenz.ui.wallet.add
 
 import androidx.lifecycle.ViewModel
 import com.udinesfata.expenz.domain.entity.Wallet

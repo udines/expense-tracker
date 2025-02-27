@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.ui.home.tab
+package com.udinesfata.expenz.ui.home
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

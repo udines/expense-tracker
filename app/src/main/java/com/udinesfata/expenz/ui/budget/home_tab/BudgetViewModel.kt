@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.ui.home.tab.budget
+package com.udinesfata.expenz.ui.budget.home_tab
 
 import androidx.lifecycle.ViewModel
 import com.udinesfata.expenz.domain.entity.BudgetItem
