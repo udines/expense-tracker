@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.ui.category
+package com.udinesfata.expenz.ui.category.add
 
 import androidx.lifecycle.ViewModel
 import com.udinesfata.expenz.domain.entity.Category

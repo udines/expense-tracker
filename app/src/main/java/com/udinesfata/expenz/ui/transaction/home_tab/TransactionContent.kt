@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.ui.home.tab.transaction
+package com.udinesfata.expenz.ui.transaction.home_tab
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

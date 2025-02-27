@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.ui.home.tab.transaction
+package com.udinesfata.expenz.ui.transaction.home_tab
 
 import androidx.lifecycle.ViewModel
 import com.udinesfata.expenz.domain.entity.TransactionItem

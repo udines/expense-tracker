@@ -31,12 +31,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.udinesfata.expenz.ui.budget.AddBudgetActivity
-import com.udinesfata.expenz.ui.home.tab.BottomNavBarItem
-import com.udinesfata.expenz.ui.home.tab.budget.BudgetContent
-import com.udinesfata.expenz.ui.home.tab.dashboard.DashboardContent
-import com.udinesfata.expenz.ui.home.tab.transaction.TransactionContent
-import com.udinesfata.expenz.ui.transaction.AddTransactionActivity
+import com.udinesfata.expenz.ui.budget.add.AddBudgetActivity
+import com.udinesfata.expenz.ui.budget.home_tab.BudgetContent
+import com.udinesfata.expenz.ui.transaction.home_tab.TransactionContent
+import com.udinesfata.expenz.ui.transaction.add.AddTransactionActivity
 
 
 class HomeActivity : ComponentActivity() {

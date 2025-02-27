@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.ui.wallet
+package com.udinesfata.expenz.ui.wallet.add
 
 import androidx.lifecycle.ViewModel
 import com.udinesfata.expenz.domain.entity.Wallet
@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 
 class AddWalletViewModel(
     private val createWalletUseCase: CreateWalletUseCase,
-    private val exceptionHandler: ExceptionHandler,
-    private val dispatcher: CoroutineDispatcher,
+    exceptionHandler: ExceptionHandler,
+    dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(AddWalletState())
     val uiState: StateFlow<AddWalletState> = _uiState

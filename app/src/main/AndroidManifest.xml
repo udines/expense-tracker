@@ -23,13 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.transaction.AddTransactionActivity">
+        <activity android:name=".ui.transaction.add.AddTransactionActivity">
         </activity>
-        <activity android:name=".ui.wallet.AddWalletActivity">
+        <activity android:name=".ui.wallet.add.AddWalletActivity">
         </activity>
-        <activity android:name=".ui.category.AddCategoryActivity">
+        <activity android:name=".ui.category.add.AddCategoryActivity">
         </activity>
-        <activity android:name=".ui.budget.AddBudgetActivity">
+        <activity android:name=".ui.budget.add.AddBudgetActivity">
         </activity>
     </application>
 

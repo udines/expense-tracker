@@ -29,6 +29,7 @@ import com.udinesfata.expenz.domain.usecase.GetStartDateUseCase
 import com.udinesfata.expenz.domain.usecase.GetThisMonthReportUseCase
 import com.udinesfata.expenz.domain.usecase.GetThisMonthTopSpendingUseCase
 import com.udinesfata.expenz.domain.usecase.GetThisMonthTransactionsUseCase
+import com.udinesfata.expenz.domain.usecase.GetTopSpendingUseCase
 import com.udinesfata.expenz.domain.usecase.GetTotalBalanceUseCase
 import com.udinesfata.expenz.domain.usecase.GetTransactionsByCategoryUseCase
 import com.udinesfata.expenz.domain.usecase.GetTransactionsByWalletUseCase
@@ -84,4 +85,5 @@ val domainModule = module {
     single { UpdateTransactionUseCase(get()) }
     single { UpdateWalletUseCase(get()) }
     single { CreateCategoryUseCase(get()) }
+    single { GetTopSpendingUseCase(get(), get(), get(), get()) }
 }

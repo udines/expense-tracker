@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.ui.home.tab.dashboard
+package com.udinesfata.expenz.ui.home
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Column
@@ -6,10 +6,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.udinesfata.expenz.ui.category.AddCategoryActivity
+import com.udinesfata.expenz.ui.category.add.AddCategoryActivity
 import com.udinesfata.expenz.ui.components.ActionAppBar
 import com.udinesfata.expenz.ui.components.MenuItemData
-import com.udinesfata.expenz.ui.wallet.AddWalletActivity
+import com.udinesfata.expenz.ui.transaction.top_spending_card.TopSpendingCard
+import com.udinesfata.expenz.ui.wallet.add.AddWalletActivity
+import com.udinesfata.expenz.ui.wallet.summary_card.WalletSummaryCard
 
 @Composable
 fun DashboardContent() {
@@ -26,6 +28,8 @@ fun DashboardContent() {
     )
 
     Column {
-        ActionAppBar(title = "Dashboard", menuItems = menuItems)
+        ActionAppBar(title = "Expense Tracker", menuItems = menuItems)
+        WalletSummaryCard()
+        TopSpendingCard()
     }
 }

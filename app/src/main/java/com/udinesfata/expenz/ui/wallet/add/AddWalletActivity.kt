@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.ui.wallet
+package com.udinesfata.expenz.ui.wallet.add
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.ui.budget
+package com.udinesfata.expenz.ui.budget.add
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

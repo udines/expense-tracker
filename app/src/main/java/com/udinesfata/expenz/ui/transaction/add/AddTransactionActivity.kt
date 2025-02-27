@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.ui.transaction
+package com.udinesfata.expenz.ui.transaction.add
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

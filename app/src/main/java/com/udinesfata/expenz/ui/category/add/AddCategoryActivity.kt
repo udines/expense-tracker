@@ -1,4 +1,4 @@
-package com.udinesfata.expenz.ui.category
+package com.udinesfata.expenz.ui.category.add
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
