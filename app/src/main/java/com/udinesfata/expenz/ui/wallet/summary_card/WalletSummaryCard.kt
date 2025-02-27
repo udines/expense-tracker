@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.udinesfata.expenz.domain.entity.Wallet
+import com.udinesfata.expenz.ui.components.SummaryCard
 import com.udinesfata.expenz.utils.formatCurrencyIdr
 import org.koin.androidx.compose.koinViewModel
 
@@ -18,14 +19,12 @@ import org.koin.androidx.compose.koinViewModel
 fun WalletSummaryCard(viewModel: WalletSummaryViewModel = koinViewModel()) {
     viewModel.getWallets()
     val uiState = viewModel.uiState.collectAsState()
-    val walletSize = uiState.value.wallets.size
-    LazyColumn(modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 16.dp)) {
-        if (walletSize <= 3) {
-            items(uiState.value.wallets.size) { index ->
-                WalletItem(uiState.value.wallets[index])
-            }
-        } else {
-            items(3) { index ->
+    val displayCount = if (uiState.value.wallets.size <= 3) uiState.value.wallets.size else 3
+    SummaryCard(
+        title = "My Wallet", "See all", onActionClick = { }
+    ) {
+        LazyColumn(modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 16.dp)) {
+            items(displayCount) { index ->
                 WalletItem(uiState.value.wallets[index])
             }
         }

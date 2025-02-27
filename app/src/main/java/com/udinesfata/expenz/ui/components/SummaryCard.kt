@@ -23,6 +23,7 @@ fun SummaryCard(
     onActionClick: (() -> Unit)?,
     content: @Composable () -> Unit
 ) {
+    val effectiveTopPadding = if (actionText != null && onActionClick != null) 0.dp else 8.dp
     Box(
         modifier = Modifier
             .padding(16.dp)
@@ -34,7 +35,7 @@ fun SummaryCard(
     ) {
         Column {
             Row(
-                modifier = Modifier.padding(horizontal = 12.dp),
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, top = effectiveTopPadding),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(text = title, style = MaterialTheme.typography.titleMedium)

@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.udinesfata.expenz.ui.category.add.AddCategoryActivity
 import com.udinesfata.expenz.ui.components.ActionAppBar
 import com.udinesfata.expenz.ui.components.MenuItemData
-import com.udinesfata.expenz.ui.components.SummaryCard
+import com.udinesfata.expenz.ui.transaction.top_spending_card.TopSpendingCard
 import com.udinesfata.expenz.ui.wallet.add.AddWalletActivity
 import com.udinesfata.expenz.ui.wallet.summary_card.WalletSummaryCard
 
@@ -29,10 +29,7 @@ fun DashboardContent() {
 
     Column {
         ActionAppBar(title = "Expense Tracker", menuItems = menuItems)
-        SummaryCard(
-            title = "Wallet Summary", "See all", onActionClick = { }
-        ) {
-            WalletSummaryCard()
-        }
+        WalletSummaryCard()
+        TopSpendingCard()
     }
 }

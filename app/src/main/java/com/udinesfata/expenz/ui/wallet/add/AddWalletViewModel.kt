@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 
 class AddWalletViewModel(
     private val createWalletUseCase: CreateWalletUseCase,
-    private val exceptionHandler: ExceptionHandler,
-    private val dispatcher: CoroutineDispatcher,
+    exceptionHandler: ExceptionHandler,
+    dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(AddWalletState())
     val uiState: StateFlow<AddWalletState> = _uiState
