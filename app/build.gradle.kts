@@ -83,6 +83,10 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.koin.test.junit4)
+    testImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.androidx.room.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.robolectric)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
