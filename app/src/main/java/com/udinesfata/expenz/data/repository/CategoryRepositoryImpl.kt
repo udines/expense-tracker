@@ -49,7 +49,7 @@ class CategoryRepositoryImpl(
     override suspend fun createCategory(category: Category, fromLocal: Boolean): Category {
         try {
             if (fromLocal || !networkChecker.isNetworkAvailable()) {
-                localDataSource.createCategory(category.toDb())
+                localDataSource.createCategory(category.toDb(), fromLocal = true)
                 return category
             } else {
                 val response = remoteDataSource.createCategory(category.toPayload())
