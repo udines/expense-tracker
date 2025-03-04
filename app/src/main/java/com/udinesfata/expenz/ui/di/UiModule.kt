@@ -6,6 +6,7 @@ import com.udinesfata.expenz.ui.budget.home_tab.BudgetViewModel
 import com.udinesfata.expenz.ui.transaction.home_tab.TransactionViewModel
 import com.udinesfata.expenz.ui.transaction.add.AddTransactionViewModel
 import com.udinesfata.expenz.ui.transaction.top_spending_card.TopSpendingViewModel
+import com.udinesfata.expenz.ui.transaction.update.UpdateTransactionViewModel
 import com.udinesfata.expenz.ui.wallet.add.AddWalletViewModel
 import com.udinesfata.expenz.ui.wallet.summary_card.WalletSummaryViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,4 +22,5 @@ val uiModule = module {
     viewModel { TransactionViewModel(get(), get(), get(), Dispatchers.Main) }
     viewModel { WalletSummaryViewModel(get(), get(), Dispatchers.Main) }
     viewModel { TopSpendingViewModel(get(), get(), Dispatchers.Main) }
+    viewModel { UpdateTransactionViewModel(get(), get(), Dispatchers.Main) }
 }
