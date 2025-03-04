@@ -1,6 +1,9 @@
 package com.udinesfata.expenz.ui.transaction.home_tab
 
+import android.app.Activity
 import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,7 +35,15 @@ import org.koin.androidx.compose.koinViewModel
 fun TransactionContent(viewModel: TransactionViewModel = koinViewModel()) {
     val uiState = viewModel.uiState.collectAsState()
     val context = LocalContext.current
-    viewModel.getWallets()
+    var selectedWallet by remember { mutableStateOf("") }
+    val deleteLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.getWallets()
+            viewModel.getTransactions(selectedWallet)
+        }
+    }
 
     LaunchedEffect(Unit) {
         viewModel.getWallets()
@@ -42,6 +53,7 @@ fun TransactionContent(viewModel: TransactionViewModel = koinViewModel()) {
         TopAppBar(
             title = {
                 TopBar(onWalletSelected = {
+                    selectedWallet = it
                     viewModel.getTransactions(it)
                 }, uiState = uiState.value)
             },
@@ -51,7 +63,7 @@ fun TransactionContent(viewModel: TransactionViewModel = koinViewModel()) {
                 TransactionItem(transaction = uiState.value.transactions[index], onTap = { id ->
                     val intent = Intent(context, UpdateTransactionActivity::class.java)
                     intent.putExtra("transactionId", id)
-                    context.startActivity(intent)
+                    deleteLauncher.launch(intent)
                 })
             }
         }

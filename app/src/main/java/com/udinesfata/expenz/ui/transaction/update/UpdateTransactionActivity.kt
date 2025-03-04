@@ -1,5 +1,6 @@
 package com.udinesfata.expenz.ui.transaction.update
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,7 +35,11 @@ class UpdateTransactionActivity : ComponentActivity() {
             UpdateTransactionScreen(
                 viewModel = updateTransactionViewModel,
                 onClose = { finish() },
-                transactionId = intent.getIntExtra("transactionId", 0)
+                transactionId = intent.getIntExtra("transactionId", 0),
+                onDelete = {
+                    setResult(RESULT_OK)
+                    finish()
+                }
             )
         }
     }
@@ -44,7 +49,8 @@ class UpdateTransactionActivity : ComponentActivity() {
 private fun UpdateTransactionScreen(
     viewModel: UpdateTransactionViewModel,
     onClose: () -> Unit,
-    transactionId: Int
+    transactionId: Int,
+    onDelete: () -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
     val uiState = viewModel.uiState.collectAsState()
@@ -53,7 +59,7 @@ private fun UpdateTransactionScreen(
 
     if (uiState.value.deleteSuccess != null && uiState.value.deleteSuccess!!) {
         showDeleteDialog = false
-        onClose()
+        onDelete()
     }
 
     systemUiController.setStatusBarColor(
