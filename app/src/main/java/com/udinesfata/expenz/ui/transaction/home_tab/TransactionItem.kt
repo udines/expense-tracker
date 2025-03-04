@@ -1,6 +1,7 @@
 package com.udinesfata.expenz.ui.transaction.home_tab
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,12 +21,13 @@ import com.udinesfata.expenz.utils.formatCurrencyIdr
 import com.udinesfata.expenz.utils.formatDateReadable
 
 @Composable
-fun TransactionItem(transaction: TransactionItem) {
+fun TransactionItem(transaction: TransactionItem, onTap: (Int) -> Unit) {
     Box(
         modifier = Modifier
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .fillMaxWidth()
             .background(color = Color.LightGray, shape = RoundedCornerShape(8.dp))
+            .clickable { onTap(transaction.transaction.id) }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row {
