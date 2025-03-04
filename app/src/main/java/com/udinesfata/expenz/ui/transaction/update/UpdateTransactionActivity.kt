@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,7 +40,6 @@ class UpdateTransactionActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun UpdateTransactionScreen(
     viewModel: UpdateTransactionViewModel,
@@ -47,56 +47,82 @@ private fun UpdateTransactionScreen(
     transactionId: Int
 ) {
     val systemUiController = rememberSystemUiController()
+    val uiState = viewModel.uiState.collectAsState()
 
     var showDeleteDialog by remember { mutableStateOf(false) }
+
+    if (uiState.value.deleteSuccess != null && uiState.value.deleteSuccess!!) {
+        showDeleteDialog = false
+        onClose()
+    }
 
     systemUiController.setStatusBarColor(
         color = Color.LightGray,
         darkIcons = true
     )
 
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        TopAppBar(
-            title = { Text("Update Transaction") },
-            navigationIcon = {
-                IconButton(onClick = { onClose() }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                }
-            },
-            actions = {
-                IconButton(onClick = {
-                    showDeleteDialog = true
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete"
-                    )
-                }
+        AppBar(
+            onClose = onClose,
+            onDelete = {
+                showDeleteDialog = true
             }
         )
     }
 
     if (showDeleteDialog) {
-        AlertDialog(
-            onDismissRequest = { showDeleteDialog = false },
-            title = { Text(text = "Confirm Delete") },
-            text = { Text("Are you sure you want to delete this item?") },
-            confirmButton = {
-                TextButton(onClick = { viewModel.deleteTransaction(transactionId) }) {
-                    Text("Delete")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDeleteDialog = false }) {
-                    Text("Cancel")
-                }
-            }
+        DeleteConfirmationDialog(
+            onConfirm = { viewModel.deleteTransaction(transactionId) },
+            onDismiss = { showDeleteDialog = false }
         )
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AppBar(onClose: () -> Unit, onDelete: () -> Unit) {
+    TopAppBar(
+        title = { Text("Update Transaction") },
+        navigationIcon = {
+            IconButton(onClick = { onClose() }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back"
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = {
+                onDelete()
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete"
+                )
+            }
+        }
+    )
+}
+
+@Composable
+private fun DeleteConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(text = "Confirm Delete") },
+        text = { Text("Are you sure you want to delete this transaction?") },
+        confirmButton = {
+            TextButton(onClick = onConfirm) {
+                Text("Delete")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
 }
 

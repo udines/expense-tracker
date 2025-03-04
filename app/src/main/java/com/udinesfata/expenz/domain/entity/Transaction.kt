@@ -11,8 +11,7 @@ class Transaction(
     val walletId: Int,
     val type: String, // income or expense
     val currency: String,
-)
-
-fun Transaction.isIncome(): Boolean = this.type == "income"
-
-fun Transaction.isExpense(): Boolean = this.type == "expense"
+) {
+    fun isIncome(): Boolean = this.type == "income"
+    fun isExpense(): Boolean = this.type == "expense"
+}
