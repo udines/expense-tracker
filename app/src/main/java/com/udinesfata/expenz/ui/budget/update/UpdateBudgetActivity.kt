@@ -1,6 +1,5 @@
-package com.udinesfata.expenz.ui.transaction.update
+package com.udinesfata.expenz.ui.budget.update
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,30 +26,31 @@ import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class UpdateTransactionActivity : ComponentActivity() {
-    private val updateTransactionViewModel by viewModel<UpdateTransactionViewModel>()
+class UpdateBudgetActivity : ComponentActivity() {
+    private val updateBudgetViewModel by viewModel<UpdateBudgetViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            UpdateTransactionScreen(
-                viewModel = updateTransactionViewModel,
+            UpdateBudgetScreen(
                 onClose = { finish() },
-                transactionId = intent.getIntExtra("transactionId", 0),
                 onDelete = {
                     setResult(RESULT_OK)
                     finish()
-                }
+                },
+                viewModel = updateBudgetViewModel,
+                budgetId = intent.getIntExtra("budgetId", 0),
             )
         }
     }
 }
 
 @Composable
-private fun UpdateTransactionScreen(
-    viewModel: UpdateTransactionViewModel,
+private fun UpdateBudgetScreen(
+    viewModel: UpdateBudgetViewModel,
     onClose: () -> Unit,
-    transactionId: Int,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    budgetId: Int
 ) {
     val systemUiController = rememberSystemUiController()
     val uiState = viewModel.uiState.collectAsState()
@@ -67,7 +67,6 @@ private fun UpdateTransactionScreen(
         darkIcons = true
     )
 
-
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -81,7 +80,7 @@ private fun UpdateTransactionScreen(
 
     if (showDeleteDialog) {
         DeleteConfirmationDialog(
-            onConfirm = { viewModel.deleteTransaction(transactionId) },
+            onConfirm = { viewModel.deleteBudget(budgetId) },
             onDismiss = { showDeleteDialog = false }
         )
     }
@@ -91,7 +90,7 @@ private fun UpdateTransactionScreen(
 @Composable
 private fun AppBar(onClose: () -> Unit, onDelete: () -> Unit) {
     TopAppBar(
-        title = { Text("Update Transaction") },
+        title = { Text("Update Budget") },
         navigationIcon = {
             IconButton(onClick = { onClose() }) {
                 Icon(

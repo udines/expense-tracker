@@ -1,6 +1,7 @@
 package com.udinesfata.expenz.ui.budget.home_tab
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,12 +21,13 @@ import androidx.compose.ui.unit.sp
 import com.udinesfata.expenz.utils.formatCurrencyIdr
 
 @Composable
-fun BudgetItem(budgetName: String, amount: Double, used: Double) {
+fun BudgetItem(id: Int, budgetName: String, amount: Double, used: Double, onClick: (Int) -> Unit) {
     Box(
         modifier = Modifier
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .fillMaxWidth()
             .background(color = Color.LightGray, shape = RoundedCornerShape(8.dp))
+            .clickable { onClick(id) }
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()

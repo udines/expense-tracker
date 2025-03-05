@@ -28,6 +28,7 @@
         <activity android:name=".ui.category.add.AddCategoryActivity"/>
         <activity android:name=".ui.budget.add.AddBudgetActivity"/>
         <activity android:name=".ui.transaction.update.UpdateTransactionActivity"/>
+        <activity android:name=".ui.budget.update.UpdateBudgetActivity"/>
     </application>
 
 </manifest>
