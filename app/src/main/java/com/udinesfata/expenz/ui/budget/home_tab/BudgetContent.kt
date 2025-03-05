@@ -1,5 +1,9 @@
 package com.udinesfata.expenz.ui.budget.home_tab
 
+import android.app.Activity
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +17,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
+import com.udinesfata.expenz.ui.budget.update.UpdateBudgetActivity
 import com.udinesfata.expenz.utils.formatCurrencyIdr
 import org.koin.androidx.compose.koinViewModel
 
@@ -21,6 +27,14 @@ import org.koin.androidx.compose.koinViewModel
 fun BudgetContent(viewModel: BudgetViewModel = koinViewModel()) {
     viewModel.getActiveBudgets()
     val uiState = viewModel.uiState.collectAsState()
+    val context = LocalContext.current
+    val deleteLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.getActiveBudgets()
+        }
+    }
 
     Column {
         Header(uiState.value)
@@ -32,7 +46,13 @@ fun BudgetContent(viewModel: BudgetViewModel = koinViewModel()) {
                     BudgetItem(
                         budgetName = budget.category?.name ?: "Unnamed",
                         amount = budget.budget.amount,
-                        used = budget.totalExpense
+                        used = budget.totalExpense,
+                        id = budget.budget.id,
+                        onClick = {
+                            val intent = Intent(context, UpdateBudgetActivity::class.java)
+                            intent.putExtra("budgetId", it)
+                            deleteLauncher.launch(intent)
+                        }
                     )
                 }
             }
