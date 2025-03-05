@@ -131,4 +131,3 @@ private fun DeleteConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Uni
         }
     )
 }
-
