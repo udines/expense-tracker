@@ -24,5 +24,5 @@ val uiModule = module {
     viewModel { WalletSummaryViewModel(get(), get(), Dispatchers.Main) }
     viewModel { TopSpendingViewModel(get(), get(), Dispatchers.Main) }
     viewModel { UpdateTransactionViewModel(get(), get(), Dispatchers.Main) }
-    viewModel { UpdateBudgetViewModel(get(), get(), Dispatchers.Main) }
+    viewModel { UpdateBudgetViewModel(get(), get(), get(), Dispatchers.Main) }
 }

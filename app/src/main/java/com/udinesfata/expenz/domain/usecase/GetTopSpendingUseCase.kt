@@ -1,6 +1,6 @@
 package com.udinesfata.expenz.domain.usecase
 
-import com.udinesfata.expenz.domain.entity.TopSpending
+import com.udinesfata.expenz.domain.entity.ui.TopSpending
 import com.udinesfata.expenz.domain.entity.params.CategoryParams
 import com.udinesfata.expenz.domain.entity.params.TransactionParams
 import com.udinesfata.expenz.domain.repository.CategoryRepository

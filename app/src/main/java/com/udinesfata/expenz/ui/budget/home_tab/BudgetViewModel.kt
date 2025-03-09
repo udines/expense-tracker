@@ -1,7 +1,7 @@
 package com.udinesfata.expenz.ui.budget.home_tab
 
 import androidx.lifecycle.ViewModel
-import com.udinesfata.expenz.domain.entity.BudgetItem
+import com.udinesfata.expenz.domain.entity.ui.BudgetItem
 import com.udinesfata.expenz.domain.usecase.GetActiveBudgetsUseCase
 import com.udinesfata.expenz.utils.ExceptionHandler
 import kotlinx.coroutines.CoroutineDispatcher

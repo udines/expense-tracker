@@ -1,6 +1,6 @@
 package com.udinesfata.expenz.domain.usecase
 
-import com.udinesfata.expenz.domain.entity.BudgetItem
+import com.udinesfata.expenz.domain.entity.ui.BudgetItem
 import com.udinesfata.expenz.domain.entity.params.BudgetParams
 import com.udinesfata.expenz.domain.entity.params.TransactionParams
 import com.udinesfata.expenz.domain.repository.BudgetRepository

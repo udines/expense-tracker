@@ -30,7 +30,7 @@ fun DropdownField(
     Box(modifier = Modifier.wrapContentSize()) {
         OutlinedTextField(
             value = selectedOption ?: "",
-            onValueChange = {},
+            onValueChange = onOptionSelected,
             label = { Text(label) },
             readOnly = true,
             modifier = Modifier.fillMaxWidth(),

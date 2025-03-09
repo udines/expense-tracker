@@ -10,7 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.udinesfata.expenz.domain.entity.TopSpending
+import com.udinesfata.expenz.domain.entity.ui.TopSpending
 import com.udinesfata.expenz.ui.components.SummaryCard
 import com.udinesfata.expenz.utils.formatCurrencyIdr
 import org.koin.androidx.compose.koinViewModel

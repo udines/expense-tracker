@@ -1,7 +1,7 @@
 package com.udinesfata.expenz.ui.transaction.top_spending_card
 
 import androidx.lifecycle.ViewModel
-import com.udinesfata.expenz.domain.entity.TopSpending
+import com.udinesfata.expenz.domain.entity.ui.TopSpending
 import com.udinesfata.expenz.domain.usecase.GetTopSpendingUseCase
 import com.udinesfata.expenz.utils.ExceptionHandler
 import kotlinx.coroutines.CoroutineDispatcher

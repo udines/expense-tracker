@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.udinesfata.expenz.domain.entity.TransactionItem
+import com.udinesfata.expenz.domain.entity.ui.TransactionItem
 import com.udinesfata.expenz.utils.formatCurrencyIdr
 import com.udinesfata.expenz.utils.formatDateReadable
 

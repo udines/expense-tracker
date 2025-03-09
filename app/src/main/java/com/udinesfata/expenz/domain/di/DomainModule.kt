@@ -18,6 +18,7 @@ import com.udinesfata.expenz.domain.usecase.DeleteWalletUseCase
 import com.udinesfata.expenz.domain.usecase.GetActiveBudgetsUseCase
 import com.udinesfata.expenz.domain.usecase.GetAllWalletsUseCase
 import com.udinesfata.expenz.domain.usecase.GetBalanceByWalletUseCase
+import com.udinesfata.expenz.domain.usecase.GetBudgetFormDataUseCase
 import com.udinesfata.expenz.domain.usecase.GetBudgetDetailsUseCase
 import com.udinesfata.expenz.domain.usecase.GetCategoriesUseCase
 import com.udinesfata.expenz.domain.usecase.GetEndDateUseCase
@@ -42,18 +43,10 @@ import org.koin.dsl.module
 
 val domainModule = module {
     /// Repositories
-    single<BudgetRepository> {
-        BudgetRepositoryImpl(get(), get(), get())
-    }
-    single<CategoryRepository> {
-        CategoryRepositoryImpl(get(), get(), get())
-    }
-    single<TransactionRepository> {
-        TransactionRepositoryImpl(get(), get(), get())
-    }
-    single<WalletRepository> {
-        WalletRepositoryImpl(get(), get(), get())
-    }
+    single<BudgetRepository> { BudgetRepositoryImpl(get(), get(), get()) }
+    single<CategoryRepository> { CategoryRepositoryImpl(get(), get(), get()) }
+    single<TransactionRepository> { TransactionRepositoryImpl(get(), get(), get()) }
+    single<WalletRepository> { WalletRepositoryImpl(get(), get(), get()) }
 
     /// Use cases
     single { CreateBudgetUseCase(get()) }
@@ -86,4 +79,5 @@ val domainModule = module {
     single { UpdateWalletUseCase(get()) }
     single { CreateCategoryUseCase(get()) }
     single { GetTopSpendingUseCase(get(), get(), get(), get()) }
+    single { GetBudgetFormDataUseCase(get(), get(), get()) }
 }

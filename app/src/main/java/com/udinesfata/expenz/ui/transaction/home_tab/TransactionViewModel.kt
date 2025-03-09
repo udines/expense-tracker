@@ -1,7 +1,7 @@
 package com.udinesfata.expenz.ui.transaction.home_tab
 
 import androidx.lifecycle.ViewModel
-import com.udinesfata.expenz.domain.entity.TransactionItem
+import com.udinesfata.expenz.domain.entity.ui.TransactionItem
 import com.udinesfata.expenz.domain.entity.Wallet
 import com.udinesfata.expenz.domain.usecase.GetAllWalletsUseCase
 import com.udinesfata.expenz.domain.usecase.GetThisMonthTransactionsUseCase
